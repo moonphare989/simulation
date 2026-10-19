@@ -1,0 +1,261 @@
+   500→            'Que révèle ce tableau de bord sur les risques de recouvrement, et quelles suites recommanderiez-vous ?',
+   501→          type: 'open',
+   502→          keywords: ['concentration', 'ancienneté', 'encours', 'relance', 'recouvrement', 'dépréciation'],
+   503→          explanation:
+   504→            'Trois lectures successives. (1) La concentration : 50,0 % des créances sur trois clients (43 470,00 €) — la défaillance d’un seul gros débiteur dégraderait fortement le poste ; à suivre en tendance et, le cas échéant, à couvrir (assurance-crédit, encadrement des encours par client). (2) L’ancienneté : 46 970,00 € de créances de plus de 60 jours, soit 54,0 % du total — dont Boulangerie Rousseau (85 jours, 15 780,00 €) et Hypermarché Verdier (72 jours, 18 240,00 €) : relances graduées à lancer, échéanciers à convenir, et au-delà du délai de la politique interne, passage en créances douteuses et dépréciation à envisager (les moins-values probables se provisionnent, elles ne s’oublient pas). (3) Côté fournisseurs, 22 230,00 € de dettes de plus de 60 jours (Éleclairs Énergie, Froid & Maintenance, Sécuritest Contrôles) : risque de dégradation de la relation et des conditions commerciales. La suite : un tableau de relances daté (qui, quoi, depuis quand), la balance âgée mensualisée pour suivre l’évolution des tranches d’ancienneté, et un seuil d’alerte sur la concentration.',
+   505→        },
+   506→      ],
+   507→      solutionSummary:
+   508→        'Créances clients : 86 940,00 € (15 comptes) ; dettes fournisseurs : 48 460,00 € (10) ; total des tiers : 135 400,00 € — chaque total se recoupe par la somme croisée (135 400,00 − 48 460,00 = 86 940,00). Top 3 clients : 43 470,00 €, soit 50,0 % des créances — concentration élevée, à suivre en tendance. Encours de plus de 60 jours : 8 comptes — côté clients, 46 970,00 € (54,0 % des créances : relances graduées, créances douteuses et dépréciation au-delà de la politique interne) ; côté fournisseurs, 22 230,00 € (relations à surveiller). Le tableau de bord utile croise soldes (SOMME.SI par type), ancienneté (SOMME.SI.ENS ">60") et concentration : c’est une balance âgée qui pilote le recouvrement, pas une liste de comptes.',
+   509→      interviewTips: [
+   510→        'Traduisez chaque chiffre en action : 85 jours d’ancienneté = une relance à lancer, pas une statistique à commenter.',
+   511→        'Le mot « concentration » (top 3 = 50,0 %) montre que vous lisez un portefeuille de créances, pas une liste de comptes.',
+   512→      ],
+   513→    },
+   514→    // ================ EXERCICE 4 ================
+   515→    {
+   516→      id: 'danone-m6-ex4',
+   517→      title: 'Tableau de bord 3 — anomalies et contrôles à réaliser',
+   518→      cycle: 'Anomalies',
+   519→      context:
+   520→        'Troisième tableau de bord : anomalies et contrôles à réaliser. Le suivi de septembre 2024 recense 24 anomalies issues des contrôles du mois (rapprochements, lettrage, procédures), avec cycle, criticité, responsable, statut et délai restant avant échéance de traitement. Dans le classeur, la feuille « Anomalies » porte : A référence, B cycle, C criticité, D responsable, E statut, F délai restant. Toutes les données sont fictives.',
+   521→      risks: ['Priorisation absente', 'Anomalies en retard invisibles', 'Taux sans dénominateur précis'],
+   522→      documents: [
+   523→        {
+   524→          kind: 'table',
+   525→          name: 'Suivi des anomalies — 24 lignes de septembre 2024 (fictif)',
+   526→          columns: ['Réf', 'Cycle', 'Criticité', 'Responsable', 'Statut', 'Délai restant (j)'],
+   527→          rows: [
+   528→            ['AN-2024-101', 'Achats', 'haute', 'A. Ndiaye', 'ouverte', -5],
+   529→            ['AN-2024-104', 'Ventes', 'haute', 'S. Farine', 'ouverte', 3],
+   530→            ['AN-2024-112', 'Trésorerie', 'haute', 'M. Lenoir', 'ouverte', -12],
+   531→            ['AN-2024-108', 'Achats', 'haute', 'A. Ndiaye', 'en cours', 7],
+   532→            ['AN-2024-119', 'Paie', 'haute', 'C. Bertin', 'en cours', 2],
+   533→            ['AN-2024-096', 'Stocks', 'haute', 'L. Berthier', 'résolue', 0],
+   534→            ['AN-2024-098', 'Ventes', 'moyenne', 'S. Farine', 'ouverte', 15],
+   535→            ['AN-2024-103', 'Achats', 'moyenne', 'A. Ndiaye', 'ouverte', -2],
+   536→            ['AN-2024-117', 'Transversal', 'moyenne', 'C. Bertin', 'ouverte', 21],
+   537→            ['AN-2024-099', 'Trésorerie', 'moyenne', 'M. Lenoir', 'en cours', 9],
+   538→            ['AN-2024-106', 'Stocks', 'moyenne', 'L. Berthier', 'en cours', -4],
+   539→            ['AN-2024-110', 'Ventes', 'moyenne', 'S. Farine', 'en cours', 12],
+   540→            ['AN-2024-115', 'Paie', 'moyenne', 'C. Bertin', 'en cours', 5],
+   541→            ['AN-2024-093', 'Achats', 'moyenne', 'A. Ndiaye', 'résolue', 0],
+   542→            ['AN-2024-100', 'Transversal', 'moyenne', 'S. Farine', 'résolue', 0],
+   543→            ['AN-2024-121', 'Trésorerie', 'moyenne', 'M. Lenoir', 'résolue', 0],
+   544→            ['AN-2024-123', 'Stocks', 'moyenne', 'L. Berthier', 'résolue', 0],
+   545→            ['AN-2024-095', 'Ventes', 'basse', 'S. Farine', 'ouverte', 30],
+   546→            ['AN-2024-107', 'Paie', 'basse', 'C. Bertin', 'en cours', 18],
+   547→            ['AN-2024-113', 'Transversal', 'basse', 'C. Bertin', 'en cours', 25],
+   548→            ['AN-2024-091', 'Achats', 'basse', 'A. Ndiaye', 'résolue', 0],
+   549→            ['AN-2024-102', 'Trésorerie', 'basse', 'M. Lenoir', 'résolue', 0],
+   550→            ['AN-2024-105', 'Stocks', 'basse', 'L. Berthier', 'résolue', 0],
+   551→            ['AN-2024-116', 'Ventes', 'basse', 'S. Farine', 'résolue', 0],
+   552→          ],
+   553→          note: 'Document fictif. Délai restant : jours avant l’échéance interne de traitement ; négatif = échéance dépassée ; 0 pour les anomalies résolues. Responsables fictifs : A. Ndiaye (achats), S. Farine (ventes/clients), M. Lenoir (trésorerie), C. Bertin (paie/transversal), L. Berthier (stocks/logistique).',
+   554→        },
+   555→      ],
+   556→      questions: [
+   557→        {
+   558→          id: 'danone-m6-ex4-q1',
+   559→          question: 'Quel est le taux de résolution des anomalies (en %) ?',
+   560→          type: 'numeric',
+   561→          expected: 37.5,
+   562→          explanation:
+   563→            '9 anomalies résolues sur 24 recensées : 9 ÷ 24 = 37,5 %. Le reste se répartit en 7 ouvertes (29,2 %) et 8 en cours (33,3 %). La note de méthode doit préciser le dénominateur — « résolues / recensées du mois » — car « taux de résolution » peut aussi désigner résolues / clôturées : un chiffre sans définition se lit de travers.',
+   564→        },
+   565→        {
+   566→          id: 'danone-m6-ex4-q2',
+   567→          question: 'Combien d’anomalies de criticité haute sont encore ouvertes ?',
+   568→          type: 'numeric',
+   569→          expected: 3,
+   570→          explanation:
+   571→            '=NB.SI.ENS(C2:C25;"haute";E2:E25;"ouverte") → 3 : AN-2024-101 (Achats, −5 jours), AN-2024-104 (Ventes, +3 jours) et AN-2024-112 (Trésorerie, −12 jours) — dont deux déjà en retard. Sur les 6 anomalies de criticité haute, 1 est résolue et 2 en cours : les trois ouvertes sont la priorité n° 1 du tableau de bord.',
+   572→        },
+   573→        {
+   574→          id: 'danone-m6-ex4-q3',
+   575→          question:
+   576→            'Combien d’anomalies non résolues ont dépassé leur échéance (délai restant négatif) ?',
+   577→          type: 'numeric',
+   578→          expected: 4,
+   579→          explanation:
+   580→            'Quatre : AN-2024-112 (−12 jours, haute, ouverte), AN-2024-101 (−5 jours, haute, ouverte), AN-2024-106 (−4 jours, moyenne, en cours) et AN-2024-103 (−2 jours, moyenne, ouverte). Un délai restant négatif doit sauter aux yeux — mise en forme conditionnelle sur la colonne F (< 0) ou filtre dédié : c’est lui qui déclenche l’escalade, pas le statut « ouverte » seul.',
+   581→        },
+   582→        {
+   583→          id: 'danone-m6-ex4-q4',
+   584→          question:
+   585→            'Quelle formule compte les anomalies de criticité haute encore ouvertes (criticité en C, statut en E, délai en F) ?',
+   586→          type: 'mcq',
+   587→          options: [
+   588→            '=NB.SI($C$2:$C$25;"haute")',
+   589→            '=SOMME.SI.ENS($F$2:$F$25;$C$2:$C$25;"haute";$E$2:$E$25;"ouverte")',
+   590→            '=NB.SI.ENS($C$2:$C$25;"haute";$E$2:$E$25;"ouverte")',
+   591→            '=NB.SI.ENS($C$2:$C$25;"haute";$E$2:$E$25;"ouverte";$F$2:$F$25;"<0")',
+   592→          ],
+   593→          expected: '2',
+   594→          explanation:
+   595→            '=NB.SI.ENS($C$2:$C$25;"haute";$E$2:$E$25;"ouverte") → 3. NB.SI seul compterait les 6 anomalies « haute », résolue comprise ; SOMME.SI.ENS additionnerait les délais restants des hautes ouvertes (−5 + 3 − 12 = −14), un total sans signification de comptage ; la dernière option ajoute « délai < 0 » — elle ne compterait que les 2 hautes ouvertes en retard. Compter, totaliser, restreindre : trois intentions différentes, trois formules différentes.',
+   596→        },
+   597→        {
+   598→          id: 'danone-m6-ex4-q5',
+   599→          question:
+   600→            'Comment piloteriez-vous le traitement de ces anomalies à partir de ce tableau de bord ?',
+   601→          type: 'open',
+   602→          keywords: ['criticité', 'retard', 'responsable', 'échéance', 'suivi', 'priorité'],
+   603→          explanation:
+   604→            'Le pilotage se fait par vagues. (1) Priorité aux trois hautes ouvertes — dont deux en retard (AN-2024-112 à −12 jours, AN-2024-101 à −5 jours) — avec responsable nommé et échéance resserrée. (2) Revue hebdomadaire des statuts : le taux de résolution (37,5 %) se suit en tendance, pas en valeur isolée. (3) Alerte systématique sur les délais négatifs (MEFC « < 0 » ou filtre) : quatre anomalies ont déjà dépassé leur échéance, dont deux de criticité haute. (4) Analyse des récurrences par cycle : achats 5 et ventes 5 anomalies sur 24, trésorerie 4, stocks 4, paie 3, transversal 3 — si un cycle revient chaque mois, le problème est de process, plus que d’exécution : c’est une remontée de faille de procédure, pas une liste de tickets. (5) Clôture documentée : une anomalie ne passe « résolue » qu’avec la preuve de la correction — comme un verdict de contrôle. Le tableau de bord devient alors un outil de comité : une page, des propriétaires, des échéances, une tendance.',
+   605→        },
+   606→      ],
+   607→      solutionSummary:
+   608→        '24 anomalies : 9 résolues (37,5 %), 8 en cours (33,3 %), 7 ouvertes (29,2 %). Criticité : 6 hautes dont 3 encore ouvertes — dont 2 en retard (−12 et −5 jours) — 11 moyennes, 7 basses. Quatre anomalies au total ont dépassé leur échéance : elles doivent sauter aux yeux (MEFC sur délai < 0). Le tableau de bord pilote par criticité, responsable et échéance ; le taux de résolution se suit en tendance, avec son dénominateur documenté ; les récurrences par cycle (achats 5, ventes 5, trésorerie 4, stocks 4) orientent vers des correctifs de process. NB.SI.ENS alimente les compteurs, SOMME.SI.ENS les montants, la MEFC les alertes.',
+   609→      interviewTips: [
+   610→        'Un taux sans dénominateur précis est un piège d’entretien : dites « 9 résolues sur 24 recensées ce mois-ci ».',
+   611→        'Les anomalies « en retard » valent plus que les « ouvertes » : montrez que vous hiérarchisez par criticité ET par échéance.',
+   612→      ],
+   613→    },
+   614→    // ================ EXERCICE 5 ================
+   615→    {
+   616→      id: 'danone-m6-ex5',
+   617→      title: 'Contrôler l’exactitude d’un tableau de bord',
+   618→      cycle: 'Contrôles',
+   619→      context:
+   620→        'Dernier réflexe, le plus important : avant de diffuser un tableau de bord, on le contrôle. Un collègue vous remet le tableau de bord de septembre ; vous recalculez chaque indicateur de façon indépendante (à partir des données sources et de la balance auxiliaire) et vous confrontez les valeurs affichées aux valeurs recalculées. Toutes les données sont fictives.',
+   621→      risks: ['Exactitude non recoupée', 'Erreur propagée aux ratios', 'Diffusion sans relecture'],
+   622→      documents: [
+   623→        {
+   624→          kind: 'text',
+   625→          name: 'Note de transmission — tableau de bord de septembre (fictif)',
+   626→          content:
+   627→            'De : C. Bertin\nÀ : Stagiaire comptabilité\nObjet : tableau de bord de septembre — relecture avant lundi\n\nBonjour,\n\nVoici le tableau de bord de septembre. J’ai vérifié le total clients « à l’œil » la semaine dernière, il m’a semblé correct. Peux-tu le relire avant la réunion de lundi ? Si tout va bien, on le diffuse tel quel.\n\nCordialement,\nC. Bertin',
+   628→          note: 'Document fictif. Une relecture « à l’œil » n’est pas un contrôle : seul un recalcul indépendant en est un.',
+   629→        },
+   630→        {
+   631→          kind: 'table',
+   632→          name: 'Contrôles d’exactitude — valeur affichée contre recalcul indépendant (fictif)',
+   633→          columns: ['Indicateur', 'Valeur affichée (TdB)', 'Recalcul indépendant', 'Écart'],
+   634→          rows: [
+   635→            ['Nombre de pièces suivies (extrait)', '30', '30', '0'],
+   636→            ['Délai moyen de saisie (jours)', '4,0', '4,0', '0,0'],
+   637→            ['Pièces saisies à plus de 5 jours', '8', '8', '0'],
+   638→            ['Total créances clients (€)', '84 940,00', '86 940,00', '− 2 000,00'],
+   639→            ['Part du top 3 clients (%)', '48,8 %', '50,0 %', '− 1,2 pt'],
+   640→            ['Taux de résolution des anomalies', '37,5 %', '37,5 %', '0,0'],
+   641→          ],
+   642→          note: 'Document fictif. Recalcul indépendant : données sources du classeur et balance auxiliaire. L’écart sur le total des créances se propage à la part du top 3 (48,8 % contre 50,0 %) : une erreur de source contamine tous les indicateurs qui en dépendent.',
+   643→        },
+   644→        {
+   645→          kind: 'table',
+   646→          name: 'Recoupement ligne à ligne — extraits du rapprochement (fictif)',
+   647→          columns: ['Compte', 'Solde balance (€)', 'Solde feuille TdB (€)', 'Écart (€)'],
+   648→          rows: [
+   649→            ['411VER Hypermarché Verdier', '18 240,00', '18 240,00', '0,00'],
+   650→            ['411LEM Supérette Lemoine', '9 450,00', '7 450,00', '2 000,00'],
+   651→            ['411ROU Boulangerie Rousseau', '15 780,00', '15 780,00', '0,00'],
+   652→          ],
+   653→          note: 'Document fictif. Extrait du rapprochement des 25 comptes (=RECHERCHEX + ESTNA) : un seul écart sur les 25 lignes.',
+   654→        },
+   655→      ],
+   656→      questions: [
+   657→        {
+   658→          id: 'danone-m6-ex5-q1',
+   659→          question:
+   660→            'Décrivez votre démarche complète pour contrôler l’exactitude de ce tableau de bord avant diffusion.',
+   661→          type: 'open',
+   662→          keywords: ['recoupement', 'formule de contrôle', 'somme croisée', 'hypothèse documentée', 'note de méthode', 'revue par un tiers'],
+   663→          explanation:
+   664→            'Six réflexes, dans l’ordre. (1) Le recoupement : recalculer chaque indicateur de façon indépendante — données sources, balance auxiliaire — au lieu de relire les cellules : la relecture « à l’œil » de C. Bertin n’a détecté aucun des écarts. (2) La formule de contrôle : des cellules dédiées qui comparent la valeur affichée au recalcul et affichent l’écart — tout écart ≠ 0 est une alerte, pas une impression. (3) La somme croisée : total général = somme des sous-totaux (par exemple 92 010,40 + 58 250,00 + 5 246,80 = 155 507,20 € pour les factures ; 135 400,00 − 48 460,00 = 86 940,00 € pour les tiers). (4) L’hypothèse documentée : périmètre (extrait de 30 pièces sur environ 150), date et source d’extraction, conventions (jours calendaires, seuil de 60 jours) — toutes notées noir sur blanc. (5) La note de méthode : une page qui dit ce que chaque chiffre contient et comment il est calculé — elle accompagne le fichier diffusé. (6) La revue par un tiers : C. Bertin relit, mais sur la base des contrôles chiffrés — et l’écart trouvé remonte à la ligne fautive (411LEM : 7 450,00 € saisis au lieu de 9 450,00 €), jamais à un ajustement manuel du total. On corrige la source, on recalcule les indicateurs dépendants, on rediffuse après re-vérification.',
+   665→        },
+   666→        {
+   667→          id: 'danone-m6-ex5-q2',
+   668→          question:
+   669→            'Quel est le montant de l’écart sur le total des créances clients (en €, valeur absolue) ?',
+   670→          type: 'numeric',
+   671→          expected: 2000,
+   672→          explanation:
+   673→            'Valeur affichée 84 940,00 € contre recalcul indépendant 86 940,00 € : écart de − 2 000,00 €, soit 2 000,00 € en valeur absolue. Le recoupement ligne à ligne l’attribue au compte 411LEM Supérette Lemoine : 9 450,00 € en balance, 7 450,00 € dans la feuille du tableau de bord — une transposition de chiffres (9 ↔ 7). L’écart se propage : la part du top 3 affichée (48,8 %) est fausse (50,0 % réels), parce qu’elle dépend du même solde erroné.',
+   674→        },
+   675→        {
+   676→          id: 'danone-m6-ex5-q3',
+   677→          question: 'Quelle est la cause de l’écart constaté sur les créances clients ?',
+   678→          type: 'mcq',
+   679→          options: [
+   680→            'La ligne du client Supérette Lemoine porte 7 450,00 € dans la feuille du tableau de bord contre 9 450,00 € en balance (transposition de chiffres)',
+   681→            'La balance auxiliaire est erronée : c’est elle qu’il faut corriger',
+   682→            'Le calcul du top 3 clients est faux : la formule de la part est à revoir',
+   683→            'Une ligne client a été oubliée dans la plage de la formule de total',
+   684→          ],
+   685→          expected: '0',
+   686→          explanation:
+   687→            'Le rapprochement ligne à ligne (=RECHERCHEX + ESTNA sur les 25 comptes) ne montre qu’un seul écart : 411LEM, 7 450,00 € saisis au lieu de 9 450,00 € — une inversion 9 ↔ 7, l’erreur de saisie la plus banale et la plus difficile à voir « à l’œil ». La balance est la référence du recoupement : on ne corrige pas une balance pour faire taire un écart ; la part du top 3 (48,8 % contre 50,0 %) est une conséquence de l’erreur, pas sa cause ; et aucune ligne ne manque — le rapprochement montre 25 comptes présents sur 25, avec un seul écart de valeur. La correction se fait à la source, puis les indicateurs dépendants se recalculent.',
+   688→        },
+   689→        {
+   690→          id: 'danone-m6-ex5-q4',
+   691→          question: 'Avant de diffuser un tableau de bord, quelle est la meilleure pratique ?',
+   692→          type: 'mcq',
+   693→          options: [
+   694→            'Recouper chaque total avec un calcul indépendant et documenter les contrôles réalisés',
+   695→            'Saisir les totaux « en dur » une fois vérifiés, pour éviter les erreurs de formule',
+   696→            'Supprimer les formules de contrôle de la version diffusée pour alléger le fichier',
+   697→            'Faire confiance aux formules : si Excel ne renvoie pas d’erreur, le résultat est exact',
+   698→          ],
+   699→          expected: '0',
+   700→          explanation:
+   701→            'Recouper et documenter : chaque total confronté à un calcul indépendant, chaque écart tracé, les contrôles visibles dans le fichier diffusé — c’est eux qui prouvent l’exactitude au lecteur. Les trois leurres : les totaux « en dur » figent des valeurs qui deviennent fausses dès que la donnée change (et suppriment la piste du calcul) ; retirer les formules de contrôle de la version diffusée, c’est retirer les preuves ; et l’absence d’erreur Excel (#N/A, #REF!) ne prouve rien — une plage incomplète, un critère erroné ou une saisie fausse (411LEM…) ne génèrent aucune erreur : le résultat est faux et propre à la fois.',
+   702→        },
+   703→        {
+   704→          id: 'danone-m6-ex5-q5',
+   705→          question: 'Quels sont les réflexes de fiabilité d’un tableau de bord ?',
+   706→          type: 'multi',
+   707→          options: [
+   708→            'Vérifier que les plages des formules couvrent toutes les lignes de données (ni ligne oubliée, ni ligne parasite)',
+   709→            'Documenter les hypothèses : périmètre, date et source d’extraction, exclusions, conventions',
+   710→            'Contrôler les totaux par une somme croisée (une seconde méthode, une autre décomposition)',
+   711→            'Faire relire le tableau de bord par un tiers avant diffusion',
+   712→            'Saisir les totaux à la main après vérification, pour les figer',
+   713→            'Élargir les plages très au-delà des données « au cas où »',
+   714→            'Archiver la note de méthode à part, sans la joindre au tableau de bord diffusé',
+   715→          ],
+   716→          expected: ['0', '1', '2', '3'],
+   717→          explanation:
+   718→            'Les quatre bons réflexes : plages exactes (couvrant toutes les lignes, sans excès), hypothèses documentées (le lecteur sait ce qu’il lit), sommes croisées (le total se démontre par un second chemin) et relecture par un tiers (le concepteur ne voit jamais ses propres erreurs — C. Bertin en est la preuve vivante). Les trois réflexes fautifs : figer des totaux à la main (la prochaine mise à jour sera fausse, et la traçabilité disparaît), élargir les plages « au cas où » (tôt ou tard une ligne parasite s’y glisse : une note, un total intermédiaire), et dissocier la note de méthode du fichier diffusé (l’hypothèse doit suivre le chiffre jusqu’à son lecteur — une note archivée n’informe personne).',
+   719→        },
+   720→      ],
+   721→      solutionSummary:
+   722→        'Le contrôle révèle un écart de 2 000,00 € sur les créances clients (84 940,00 € affichés contre 86 940,00 € recalculés), propagé à la part du top 3 (48,8 % affichés contre 50,0 % réels) : cause isolée par rapprochement ligne à ligne — le solde de la Supérette Lemoine saisi 7 450,00 € au lieu de 9 450,00 € (transposition 9 ↔ 7). On corrige la source, jamais le total à la main, on recalcule les indicateurs dépendants et on rediffuse après re-vérification. Les six réflexes : recoupement (recalcul indépendant), formule de contrôle (écart attendu 0), somme croisée (sous-totaux = total général), hypothèse documentée (périmètre, extraction, conventions), note de méthode jointe au fichier, revue par un tiers. La relecture « à l’œil » n’est pas un contrôle : elle n’a rien vu.',
+   723→      interviewTips: [
+   724→        'La phrase à placer : « je ne crois pas un total que je n’ai pas recoupé » — elle résume la mission entière.',
+   725→        'Racontez la propagation (2 000,00 € → 48,8 % contre 50,0 %) : une erreur qui contamine les ratios est plus parlante que l’écart brut.',
+   726→      ],
+   727→    },
+   728→  ],
+   729→  interviewQuestions: [
+   730→    { question: 'Pourquoi construire des tableaux de bord Excel alors que l’ERP et la comptabilité produisent déjà des états ?', expected: 'Parce que les états standard répondent rarement à la question précise du destinataire : croiser sur une page délais de saisie, ancienneté des tiers et suivi des anomalies, actualisable et documentée. Excel comble l’écart entre les exports bruts et le pilotage — à condition que les données soient structurées, les formules justes et les résultats recoupés : un tableau de bord faux est pire que pas de tableau de bord du tout.', hint: 'Répondez « usage d’abord » : un tableau de bord existe pour une décision, pas pour embellir des données.' },
+   731→    { question: 'Quelle formule utiliseriez-vous pour compter les factures d’un fournisseur donné sur le mois de mars ?', expected: 'NB.SI.ENS : =NB.SI.ENS(plage_tiers;"fournisseur";plage_dates;">=01/03/2024";plage_dates;"<01/04/2024") — plusieurs critères, y compris deux bornes sur la même colonne de dates. Avec un seul critère, NB.SI suffit ; SOMME.SI.ENS, lui, totaliserait les montants. L’erreur classique : écrire « mars » comme critère de date — Excel ne l’interprète pas.', hint: 'Deux critères = NB.SI.ENS ; annoncez l’ordre des arguments sans détour.' },
+   732→    { question: 'Quelle différence faites-vous entre SOMME.SI et SOMME.SI.ENS — et quand utiliser l’un ou l’autre ?', expected: 'SOMME.SI totalise selon un critère (plage ; critère ; plage_somme) ; SOMME.SI.ENS selon plusieurs (plage_somme ; plage1 ; critère1 ; …) et accepte les bornes cumulées sur une même colonne. SOMME.SI.ENS couvre tous les cas, SOMME.SI reste la forme la plus directe à un critère. Piège : l’ordre des arguments diffère — la plage à totaliser n’est pas à la même place.', hint: 'La question cache un test : l’ordre des arguments. Citez-le.' },
+   733→    { question: 'Comment retrouver le RIB d’un fournisseur à partir de son code avec RECHERCHEX — et que faisiez-vous avant ?', expected: '=RECHERCHEX(code; plage_codes; plage_RIB;"non trouvé") : recherche exacte par défaut, colonne de renvoi libre, message si absence grâce à l’argument si_non_trouvé. Avant : RECHERCHEV(code; table; n°_colonne; FAUX) enveloppé dans SIERREUR pour éviter le #N/A — ou INDEX+EQUIV quand la colonne de renvoi précède la colonne de recherche, ce que RECHERCHEV ne sait pas faire.', hint: 'Citez l’argument si_non_trouvé : il distingue celui qui connaît RECHERCHEX de celui qui en a entendu parler.' },
+   734→    { question: 'Comment détectez-vous les doublons dans une liste de numéros de factures ?', expected: 'Une mise en forme conditionnelle avec =NB.SI($A$2:$A$151;A2)>1 : chaque ligne dont le numéro apparaît plus d’une fois dans la plage se colore, puis tri ou filtre sur les lignes colorées pour traitement. Le même NB.SI posé en colonne de contrôle donne le comptage exploitable. Point technique à citer : la plage doit être verrouillée ($), sinon elle glisse avec la recopie et le premier exemplaire n’est jamais marqué.', hint: 'Le verrouillage de la plage est le détail qui prouve la pratique réelle.' },
+   735→    { question: 'Quel outil utilisez-vous pour connaître la répartition des factures par type et par semaine, sans écrire une seule formule ?', expected: 'Le tableau croisé dynamique : type en colonnes, semaines en lignes (ou l’inverse), comptage ou somme des montants en valeurs, actualisation à chaque mise à jour. Il explore, vérifie les ordres de grandeur et fournit un second chemin de calcul — sans remplacer les indicateurs finaux du tableau de bord, qui restent choisis, définis et documentés.', hint: 'TCD = exploration et contre-vérification ; tableau de bord = pilotage : ne confondez pas les deux.' },
+   736→    { question: 'Comment vous assurez-vous qu’un tableau de bord est exact avant de le diffuser ?', expected: 'Par recoupements : recalcul indépendant de chaque indicateur à partir des sources, formules de contrôle qui affichent les écarts (attendus à 0), somme croisée (total général = somme des sous-totaux), rapprochement ligne à ligne avec la balance si un écart apparaît — puis revue par un tiers et note de méthode jointe au fichier. Un total n’est jamais « exact » dans l’absolu : il est recoupé, ou il ne l’est pas.', hint: 'La phrase attendue : « je ne crois pas un total que je n’ai pas recoupé ».' },
+   737→    { question: 'Un lecteur signale que votre total clients diffère de la balance : quelle est votre réaction ?', expected: 'Le remercier (la revue par un tiers fonctionne), reproduire l’écart, remonter à la ligne fautive par rapprochement ligne à ligne (RECHERCHEX + ESTNA ou NB.SI), corriger la donnée source — jamais le total à la main —, recalculer tous les indicateurs dépendants (parts, ratios), documenter l’incident dans la note de méthode et rediffuser après re-vérification. L’erreur propagée (le ratio qui dépend du solde faux) se corrige en même temps que la source.', hint: 'Corriger un total à la main est la faute éliminatoire : elle masque l’erreur au lieu de la résoudre.' },
+   738→    { question: 'Comment gérez-vous les hypothèses et le périmètre d’un tableau de bord ?', expected: 'Tout se documente dans la note de méthode : périmètre (exhaustif ou extrait — par exemple 30 pièces sur 150, ce n’est pas le mois complet), source et date d’extraction, conventions (jours calendaires, seuil de 60 jours, criticités), exclusions et seuils d’alerte. Une hypothèse non documentée devient une surinterprétation : le lecteur croit lire le mois complet alors que l’extrait ne le représente pas.', hint: 'L’écart le plus dangereux est invisible : entre ce que le lecteur croit lire et ce que le chiffre contient.' },
+   739→    { question: 'Quel graphique choisiriez-vous pour suivre les délais de traitement, et pourquoi ?', expected: 'Une courbe du délai moyen mensuel avec une ligne de seuil cible : elle montre la tendance et les dépassements dans le temps ; éventuellement des barres pour les hors délai par type. L’histogramme compare des catégories, le camembert se limite aux répartitions simples (cinq parts au plus) et la 3D déforme les proportions. Règle générale : un graphique = un message — sinon c’est de la décoration.', hint: 'Justifiez toujours le type de graphique par le message, jamais par l’esthétique.' },
+   740→  ],
+   741→  followUps: [
+   742→    { question: 'Le nouveau logiciel de saisie change le format des exports : que devient votre tableau de bord ?', expected: 'La structure en couches l’a protégé : les feuilles de données se reconstituent depuis les nouveaux exports (manuellement ou via Power Query), et les formules du tableau de bord pointent sur des plages nommées ou des tableaux structurés, donc survivent au changement de source. J’en profite pour ajouter des contrôles de structure : présence des colonnes attendues, volumétrie plausible, alerte si la source change de forme — un tableau de bord doit savoir dire « quelque chose a bougé ».' },
+   743→    { question: 'On vous demande une mise à jour mensuelle sans intervention manuelle : comment procédez-vous ?', expected: 'Transformer les plages de données en tableaux structurés (extension automatique des formules), nommer les plages, et basculer l’extraction-nettoyage sur Power Query : importation transformée et actualisable en un clic. Les TCD s’actualisent dans la même opération ; un bouton peut enchaîner actualisation et export. Ce qui reste manuel, volontairement : la relecture des contrôles d’exactitude et la mise à jour de la note de méthode (périmètre, hypothèses) — l’automatisation ne dispense jamais de vérifier.' },
+   744→    { question: 'Le responsable veut le taux de résolution des anomalies par cycle ET par responsable : quel outil ?', expected: 'Le tableau croisé dynamique : responsable et cycle en lignes (ou l’un en lignes, l’autre en colonnes), statut en colonnes, comptage en valeurs — le taux se calcule par champ calculé ou par formule posée à côté du TCD. Alternative tout-formules : une matrice de NB.SI.ENS. Dans les deux cas, je livre la matrice avec une lecture : les cellules vides (aucune anomalie) et les taux bas appellent un commentaire, pas seulement un chiffre.' },
+   745→    { question: 'Votre tableau de bord et la balance diffèrent de 2 000,00 € : quelle est votre démarche exacte ?', expected: 'Reproduire l’écart d’abord (un écart non reproduit ne se corrige pas), puis rapprocher ligne à ligne (RECHERCHEX + ESTNA ou NB.SI) pour isoler la ou les lignes fautives, identifier la cause (saisie transposée, plage incomplète, doublon), corriger la source — jamais le total à la main —, recalculer tous les indicateurs dépendants (parts, ratios : une erreur de source se propage), documenter l’incident dans la note de méthode et faire relire avant rediffusion.' },
+   746→    { question: 'On vous demande un camembert 3D « qui claque » pour la direction : que répondez-vous ?', expected: 'Que le graphique sert un message : la 3D déforme la perception des proportions, le camembert devient illisible au-delà de cinq parts, et « qui claque » n’est pas un objectif de gestion. Je propose l’alternative lisible — barres triées, courbe avec seuil — et si l’esthétique compte vraiment, je l’obtiens par la sobriété (titres clairs, unités, palette sobre) et non par les effets. Un tableau de bord reste un outil de décision, pas une vitrine.' },
+   747→    { question: 'Le fichier devient lent et personne n’ose plus le modifier : comment le remettez-vous en état ?', expected: 'Diagnostic d’abord : plages surdimensionnées (des SOMME sur des milliers de lignes « au cas où »), formules volatiles recopiées, feuilles dupliquées, TCD jamais actualisés. Puis remise en état : tableaux structurés aux dimensions exactes, TCD pour les synthèses lourdes, allègement des mises en forme, découpage données / calculs / restitution. Enfin la partie la plus négligée : documentation et versionnage, pour que le prochain mainteneur n’ait pas à redécouvrir le fichier — et contrôles d’exactitude conservés, toujours.' },
+   748→  ],
+   749→  evaluation: {
+   750→    criteria: [
+   751→      { label: 'Choix des formules', description: 'Met la bonne formule au bon endroit : NB.SI.ENS pour compter, SOMME.SI.ENS pour totaliser, SI pour décider, RECHERCHEX pour retrouver — syntaxe, ordre des arguments et références exacts.' },
+   752→      { label: 'Structuration des données', description: 'Nettoie et structure les sources (une information par colonne, formats normalisés, doublons traqués) et organise le classeur en couches : données, calculs, tableau de bord.' },
+   753→      { label: 'Pertinence des indicateurs', description: 'Retient peu d’indicateurs, chacun défini et relié à une décision, avec les seuils et conventions internes explicites (délai cible, encours à 60 jours, criticités).' },
+   754→      { label: 'Exactitude vérifiée', description: 'Recoupe chaque total par un calcul indépendant, utilise formules de contrôle et sommes croisées, et remonte à la ligne fautive par rapprochement en cas d’écart.' },
+   755→      { label: 'Documentation', description: 'Rédige et joint la note de méthode : périmètre, source et date d’extraction, hypothèses, exclusions — et fait relire par un tiers avant diffusion.' },
+   756→      { label: 'Restitution', description: 'Choisit le graphique pertinent (un message par graphique), met en évidence retards et dépassements, et tient le tableau de bord à jour en tendance.' },
+   757→    ],
+   758→  },
+
+[showing lines 500-758 of 760; use offset=759 with limit to continue reading]

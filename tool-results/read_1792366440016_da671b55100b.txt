@@ -1,0 +1,402 @@
+     1→     1→// =====================================================================
+     2→     2→// AuditLab — Banque de questions : Excel appliqué & gestion transversale
+     3→     3→// 50 questions — IDs qt-101 à qt-150
+     4→     4→// Contrôle de gestion, Excel finance/compta/audit, audit interne, contrôle interne.
+     5→     5→// Rédaction recruteur senior PFE — formulations naturelles à l’oral.
+     6→     6→// =====================================================================
+     7→     7→
+     8→     8→import type { BankQuestion } from '@/lib/types'
+     9→     9→
+    10→    10→export const transversalExcelGestionQuestions: BankQuestion[] = [
+    11→    11→  {
+    12→    12→    id: 'qt-101',
+    13→    13→    job: 'controle-gestion',
+    14→    14→    category: 'definitions',
+    15→    15→    difficulty: 1,
+    16→    16→    skill: 'Rôle du contrôle de gestion',
+    17→    17→    question: 'Pour commencer simplement : c’est quoi, pour toi, le contrôle de gestion ? Décris-moi le métier avec tes mots, pas une définition de manuel.',
+    18→    18→    expectedAnswer:
+    19→    19→      'Le contrôle de gestion est la fonction qui aide la direction à piloter la performance : elle anticipe (budgets, prévisions), mesure (reporting, comptabilité analytique), analyse les écarts entre le réalisé et les références, et alimente le dialogue de gestion pour décider des actions correctives. C’est une boucle : prévoir, mesurer, analyser, agir. Le contrôleur est un bras armé de la direction et une interface entre la finance et les opérationnels : il traduit les chiffres en causes compréhensibles et les décisions en conséquences chiffrées. Le mot « contrôle » ne signifie pas surveiller les équipes mais maîtriser la trajectoire. Le contour du poste dépend de la taille de l’entreprise : en PME il est souvent proche de la comptabilité et très opérationnel, dans un groupe il est organisé en équipes par business unit avec des niveaux plus analytiques.',
+    20→    20→    reasoning:
+    21→    21→      'Question d’échauffement qui vérifie que le candidat a compris la finalité du métier au-delà des clichés (« c’est celui qui contrôle les dépenses »). Points attendus : la boucle prévoir/mesurer/analyser/agir, la dimension d’aide à la décision et de dialogue de gestion, et la lucidité sur un périmètre variable selon la taille de la structure. Le candidat qui parle uniquement de clôture comptable ou de police des dépenses n’a pas saisi le rôle.',
+    22→    22→    commonErrors: [
+    23→    23→      'Réduire le contrôle de gestion à la surveillance des dépenses ou à un rôle de « policier » de l’entreprise.',
+    24→    24→      'Confondre contrôleur de gestion et auditeur interne : l’un pilote la performance, l’autre évalue les processus et les risques.',
+    25→    25→      'Oublier la dimension d’aide à la décision et de dialogue avec les opérationnels.',
+    26→    26→      'Présenter un périmètre figé sans signaler qu’il varie selon la taille de l’entreprise (PME vs groupe).',
+    27→    27→    ],
+    28→    28→    oralShort:
+    29→    29→      'Le contrôle de gestion, c’est la fonction qui permet à la direction de piloter la performance : je prévois avec les budgets, je mesure avec le reporting, j’analyse les écarts, et j’alimente le dialogue de gestion pour décider des actions. Je ne contrôle pas les personnes, je maîtrise la trajectoire chiffrée de l’entreprise, en interface entre la finance et les opérationnels.',
+    30→    30→    oralLong:
+    31→    31→      'Par définition, le contrôle de gestion est la fonction de pilotage de la performance : il met à disposition de la direction des outils pour anticiper, mesurer et corriger. L’objectif est que l’entreprise atteigne ses objectifs en s’appuyant sur des chiffres fiables et compris de tous. Concrètement, la démarche est une boucle en quatre temps : prévoir — construire budgets et prévisions ; mesurer — produire le reporting périodique ; analyser — décomposer les écarts entre le réalisé et le budget, comprendre les causes ; agir — proposer des actions correctives et en suivre les effets. Par exemple, sur mon stage fictif de contrôleur de gestion junior, chaque mois je sortais le reporting des ventes par région, j’expliquais un écart de chiffre d’affaires par une décomposition volume/prix, et je préparais la réunion de dialogue de gestion entre le DAF et les responsables commerciaux. En conclusion, c’est un rôle d’interface : traduire les chiffres en causes opérationnelles et les décisions en conséquences financières — avec un périmètre qui varie beaucoup selon la taille de l’entreprise.',
+    32→    32→    followUp: 'Et dans une PME de trente personnes, tu penses qu’un contrôleur de gestion est justifié ?',
+    33→    33→    grading: [
+    34→    34→      'Boucle prévoir / mesurer / analyser / agir explicitement citée.',
+    35→    35→      'Dimension d’aide à la décision et de dialogue de gestion mentionnée.',
+    36→    36→      'Distinction claire avec l’audit interne ou la comptabilité.',
+    37→    37→      'Nuance apportée sur le périmètre selon la taille de la structure.',
+    38→    38→    ],
+    39→    39→  },
+    40→    40→  {
+    41→    41→    id: 'qt-102',
+    42→    42→    job: 'controle-gestion',
+    43→    43→    category: 'definitions',
+    44→    44→    difficulty: 1,
+    45→    45→    skill: 'Sens de calcul et qualification des écarts',
+    46→    46→    question: 'En analyse des écarts, c’est quoi un écart favorable et un écart défavorable ? Et surtout : dans quel sens tu calcules un écart ?',
+    47→    47→    expectedAnswer:
+    48→    48→      'L’écart se calcule par convention réalisé − budget (montant constaté moins montant budgété). Il est favorable s’il améliore le résultat, défavorable s’il le dégrade — et cela dépend de la nature de la ligne, pas seulement du signe : un écart de +192 000 € sur une ligne de chiffre d’affaires est favorable, le même écart positif sur une ligne de charges est défavorable. La bonne pratique est donc : calculer toujours dans le même sens (réalisé − budget), qualifier explicitement chaque écart (favorable/défavorable) dans le commentaire ou par une mise en forme, et préciser la convention retenue dans le fichier pour éviter les contre-sens de lecture.',
+    49→    49→    reasoning:
+    50→    50→      'Le recruteur piège les candidats qui croient que « positif = favorable » de façon universelle. La maîtrise attendue : la convention de calcul (réalisé − budget), la qualification fonction du caractère produit ou charge de la ligne, et la rigueur de présentation (préciser la convention, qualifier chaque écart). Un contrôleur qui mélange les sens de calcul produit des tableaux illisibles et contestables en réunion.',
+    51→    51→    commonErrors: [
+    52→    52→      'Appliquer « positif = favorable » à une ligne de charges : un dérapage de charges positif est défavorable.',
+    53→    53→      'Calculer budget − réalisé sur certaines lignes et réalisé − budget sur d’autres sans le préciser.',
+    54→    54→      'Donner le montant sans jamais qualifier l’écart (favorable/défavorable) ni le commenter.',
+    55→    55→      'Confondre écart favorable et bonne performance : un écart favorable peut révéler un budget mal calibré.',
+    56→    56→    ],
+    57→    57→    oralShort:
+    58→    58→      'Par convention, l’écart se calcule réalisé moins budget. Il est favorable s’il améliore le résultat, défavorable s’il le dégrade : un écart positif sur le chiffre d’affaires est favorable, mais le même écart positif sur les charges est défavorable. Je précise donc toujours la convention du fichier et je qualifie chaque écart dans le commentaire.',
+    59→    59→    oralLong:
+    60→    60→      'Par définition, un écart est la différence entre le réalisé et la référence budgétée, calculée par convention réalisé − budget. L’objectif de cette convention est d’avoir un sens de lecture unique dans tous les tableaux. Concrètement, la qualification se fait en deux étapes : d’abord le calcul, réalisé moins budget, toujours dans le même sens ; ensuite la lecture, qui dépend de la nature de la ligne — sur un produit comme le chiffre d’affaires, un écart positif est favorable ; sur une charge, un écart positif signifie qu’on a dépensé plus que prévu, donc défavorable. Par exemple, si les charges de personnel sont à +15 000 € par rapport au budget, mon tableau affiche un écart positif mais mon commentaire dit « défavorable : surcoût lié aux remplacements non budgétés ». En conclusion, je calcule toujours dans le même sens, je qualifie systématiquement, et je précise la convention dans le fichier — parce qu’un écart mal signé en réunion de direction, c’est une décision prise à l’envers.',
+    61→    61→    followUp: 'Tu me donnes un exemple d’écart favorable qui est en réalité une mauvaise nouvelle ?',
+    62→    62→    grading: [
+    63→    63→      'Convention réalisé − budget énoncée clairement.',
+    64→    64→      'Qualification dépendante de la nature de la ligne (produit vs charge).',
+    65→    65→      'Bonne pratique de présentation citée (préciser la convention, qualifier les écarts).',
+    66→    66→      'Exemple chiffré ou concret pour illustrer.',
+    67→    67→    ],
+    68→    68→  },
+    69→    69→  {
+    70→    70→    id: 'qt-103',
+    71→    71→    job: 'controle-gestion',
+    72→    72→    category: 'definitions',
+    73→    73→    difficulty: 1,
+    74→    74→    skill: 'Typologie des coûts',
+    75→    75→    question: 'Tu me définis les coûts fixes, les coûts variables, les coûts directs et les coûts indirects ? Et pourquoi ces distinctions sont importantes pour toi ?',
+    76→    76→    expectedAnswer:
+    77→    77→      'Deux axes de classement indépendants. Fixe/variable : comportement face à l’activité — un coût fixe ne varie pas avec le volume à court terme (loyer, amortissements, salaires permanents), un coût variable varie proportionnellement au volume (matières, commissions). Direct/indirect : possibilité d’affectation — un coût direct se rattache sans arbitraire à un produit ou un centre (matière consommée par le produit), un coût indirect est commun et nécessite une clé de répartition (loyer de l’atelier, direction). Les deux axes se croisent : un coût peut être fixe et direct (machine dédiée à un produit), variable et indirect (consommables communs à plusieurs lignes). Importance : le couple fixe/variable fonde le point mort et le direct costing (décisions de gestion court terme), le couple direct/indirect fonde les méthodes de coûts complets et la fiabilité des coûts de revient. Limite à signaler : fixe ne veut pas dire éternel — les charges fixes évoluent par paliers (recrutement, machine supplémentaire) et, à long terme, presque tout devient variable.',
+    78→    78→    reasoning:
+    79→    79→      'Vérifie la rigueur conceptuelle du candidat : la confusion fixe/direct et variable/indirect est l’erreur la plus fréquente en comptabilité de gestion. Le recruteur attend aussi la conscience que ces classifications servent des usages différents — pilotage court terme pour le couple fixe/variable, valorisation et analyse de rentabilité pour le couple direct/indirect — et qu’elles comportent des limites (fixe par paliers, répartition arbitraire des indirects).',
+    80→    80→    commonErrors: [
+    81→    81→      'Croire que fixe = direct et variable = indirect : ce sont deux axes indépendants qui se croisent.',
+    82→    82→      'Penser qu’un coût fixe est fixe pour toujours : les charges fixes évoluent par paliers d’activité.',
+    83→    83→      'Oublier l’horizon temporel : à long terme, presque tout devient variable.',
+    84→    84→      'Présenter les clés de répartition des indirects comme objectives alors qu’elles comportent une part d’arbitraire.',
+    85→    85→    ],
+    86→    86→    oralShort:
+    87→    87→      'Fixe et variable, c’est le comportement face au volume : le loyer ne bouge pas, les matières suivent la production. Direct et indirect, c’est l’affectation : la matière première se rattache directement au produit, le loyer de l’atelier doit être réparti. Les deux axes se croisent — une machine dédiée est fixe et directe — et ces distinctions servent le point mort et le calcul des coûts de revient.',
+    88→    88→    oralLong:
+    89→    89→      'Par définition, il y a deux axes de classement indépendants. Le premier, fixe/variable, décrit le comportement du coût face à l’activité : un coût fixe comme le loyer reste stable à court terme quand le volume change, un coût variable comme les matières premières varie proportionnellement. Le second, direct/indirect, décrit la possibilité d’affecter le coût : direct quand il se rattache sans arbitraire à un produit — la matière consommée —, indirect quand il est commun — le loyer de l’atelier — et nécessite une clé de répartition. L’objectif de ces distinctions est de choisir le bon outil : le couple fixe/variable alimente le point mort et le direct costing, donc les décisions de gestion court terme ; le couple direct/indirect alimente les coûts complets, donc la valorisation et l’analyse de rentabilité. Concrètement, sur mon stage fictif, je classais les charges du budget en fixes et variables pour calculer le seuil de rentabilité, puis j’affectais les charges indirectes par centres d’analyse pour les coûts de revient. En conclusion, ce sont deux découpages différents du même coût, avec leurs limites — un fixe évolue par paliers, une répartition d’indirects reste partiellement arbitraire — et c’est justement pour ça qu’on documente les conventions retenues.',
+    90→    90→    followUp: 'Ton directeur commercial veut passer une commande supplémentaire à prix cassé — quelles distinctions de coûts tu utilises pour l’arbitrer ?',
+    91→    91→    grading: [
+    92→    92→      'Deux axes indépendants identifiés (comportement vs affectation).',
+    93→    93→      'Exemples parlants pour chaque catégorie (loyer, matières, machine dédiée).',
+    94→    94→      'Usage de chaque distinction cité (point mort, direct costing, coûts complets).',
+    95→    95→      'Limite évoquée (fixe par paliers, arbitraire des clés de répartition).',
+    96→    96→    ],
+    97→    97→  },
+    98→    98→  {
+    99→    99→    id: 'qt-104',
+   100→   100→    job: 'controle-gestion',
+   101→   101→    category: 'definitions',
+   102→   102→    difficulty: 1,
+   103→   103→    skill: 'Tableaux de bord de gestion',
+   104→   104→    question: 'C’est quoi un tableau de bord de gestion, et à quoi ça sert vraiment au quotidien ?',
+   105→   105→    expectedAnswer:
+   106→   106→      'Un tableau de bord est un document synthétique et périodique qui présente un nombre limité d’indicateurs financiers et opérationnels, comparés à des références — budget, N-1, objectifs — et assortis de seuils d’alerte et de commentaires orientés action. Il sert à piloter : détecter vite ce qui dévie, anticiper plutôt que constater, préparer les décisions en réunion, et donner un langage commun aux opérationnels et à la direction. Ce n’est ni un rapport exhaustif ni un empilement de chiffres : la valeur vient de la sélection des indicateurs alignés sur les objectifs, de la comparaison systématique à une référence et du commentaire par exception. Il se distingue du reporting, qui diffuse les données : le tableau de bord les met en perspective pour la décision. Sa fréquence, sa forme et son contenu dépendent du destinataire — un tableau de bord mensuel pour la direction ne ressemble pas à un suivi hebdomadaire d’un responsable d’atelier.',
+   107→   107→    reasoning:
+   108→   108→      'Question de cadrage pour vérifier que le candidat distingue l’indicateur du chiffre brut et le tableau de bord du listing de données. Points attendus : sélection d’indicateurs (et non exhaustivité), comparaison à des références, commentaire orienté action, distinction reporting/tableau de bord. Le contre-pied classique — « on met tout ce qu’on peut mesurer » — révèle un candidat qui n’a jamais conçu d’outil de pilotage.',
+   109→   109→    commonErrors: [
+   110→   110→      'Confondre tableau de bord et reporting exhaustif : tout mesurer au lieu de choisir.',
+   111→   111→      'Présenter des chiffres sans référence comparée (budget, N-1) : un chiffre seul ne se juge pas.',
+   112→   112→      'Oublier le commentaire par exception : des chiffres sans explication ne déclenchent pas de décision.',
+   113→   113→      'Ignorer le destinataire et sa fréquence de lecture : le tableau de bord se conçoit pour son utilisateur.',
+   114→   114→    ],
+   115→   115→    oralShort:
+   116→   116→      'Un tableau de bord de gestion, c’est un document synthétique et périodique : peu d’indicateurs, mais choisis parce qu’ils sont alignés sur les objectifs, toujours comparés au budget ou à N-1, avec des seuils d’alerte et des commentaires par exception. Là où le reporting diffuse les données, le tableau de bord sert à piloter : détecter vite, anticiper, préparer la décision.',
+   117→   117→    oralLong:
+   118→   118→      'Par définition, un tableau de bord de gestion est un outil de pilotage synthétique : un nombre limité d’indicateurs financiers et opérationnels, présentés périodiquement et toujours mis en perspective. L’objectif est de permettre à la direction et aux opérationnels de décider vite et juste : détecter ce qui dévie, anticiper plutôt que constater, préparer les réunions sur des faits partagés. Concrètement, un bon tableau de bord suit des règles de construction : définir le destinataire et la fréquence d’abord ; choisir des indicateurs alignés sur les objectifs et actionnables — pas seulement mesurables ; comparer chaque chiffre à une référence — budget, N-1, objectif — sinon il n’est pas interprétable ; poser des seuils d’alerte ; commenter par exception en expliquant les causes et en proposant des actions. Par exemple, sur mon stage fictif, le tableau de bord mensuel du directeur industriel tenait sur une page : taux de rebut, coût unitaire, volume, disponibilité machine — chacun comparé au budget et à N-1, avec un code couleur et trois lignes de commentaire. En conclusion, la valeur d’un tableau de bord ne vient pas de la quantité de chiffres mais de la qualité de la sélection et du commentaire : c’est un instrument de dialogue et de décision, pas une vitrine de données.',
+   119→   119→    followUp: 'Si ton tableau de bord ne peut contenir que cinq indicateurs, tu choisis lesquels et pourquoi ?',
+   120→   120→    grading: [
+   121→   121→      'Définition orientée pilotage et décision, pas simple diffusion de chiffres.',
+   122→   122→      'Comparaison à des références (budget, N-1) citée comme indispensable.',
+   123→   123→      'Sélection d’indicateurs plutôt qu’exhaustivité soulignée.',
+   124→   124→      'Distinction reporting / tableau de bord ou adaptation au destinataire mentionnée.',
+   125→   125→    ],
+   126→   126→  },
+   127→   127→  {
+   128→   128→    id: 'qt-105',
+   129→   129→    job: 'controle-gestion',
+   130→   130→    category: 'calculs',
+   131→   131→    difficulty: 2,
+   132→   132→    skill: 'Écart de chiffre d’affaires et taux de réalisation',
+   133→   133→    question: 'On passe aux chiffres. Budget annuel de chiffre d’affaires : 2 400 000 €. Réalisé : 2 592 000 €. Quel est l’écart, quel est le taux de réalisation, et comment tu le commentes ?',
+   134→   134→    expectedAnswer:
+   135→   135→      'Écart = réalisé − budget = 2 592 000 − 2 400 000 = +192 000 €, favorable puisqu’on est sur une ligne de produit. Taux de réalisation = réalisé / budget = 2 592 000 / 2 400 000 = 108 %, soit +8 % de dépassement. Commentaire attendu : l’écart est favorable en montant et en pourcentage, mais il ne suffit pas pour conclure à une bonne performance — il faut le décomposer (effet volume, effet prix, mix produits), vérifier ce que donne le marché (une croissance de 8 % quand le marché fait 15 % est une perte de parts), et regarder la marge : un chiffre d’affaires supérieur obtenu en cassant les prix peut dégrader le résultat. En contrôle de gestion, un écart se calcule, se qualifie, se décompose, puis s’interprète.',
+   136→   136→    reasoning:
+   137→   137→      'Le recruteur vérifie la fluidité des automatismes de base : écart = réalisé − budget (192 000 €), taux de réalisation = réalisé / budget (108 %), et la capacité à ne pas s’arrêter au calcul. La distinction entre 108 % de taux de réalisation et +8 % d’écart relatif est un piège de formulation. Le vrai filtre est le commentaire : un candidat qui conclut « bonne performance » sans décomposition ni mise en perspective marché/marge n’a pas le réflexe du contrôleur.',
+   138→   138→    commonErrors: [
+   139→   139→      'Donner le taux sans le montant ou l’inverse : les deux se répondent (192 000 € et 108 %).',
+   140→   140→      'Confondre taux de réalisation (108 %) et écart en pourcentage (+8 %) en les présentant comme identiques.',
+   141→   141→      'Conclure « bonne performance » sans décomposer l’écart ni recouper avec le marché et la marge.',
+   142→   142→      'Calculer le taux avec le réalisé au dénominateur (2 400 000 / 2 592 000) — la formule est réalisé divisé par budget.',
+   143→   143→    ],
+   144→   144→    oralShort:
+   145→   145→      'L’écart, c’est réalisé moins budget : 2 592 000 moins 2 400 000, soit plus 192 000 euros, favorable sur une ligne de produit. Le taux de réalisation, c’est réalisé divisé par budget : 108 %, donc plus 8 %. Mais je ne m’arrête pas là : je décompose volume, prix et mix, je compare au marché et je regarde la marge avant de conclure.',
+   146→   146→    oralLong:
+   147→   147→      'Par définition, deux mesures complémentaires structurent l’analyse : l’écart en montant, réalisé moins budget, et le taux de réalisation, réalisé divisé par budget. L’objectif est de chiffrer l’écart puis de le relativiser pour qu’il soit parlant en réunion. Concrètement, ici : écart = 2 592 000 − 2 400 000 = +192 000 €, favorable puisque le chiffre d’affaires est un produit ; taux de réalisation = 2 592 000 / 2 400 000 = 108 %, c’est-à-dire un dépassement de +8 % du budget. Par exemple, si je commente ce chiffre en comité, je dis : « Nous sommes à 108 % du budget annuel, soit +192 000 €. Trois précisions avant de nous réjouir : la décomposition — quel est l’effet volume, quel est l’effet prix, quel est le mix ; la comparaison au marché — si le marché a progressé de 15 %, nos 8 % traduisent une perte de parts ; et la marge — si ce chiffre d’affaires a été obtenu par des remises, le résultat peut être en retrait malgré tout. » En conclusion, l’écart et le taux se calculent en trois secondes, se qualifient en une phrase, mais ne s’interprètent qu’avec la décomposition et le recoupement — c’est tout le métier du contrôleur.',
+   148→   148→    followUp: 'Le directeur commercial te répond que c’est grâce à une hausse de prix de 10 %. Qu’est-ce que ça t’inspire comme question suivante ?',
+   149→   149→    grading: [
+   150→   150→      'Calcul juste : +192 000 € (réalisé − budget) et qualification favorable.',
+   151→   151→      'Taux de réalisation juste : 108 %, avec la nuance « +8 % de dépassement ».',
+   152→   152→      'Réflexe de décomposition (volume/prix/mix) et de recoupement marché.',
+   153→   153→      'Lien fait avec la marge : un chiffre d’affaires supérieur n’implique pas un résultat supérieur.',
+   154→   154→    ],
+   155→   155→  },
+   156→   156→  {
+   157→   157→    id: 'qt-106',
+   158→   158→    job: 'controle-gestion',
+   159→   159→    category: 'calculs',
+   160→   160→    difficulty: 2,
+   161→   161→    skill: 'Marge sur coûts variables',
+   162→   162→    question: 'Chiffre d’affaires annuel : 1 500 000 €. Charges variables : 900 000 €. Charges fixes : 480 000 €. Tu me calcules la marge sur coûts variables, son taux, et le résultat ?',
+   163→   163→    expectedAnswer:
+   164→   164→      'Marge sur coûts variables = CA − charges variables = 1 500 000 − 900 000 = 600 000 €. Taux de marge sur coûts variables = marge / CA = 600 000 / 1 500 000 = 40 % — chaque euro de chiffre d’affaires apporte 0,40 € de marge avant couverture des charges fixes. Résultat = marge sur coûts variables − charges fixes = 600 000 − 480 000 = 120 000 €. Lecture de gestion : la structure est rentable, et ces trois chiffres contiennent déjà l’essentiel du pilotage — le taux de 40 % donne directement le point mort par division des charges fixes par ce taux, et toute variation du chiffre d’affaires se traduit mécaniquement à 40 % en marge. Précision de convention : le taux se calcule marge divisée par CA ; selon les entreprises on parle de taux de marge ou de taux de marque avec des dénominateurs différents, donc toujours préciser la convention retenue dans le fichier.',
+   165→   165→    reasoning:
+   166→   166→      'Le recruteur teste les automatismes du direct costing : MSCV = CA − charges variables, taux = marge/CA, résultat = MSCV − charges fixes. Les erreurs classiques : diviser par les charges variables, oublier la déduction des fixes pour le résultat, ou confondre marge sur coûts variables et marge nette. Au-delà des chiffres, la lecture structurelle — chaque euro vendu apporte 0,40 € — montre la compréhension du modèle décisoire derrière le calcul.',
+   167→   167→    commonErrors: [
+   168→   168→      'Diviser la marge par les charges variables (900 000) au lieu du chiffre d’affaires pour le taux.',
+   169→   169→      'Confondre marge sur coûts variables et résultat : il faut encore déduire les 480 000 € de charges fixes.',
+   170→   170→      'Présenter le taux de 40 % comme une marge nette ou un taux de marque sans préciser la convention.',
+   171→   171→      'S’arrêter aux calculs sans lecture de gestion (contribution unitaire, lien vers le point mort).',
+   172→   172→    ],
+   173→   173→    oralShort:
+   174→   174→      'Marge sur coûts variables : 1 500 000 moins 900 000, soit 600 000 €. Son taux : marge divisée par chiffre d’affaires, 600 000 sur 1 500 000, 40 %. Et le résultat : 600 000 moins les 480 000 de charges fixes, soit 120 000 €. Chaque euro vendu apporte quarante centimes de marge avant couverture des fixes — c’est la lecture qui compte.',
+   175→   175→    oralLong:
+   176→   176→      'Par définition, la marge sur coûts variables est ce qui reste du chiffre d’affaires après déduction des charges qui varient avec l’activité — c’est la contribution à la couverture des charges fixes et au résultat. L’objectif du calcul est double : mesurer la performance de la structure commerciale et donner les paramètres du pilotage court terme. Concrètement, trois étapes : marge sur coûts variables = 1 500 000 − 900 000 = 600 000 € ; taux = marge divisée par CA = 600 000 / 1 500 000 = 40 % ; résultat = marge − charges fixes = 600 000 − 480 000 = 120 000 €. Par exemple, avec ces paramètres, je peux dire immédiatement au directeur commercial qu’une commande additionnelle de 100 000 € apporte 40 000 € de marge, sans toucher aux charges fixes — c’est tout l’intérêt du modèle. En conclusion : 600 000 € de marge, un taux de 40 %, un résultat de 120 000 € ; je précise toujours la convention — marge divisée par CA — car certains secteurs parlent en taux de marque avec d’autres dénominateurs, et une convention mal étiquetée fausse toutes les comparaisons.',
+   177→   177→    followUp: 'On te propose une commande additionnelle de 100 000 € à marge réduite — à partir de quel taux tu l’acceptes ?',
+   178→   178→    grading: [
+   179→   179→      'Marge sur coûts variables juste : 600 000 € (CA − charges variables).',
+   180→   180→      'Taux juste : 40 % (marge / CA) avec la convention précisée.',
+   181→   181→      'Résultat juste : 120 000 € (MSCV − charges fixes).',
+   182→   182→      'Lecture de gestion : contribution unitaire de 0,40 € par euro de CA.',
+   183→   183→    ],
+   184→   184→  },
+   185→   185→  {
+   186→   186→    id: 'qt-107',
+   187→   187→    job: 'controle-gestion',
+   188→   188→    category: 'calculs',
+   189→   189→    difficulty: 3,
+   190→   190→    skill: 'Point mort / seuil de rentabilité',
+   191→   191→    question: 'Charges fixes annuelles : 750 000 €. Prix de vente unitaire : 500 €. Coût variable unitaire : 300 €. Tu me calcules le point mort — en valeur et en volume ?',
+   192→   192→    expectedAnswer:
+   193→   193→      'Le point mort (seuil de rentabilité) est le niveau d’activité où le résultat est nul : charges fixes divisées par le taux de marge sur coûts variables. Marge sur coûts variables unitaire = 500 − 300 = 200 € ; taux = 200 / 500 = 40 %. Point mort en valeur = 750 000 / 0,40 = 1 875 000 € de chiffre d’affaires. Point mort en volume = charges fixes divisées par la marge unitaire = 750 000 / 200 = 3 750 unités — contrôle de cohérence : 3 750 × 500 = 1 875 000 €. Lecture : en dessous, chaque unité vendue réduit la perte de 200 € ; au-dessus, chaque unité accroît le résultat de 200 €. Hypothèses à expliciter : prix et coût variable unitaires constants, charges fixes stables, structure mono-produit — en réalité les charges fixes évoluent par paliers et un mix produits impose un taux de marge moyen pondéré. Certains distinguent aussi le seuil de rentabilité (montant de chiffre d’affaires, 1 875 000 €) du point mort au sens strict (date à laquelle il est atteint dans l’année).',
+   194→   194→    reasoning:
+   195→   195→      'Question classique de contrôle de gestion : le candidat doit connaître la formule (charges fixes / taux de marge sur coûts variables) mais surtout éviter l’erreur de diviser les charges fixes par le prix de vente. Le volume s’obtient par les charges fixes divisées par la marge unitaire, et le contrôle croisé (3 750 × 500 = 1 875 000) prouve la maîtrise. La distinction entre niveau et date, et les hypothèses du modèle, font la différence entre un technicien et un candidat qui maîtrise la lecture de gestion.',
+   196→   196→    commonErrors: [
+   197→   197→      'Diviser les charges fixes par le prix de vente (750 000 / 500) en oubliant la marge sur coûts variables.',
+   198→   198→      'Confondre point mort en valeur et point mort en volume, ou ne pas contrôler leur cohérence (3 750 × 500 = 1 875 000).',
+   199→   199→      'Ignorer les hypothèses du modèle : charges fixes par paliers, mix produits, prix unitaires constants.',
+   200→   200→      'Oublier la distinction entre seuil de rentabilité (montant) et point mort au sens de la date d’atteinte.',
+   201→   201→    ],
+   202→   202→    oralShort:
+   203→   203→      'Marge unitaire : 500 moins 300, 200 euros, soit un taux de 40 %. Le point mort, c’est les charges fixes divisées par ce taux : 750 000 sur 0,40, 1 875 000 euros de chiffre d’affaires. En volume : 750 000 divisés par la marge unitaire de 200, soit 3 750 unités — et on contrôle : 3 750 fois 500, on retombe bien sur 1 875 000.',
+   204→   204→    oralLong:
+   205→   205→      'Par définition, le point mort — ou seuil de rentabilité — est le niveau d’activité à partir duquel l’entreprise couvre la totalité de ses charges : en dessous elle perd de l’argent, au-dessus elle en gagne. L’objectif du calcul est de chiffrer ce point pour dimensionner l’objectif commercial minimal. Concrètement, trois étapes : la marge sur coûts variables unitaire, 500 − 300 = 200 € ; le taux de marge, 200 / 500 = 40 % ; puis le point mort en valeur, charges fixes divisées par ce taux : 750 000 / 0,40 = 1 875 000 € de chiffre d’affaires. En volume, on divise les charges fixes par la marge unitaire : 750 000 / 200 = 3 750 unités — avec le contrôle de cohérence : 3 750 × 500 = 1 875 000 €. Par exemple, avec ces paramètres, je peux dire au directeur commercial que l’objectif minimal est de 3 750 unités par an, et qu’au-delà chaque unité vendue rapporte 200 € de résultat. En conclusion, 1 875 000 € et 3 750 unités — sous les hypothèses du modèle : prix et coûts unitaires constants, charges fixes stables, mono-produit. En réalité, les charges fixes montent par paliers et, en multi-produits, on travaille avec un taux de marge moyen pondéré — et certains distinguent le seuil (montant) du point mort stricto sensu (la date où on l’atteint dans l’année).',
+   206→   206→    followUp: 'Tes charges fixes passent à 900 000 € avec un palier d’investissement — nouveau point mort, et qu’est-ce que ça change pour l’objectif commercial ?',
+   207→   207→    grading: [
+   208→   208→      'Marge unitaire (200 €) et taux de marge (40 %) calculés correctement.',
+   209→   209→      'Point mort en valeur juste : 750 000 / 0,40 = 1 875 000 €.',
+   210→   210→      'Point mort en volume juste : 3 750 unités, avec le contrôle croisé.',
+   211→   211→      'Hypothèses et limites du modèle citées (paliers, mix, date vs montant).',
+   212→   212→    ],
+   213→   213→  },
+   214→   214→  {
+   215→   215→    id: 'qt-108',
+   216→   216→    job: 'controle-gestion',
+   217→   217→    category: 'calculs',
+   218→   218→    difficulty: 4,
+   219→   219→    skill: 'Décomposition d’un écart de marge',
+   220→   220→    question: 'Budget : 10 000 unités vendues à 25 €, coût variable unitaire 15 €. Réalisé : 9 500 unités à 27 €, coût variable unitaire 16 €. Décompose-moi l’écart de marge en écart sur volume, sur prix et sur coût ?',
+   221→   221→    expectedAnswer:
+   222→   222→      'Marge budgétée = 10 000 × (25 − 15) = 100 000 €. Marge réalisée = 9 500 × (27 − 16) = 104 500 €. Écart total = 104 500 − 100 000 = +4 500 €, favorable. Décomposition au volume réalisé : écart sur volume = (9 500 − 10 000) × marge unitaire budgétée (10 €) = −5 000 €, défavorable ; écart sur prix = 9 500 × (27 − 25) = +19 000 €, favorable ; écart sur coût variable = 9 500 × (15 − 16) = −9 500 €, défavorable. Bouclage : −5 000 + 19 000 − 9 500 = +4 500 €, on retombe exactement sur l’écart total. Lecture de gestion : la hausse de prix a surcompensé la baisse de volume et le dérapage du coût — mais volume et prix sont liés : vendre 5 % plus cher en perdant 5 % de volume peut signaler un problème de compétitivité ou de marché, à creuser avec le commercial. La clé de la décomposition est la cohérence des conventions : chaque sous-écart est calculé au volume réalisé, sinon la somme ne boucle pas.',
+   223→   223→    reasoning:
+   224→   224→      'Le recruteur évalue la maîtrise de la décomposition — au-delà du calcul global, la capacité à isoler les causes. Les pièges : mélanger les conventions (calculer certains sous-écarts au volume budgété, d’autres au réalisé) et ne pas vérifier le bouclage. Le signe de l’écart sur coût (coût réalisé supérieur au budget = défavorable) est l’autre difficulté. La lecture croisée prix/volume finalise la réponse : le candidat qui voit le lien entre hausse de prix et baisse de volume montre du recul de gestion.',
+   225→   225→    commonErrors: [
+   226→   226→      'Mélanger les conventions (volume budgété pour un sous-écart, réalisé pour un autre) : la somme ne retombe plus sur +4 500 €.',
+   227→   227→      'Oublier le bouclage final : total des sous-écarts = écart total, à vérifier systématiquement.',
+   228→   228→      'Mal signer l’écart sur coût : un coût unitaire réalisé supérieur au budgété est défavorable.',
+   229→   229→      'Limiter l’interprétation à « c’est favorable » sans relever le lien entre hausse de prix et baisse de volume.',
+   230→   230→    ],
+   231→   231→    oralShort:
+   232→   232→      'Marge budget : 10 000 fois 10, 100 000 €. Marge réalisée : 9 500 fois 11, 104 500 €. Écart total : plus 4 500 € favorable. Décomposé au volume réel : volume, moins 5 000 ; prix, plus 19 000 ; coût, moins 9 500. Le contrôle : moins 5 000 plus 19 000 moins 9 500, on retombe sur plus 4 500 — ça boucle.',
+   233→   233→    oralLong:
+   234→   234→      'Par définition, décomposer un écart de marge, c’est isoler les effets volume, prix et coût pour rendre l’écart actionnable. L’objectif est de savoir qui pilote quoi : le commercial sur le volume et le prix, la production ou les achats sur le coût. Concrètement, quatre étapes : marge budgétée = 10 000 × (25 − 15) = 100 000 € ; marge réalisée = 9 500 × (27 − 16) = 104 500 € ; écart total = +4 500 € favorable ; puis la décomposition, calculée intégralement au volume réalisé pour garder des conventions cohérentes — écart sur volume : (9 500 − 10 000) × 10 € de marge unitaire budgétée = −5 000 € ; écart sur prix : 9 500 × (27 − 25) = +19 000 € ; écart sur coût : 9 500 × (15 − 16) = −9 500 €. Et on boucle : −5 000 + 19 000 − 9 500 = +4 500 €, identique à l’écart total. Par exemple, en comité je commente : « la marge progresse de 4 500 € grâce au prix (+19 000), malgré un volume inférieur (−5 000) et un coût unitaire dérapé (−9 500) ; le point de vigilance, c’est le lien prix-volume : on vend plus cher mais moins — il faut vérifier avec le commercial si on a perdu des clients sur le prix. » En conclusion, une décomposition n’est recevable que si elle boucle sur le total et si la lecture croise les effets : ici, le prix compense, mais la dynamique volume mérite une investigation.',
+   235→   235→    followUp: 'Le chef des ventes te dit que la baisse de volume vient justement de la hausse de prix. Comment tu reformules ton analyse ?',
+   236→   236→    grading: [
+   237→   237→      'Écart total juste : +4 500 € favorable (104 500 − 100 000).',
+   238→   238→      'Trois sous-écarts justes au volume réalisé : −5 000 / +19 000 / −9 500.',
+   239→   239→      'Bouclage vérifié et énoncé : somme des sous-écarts = écart total.',
+   240→   240→      'Lecture croisée prix-volume et point de vigilance mentionnés.',
+   241→   241→    ],
+   242→   242→  },
+   243→   243→  {
+   244→   244→    id: 'qt-109',
+   245→   245→    job: 'controle-gestion',
+   246→   246→    category: 'calculs',
+   247→   247→    difficulty: 5,
+   248→   248→    skill: 'Écart de résultat global',
+   249→   249→    question: 'Dernier calcul, plus complet. Budget : 12 000 unités à 80 €, coût variable unitaire 46 €, charges fixes 240 000 €. Réalisé : 10 500 unités à 82 €, coût variable unitaire 49 €, charges fixes 246 000 €. Décompose-moi l’écart de résultat ?',
+   250→   250→    expectedAnswer:
+   251→   251→      'Résultat budgété = 12 000 × 80 − 12 000 × 46 − 240 000 = 960 000 − 552 000 − 240 000 = 168 000 €. Résultat réalisé = 10 500 × 82 − 10 500 × 49 − 246 000 = 861 000 − 514 500 − 246 000 = 100 500 €. Écart de résultat = 100 500 − 168 000 = −67 500 €, défavorable. Décomposition en contributions au résultat : marge unitaire budgétée = 80 − 46 = 34 € ; écart sur volume = (10 500 − 12 000) × 34 = −51 000 € ; écart sur prix = 10 500 × (82 − 80) = +21 000 € ; écart sur coût variable = 10 500 × (46 − 49) = −31 500 € ; écart sur charges fixes = 240 000 − 246 000 = −6 000 €. Bouclage : −51 000 + 21 000 − 31 500 − 6 000 = −67 500 €. À noter aussi : taux de réalisation du chiffre d’affaires = 861 000 / 960 000 ≈ 89,7 %. Lecture : le facteur dominant est le volume (−51 000 €, les trois quarts de l’écart), le coût variable explique −31 500 €, la hausse de prix ne compense que +21 000 €, et les fixes dérapent de −6 000 €. Ordre d’action : comprendre le volume (marché, force de vente, mix) et le coût unitaire (achats, rendements) — le prix, lui, a partiellement joué son rôle.',
+   252→   252→    reasoning:
+   253→   253→      'Question de niveau avancé : le candidat doit enchaîner proprement deux comptes de résultat, puis décomposer en quatre sous-écarts avec des conventions de signe cohérentes — l’écart sur charges fixes se raisonne « budget moins réalisé » pour être lu comme contribution au résultat (un coût qui monte pèse négativement). Le bouclage (−67 500) est le contrôle de crédibilité. La hiérarchisation des causes et le taux de réalisation du CA distinguent une réponse de contrôleur confirmé d’une simple récitation de formules.',
+   254→   254→    commonErrors: [
+   255→   255→      'Se tromper dans les conventions de signe des écarts de charges : un coût réalisé supérieur au budget pèse négativement sur le résultat.',
+   256→   256→      'Oublier le bouclage : −51 000 + 21 000 − 31 500 − 6 000 doit redonner exactement −67 500 €.',
+   257→   257→      'Erreurs de calcul intermédiaires (marge unitaire 34 €, coûts variables 552 000 / 514 500) qui faussent toute la décomposition.',
+   258→   258→      'Rendre le calcul sans hiérarchiser les causes ni proposer d’investigation ciblée.',
+   259→   259→    ],
+   260→   260→    oralShort:
+   261→   261→      'Résultat budget : 168 000 €. Résultat réalisé : 100 500 €. Écart : moins 67 500 défavorable. Décomposition : volume, moins 51 000 ; prix, plus 21 000 ; coût variable, moins 31 500 ; fixes, moins 6 000. Contrôle : la somme redonne moins 67 500. Le volume explique les trois quarts de l’écart — c’est la priorité d’investigation.',
+   262→   262→    oralLong:
+   263→   263→      'Par définition, l’écart de résultat global se décompose en contributions : volume, prix, coûts variables et charges fixes — chacune isolée, la somme devant boucler sur l’écart total. L’objectif est d’attribuer la dérive aux leviers de gestion pour agir. Concrètement : résultat budgété = 12 000 × 80 − 12 000 × 46 − 240 000 = 168 000 € ; résultat réalisé = 10 500 × 82 − 10 500 × 49 − 246 000 = 100 500 € ; écart total = −67 500 € défavorable. Puis la décomposition, au volume réalisé et en contribution au résultat : marge unitaire budgétée 80 − 46 = 34 € ; volume : (10 500 − 12 000) × 34 = −51 000 € ; prix : 10 500 × (82 − 80) = +21 000 € ; coût variable : 10 500 × (46 − 49) = −31 500 € ; charges fixes : 240 000 − 246 000 = −6 000 €. Bouclage : −51 000 + 21 000 − 31 500 − 6 000 = −67 500 €. Par exemple, mon commentaire en comité : « Nous sommes à 89,7 % du budget de chiffre d’affaires et le résultat décroche de 67 500 €. Trois quarts de l’écart viennent du volume, un peu moins de la moitié du reste du coût variable unitaire ; la hausse de prix a compensé 21 000 €. J’engage deux investigations : volume avec le commercial — marché ou performance de vente — et coût unitaire avec les achats et la production. » En conclusion, la force d’une telle analyse tient au bouclage qui la rend vérifiable et à la hiérarchisation qui la rend actionnable.',
+   264→   264→    followUp: 'La direction te demande de chiffrer ce que donnerait un plan d’action qui ramènerait le coût variable unitaire à 47 €. Tu fais quoi ?',
+   265→   265→    grading: [
+   266→   266→      'Résultats budgété (168 000 €) et réalisé (100 500 €) justes, écart total −67 500 € qualifié.',
+   267→   267→      'Quatre sous-écarts justes avec conventions cohérentes (−51 000 / +21 000 / −31 500 / −6 000).',
+   268→   268→      'Bouclage énoncé et vérifié, taux de réalisation du CA (≈ 89,7 %) cité.',
+   269→   269→      'Hiérarchisation des causes et pistes d’investigation proposées.',
+   270→   270→    ],
+   271→   271→  },
+   272→   272→  {
+   273→   273→    id: 'qt-110',
+   274→   274→    job: 'controle-gestion',
+   275→   275→    category: 'definitions',
+   276→   276→    difficulty: 2,
+   277→   277→    skill: 'Budget, prévision, réalisé',
+   278→   278→    question: 'Budget, prévision, forecast, réalisé — pour moi c’est un peu tout pareil. Tu me clarifies les différences ?',
+   279→   279→    expectedAnswer:
+   280→   280→      'Trois statuts différents pour les chiffres. Le budget est le plan chiffré annuel construit et validé avant le début de la période : c’est un engagement — délégation de moyens et objectifs négociés avec les responsables. La prévision (forecast) est une estimation actualisée, produite en cours de période, de ce que sera le réalisé : elle est répétée (prévision à M+1, M+2, ou glissante sur un horizon constant en rolling forecast) et sert à anticiper et alerter. Le réalisé est le constat comptable de la période, base du bilan et point de départ des comparaisons. Les usages se distinguent : le budget engage et sert de référence de gestion ; la prévision anticipe l’écart final et déclenche des actions correctives ; le réalisé mesure et alimente l’apprentissage pour N+1. Un même chiffre change de statut selon l’étiquette — d’où l’importance de toujours préciser ce qu’on regarde : un « réalisé + prévision du reste de l’année » n’est ni l’un ni l’autre et doit être identifié comme tel (c’est le full year forecast).',
+   281→   281→    reasoning:
+   282→   282→      'Vérifie le vocabulaire de gestion — un candidat qui confond budget et prévision envoie des tableaux ambigus et provoque des décisions sur de mauvaises bases. Points attendus : le statut d’engagement du budget (validé avant la période), la nature répétée de la prévision (re-prévisions périodiques, rolling), le réalisé comme constat, et la rigueur d’étiquetage des chiffres hybrides (full year). Le rolling forecast peut être cité comme variante de prévision glissante, sans être présenté comme une norme.',
+   283→   283→    commonErrors: [
+   284→   284→      'Présenter le budget actualisé en cours d’année comme le budget d’origine : c’est une prévision ou un budget révisé, à étiqueter.',
+   285→   285→      'Croire que le budget est immuable par nature : des re-prévisions ou budgets révisés existent, mais documentés et validés.',
+   286→   286→      'Oublier d’étiqueter les chiffres hybrides (réalisé + prévision du reste de l’année) : source de contresens en réunion.',
+   287→   287→      'Confondre rolling forecast (horizon glissant) et simple re-prévision annuelle.',
+   288→   288→    ],
+   289→   289→    oralShort:
+   290→   290→      'Le budget, c’est le plan annuel validé avant la période : un engagement de moyens et d’objectifs. La prévision, c’est l’estimation actualisée en cours d’année de ce que sera le réalisé — répétée, glissante parfois, pour anticiper et alerter. Le réalisé, c’est le constat comptable. Trois statuts, trois usages — et j’étiquette toujours mes chiffres.',
+   291→   291→    oralLong:
+   292→   292→      'Par définition, ces trois chiffres n’ont pas le même statut. Le budget est le plan chiffré annuel, construit à l’automne pour l’année suivante et validé par la direction : c’est un engagement — la délégation des moyens et les objectifs des responsables. La prévision, ou forecast, est une estimation actualisée en cours de période : à fin mars, je prédis ce que l’année donnera au final, et je la répète chaque mois ; en rolling forecast, l’horizon reste constant, par exemple douze mois glissants. Le réalisé est le constat comptable, arrêté à la clôture. L’objectif de cette distinction est d’éviter les contresens de gestion : on ne juge pas une performance sur une prévision, et on ne pilote pas sur un budget périmé. Concrètement, dans mes tableaux, chaque colonne est étiquetée : budget, réalisé, prévision — et le chiffre « réalisé janvier à juillet plus prévision d’août à décembre » est identifié comme full year forecast, pas comme un réalisé. Par exemple, sur mon stage fictif, en juillet la direction demandait le full year : je partais du réalisé à M7 et je reconstituais les cinq derniers mois sur hypothèses datées. En conclusion, trois statuts — engagement, anticipation, constat — et une règle d’or : toujours préciser le statut d’un chiffre avant de le commenter.',
+   293→   293→    followUp: 'Ton directeur te présente un tableau qui compare le réalisé au « budget » — et tu découvres que ce budget a été re-négocié en mars sans trace. Qu’est-ce que tu lui dis ?',
+   294→   294→    grading: [
+   295→   295→      'Budget présenté comme engagement validé avant la période.',
+   296→   296→      'Prévision/forecast définie comme estimation actualisée et répétée (rolling cité sans être érigé en norme).',
+   297→   297→      'Réalisé défini comme constat comptable, base des comparaisons.',
+   298→   298→      'Rigueur d’étiquetage des chiffres hybrides (full year forecast) mentionnée.',
+   299→   299→    ],
+   300→   300→  },
+   301→   301→  {
+   302→   302→    id: 'qt-111',
+   303→   303→    job: 'controle-gestion',
+   304→   304→    category: 'limites',
+   305→   305→    difficulty: 3,
+   306→   306→    skill: 'Limites du budget annuel',
+   307→   307→    question: 'Ton budget a été construit en octobre, on est en juin et le marché a complètement changé. Quelles sont les limites du budget annuel, et tu proposes quoi ?',
+   308→   308→    expectedAnswer:
+   309→   309→      'Limites du budget annuel classique : obsolescence rapide — des hypothèses construites plusieurs mois avant la période deviennent caduques dès que le marché bouge ; lourdeur du processus — cycle de collecte et de négociation qui consomme des semaines ; comportements de jeu budgétaire — négociation de marges de sécurité, objectifs volontairement prudents, budget devenu politique ; rigidité — un chiffre figé décourage l’ajustement et pénalise les managers qui réagissent vite. Réponses possibles : re-prévisions périodiques (recalage à M+3, M+6, documenté et validé), rolling forecast à horizon constant (12 à 18 mois glissants) qui déplace le pilotage du budget vers la prévision continue, budgets par scénarios (central, haut, bas) pour garder des repères quand l’environnement est incertain, pilotage par indicateurs avancés. Nuances à assumer : le budget reste le cadre de délégation des moyens et ne disparaît pas ; le rolling forecast est un choix de gestion, pas une règle — son coût administratif doit être comparé au bénéfice d’anticipation, et une PME en environnement stable peut très bien s’en passer.',
+   310→   310→    reasoning:
+   311→   311→      'Le recruteur teste la lucidité du candidat sur l’outil budget : les limites (obsolescence, jeux, lourdeur) mais aussi la capacité à ne pas jeter le bébé avec l’eau du bain — le budget garde un rôle d’engagement et de référence. La distinction re-prévision / budget révisé / rolling forecast montre la précision du vocabulaire. La réponse doit signaler que le choix d’un dispositif dépend de la taille et de la volatilité — c’est un choix de gestion, pas une évidence universelle.',
+   312→   312→    commonErrors: [
+   313→   313→      'Diaboliser le budget annuel : il reste le cadre de délégation des moyens et la référence d’engagement.',
+   314→   314→      'Proposer le rolling forecast comme évidence universelle sans évoquer son coût administratif ni la stabilité de l’activité.',
+   315→   315→      'Confondre re-prévision (recalage périodique du reste de l’année) et budget révisé (re-négociation formelle validée).',
+   316→   316→      'Oublier les comportements de jeu budgétaire (marges de sécurité, prudence excessive) comme limite structurelle.',
+   317→   317→    ],
+   318→   318→    oralShort:
+   319→   319→      'Les limites du budget annuel : il vieillit vite — des hypothèses d’octobre sont caduques en juin —, son processus est lourd, il induit des jeux budgétaires, et sa rigidité pénalise la réactivité. Mes réponses : re-prévisions périodiques documentées, rolling forecast à horizon glissant, ou budgets par scénarios. Mais le budget reste le cadre d’engagement — le rolling est un choix de gestion, pas une norme.',
+   320→   320→    oralLong:
+   321→   321→      'Par définition, le budget annuel est un engagement chiffré construit en fin d’année précédente — et c’est précisément sa limite : il fige des hypothèses. L’objectif de ma réponse n’est pas de le supprimer mais de le compléter. Concrètement, ses limites sont au nombre de quatre : l’obsolescence — un budget construit en octobre est périmé dès que le marché tourne ; la lourdeur — des semaines de collecte et de négociation ; les jeux budgétaires — chaque responsable négocie des marges de sécurité, le budget devient politique et sur-évalué ; la rigidité — un chiffre figé décourage l’ajustement des managers. Les réponses usuelles : des re-prévisions périodiques, à M+3 ou M+6, documentées et validées — attention, ce n’est pas un budget révisé, qui serait une re-négociation formelle ; le rolling forecast, horizon constant de douze à dix-huit mois glissants, qui déplace le pilotage vers l’anticipation continue ; ou des budgets par scénarios — central, haut, bas — quand l’incertitude est forte. Par exemple, sur mon stage fictif, la re-prévision de juin avait révélé un décalage de volume : la direction a ajusté le plan d’embauche avant la clôture, ce qu’un budget figé aurait empêché. En conclusion : le budget garde son rôle de cadre de délégation des moyens ; je le complète d’un dispositif d’anticipation — et le choix exact, re-prévisions ou rolling, dépend de la volatilité du secteur et du coût administratif que l’entreprise accepte : c’est un arbitrage de gestion, pas une règle.',
+   322→   322→    followUp: 'Le DAF te dit : « le rolling forecast, c’est un budget qui ment tous les mois ». Tu lui réponds quoi ?',
+   323→   323→    grading: [
+   324→   324→      'Au moins trois limites du budget annuel citées (obsolescence, lourdeur, jeux, rigidité).',
+   325→   325→      'Solutions hiérarchisées : re-prévisions, rolling forecast, scénarios.',
+   326→   326→      'Distinction re-prévision / budget révisé présente.',
+   327→   327→      'Position nuancée : le budget garde un rôle, le rolling est un choix de gestion (coût, volatilité).',
+   328→   328→    ],
+   329→   329→  },
+   330→   330→  {
+   331→   331→    id: 'qt-112',
+   332→   332→    job: 'controle-gestion',
+   333→   333→    category: 'procedures',
+   334→   334→    difficulty: 3,
+   335→   335→    skill: 'Construction d’un tableau de bord',
+   336→   336→    question: 'Je te demande de construire le tableau de bord mensuel de ma direction. Concrètement, tu fais quoi — tu choisis quels indicateurs, comment ?',
+   337→   337→    expectedAnswer:
+   338→   338→      'Démarche en étapes : 1) cadrer le besoin avant toute donnée — qui lit le tableau de bord, pour quelles décisions, à quelle fréquence, avec quel niveau de détail : un comité de direction n’a pas les mêmes attentes qu’un responsable d’atelier ; 2) choisir les indicateurs en partant des objectifs et des leviers : financiers (chiffre d’affaires, marge, résultat, trésorerie) et opérationnels non financiers (volumes, taux de service, retards, effectifs) — chaque indicateur doit être aligné sur un objectif et actionnable par son lecteur ; 3) définir les comparaisons de référence — budget, N-1, objectif — et les seuils d’alerte qui déclenchent le commentaire ; 4) maquetter : une page d’ensemble, une hiérarchie visuelle, le détail en annexes, les codes couleur avec parcimonie — un feu rouge doit rester rare pour rester lu ; 5) fiabiliser : source de données unique, contrôles de cohérence, date de clôture connue ; 6) commenter par exception : écarts significatifs, causes, actions — pas de narration descriptive ; 7) itérer avec les utilisateurs après deux ou trois livraisons. Règle de fond : peu d’indicateurs bien choisis valent mieux qu’un catalogue exhaustif — un tableau de bord se juge aux décisions qu’il déclenche.',
+   339→   339→    reasoning:
+   340→   340→      'Le recruteur veut distinguer le candidat qui commence par les données disponibles de celui qui commence par les décisions à éclairer. La démarche attendue : besoin d’abord, indicateurs ensuite, références et seuils, maquette, fiabilisation, commentaire par exception, itération. Les marqueurs de maturité : indicateurs actionnables, codes couleur parcimonieux, distinction entre décrire (« le taux de service est à 92 % ») et expliquer (« en baisse de 3 points, cause : absences non remplacées »).',
+   341→   341→    commonErrors: [
+   342→   342→      'Commencer par les données disponibles plutôt que par les décisions à éclairer.',
+   343→   343→      'Empiler quarante indicateurs sans hiérarchie : un tableau de bord illisible n’est pas consulté.',
+   344→   344→      'Présenter des chiffres sans référence comparée ni seuil d’alerte.',
+   345→   345→      'Commentaires descriptifs (« le CA est de X ») au lieu d’explicatif (causes et actions).',
+   346→   346→    ],
+   347→   347→    oralShort:
+   348→   348→      'Je commence par le besoin : qui lit, pour décider quoi, à quelle fréquence. Ensuite je choisis peu d’indicateurs, alignés sur les objectifs et actionnables par leurs lecteurs. Chaque chiffre est comparé au budget et à N-1, avec des seuils d’alerte. Puis je maquette sur une page, je fiabilise la source, et je commente par exception — causes et actions. Et j’itère après les premières livraisons.',
+   349→   349→    oralLong:
+   350→   350→      'Par définition, un tableau de bord est un instrument de décision, donc sa construction part de la décision, pas des données. L’objectif est d’éclairer des choix avec des chiffres fiables et lus rapidement. Concrètement, je déroule sept étapes : cadrer le besoin — qui lit, pour quelles décisions, à quelle fréquence ; choisir les indicateurs en partant des objectifs et des leviers — financiers comme la marge, opérationnels comme le taux de service — en exigeant de chacun qu’il soit actionnable par son lecteur ; définir les références — budget, N-1 — et les seuils d’alerte qui déclenchent l’analyse ; maquetter — une page d’ensemble, le détail en annexe, des codes couleur parcimonieux ; fiabiliser — source unique, contrôles de cohérence, date de clôture identifiée ; commenter par exception, en expliquant les causes et les actions ; enfin itérer avec les utilisateurs après quelques livraisons. Par exemple, sur mon stage fictif, le premier tableau de bord commercial comptait vingt-deux indicateurs ; après deux mois, la direction n’en lisait que huit — nous avons recentré, ajouté le taux de marge par segment, et la réunion a gagné en densité. En conclusion : peu d’indicateurs bien choisis, toujours comparés, toujours commentés par exception — un tableau de bord se juge aux décisions qu’il déclenche, pas aux données qu’il contient.',
+   351→   351→    followUp: 'Ta direction te demande d’ajouter un indicateur par service « pour ne froisser personne ». Tu gères comment ?',
+   352→   352→    grading: [
+   353→   353→      'Démarche qui part du besoin et des décisions, pas des données.',
+   354→   354→      'Indicateurs actionnables et alignés sur les objectifs, en nombre limité.',
+   355→   355→      'Références de comparaison et seuils d’alerte prévus.',
+   356→   356→      'Commentaire par exception et itération avec les utilisateurs mentionnés.',
+   357→   357→    ],
+   358→   358→  },
+   359→   359→  {
+   360→   360→    id: 'qt-113',
+   361→   361→    job: 'controle-gestion',
+   362→   362→    category: 'excel',
+   363→   363→    difficulty: 3,
+   364→   364→    skill: 'Reporting mensuel sous Excel',
+   365→   365→    question: 'Chaque mois tu reçois l’export brut de l’ERP. Comment tu construis ton fichier de reporting Excel pour qu’il soit fiable et rapide à produire ?',
+   366→   366→    expectedAnswer:
+   367→   367→      'Je structure le classeur en couches séparées : un onglet Données brutes où l’export mensuel est collé ou importé tel quel, jamais retouché à la main — c’est la trace de la source ; un onglet Base, où les données sont mises en forme en tableau structuré (Insertion > Tableau) avec des colonnes calculées — mois, famille, écarts ; un onglet Tableau de bord avec les synthèses : tableau croisé dynamique alimenté par la base, formules SOMME.SI.ENS ou RECHERCHEX pointant sur le tableau structuré, graphiques et segments ; un onglet Paramètres pour les hypothèses — seuils, tables de correspondance. Points techniques : le tableau structuré rend la plage extensible — le TCD s’actualise sur les nouvelles lignes sans redéfinir la plage ; les formules sont recopiées une fois pour toutes et seules les données changent ; la mise en forme conditionnelle matérialise les alertes ; des contrôles automatiques vérifient que le total affiché est égal au total de la base. Et un mode opératoire de production, écrit : l’ordre des manipulations, pour que le fichier soit productible par quelqu’un d’autre — la passation est un critère de qualité. Séparation de fond : les données d’un côté, la présentation de l’autre, jamais mélangées.',
+   368→   368→    reasoning:
+   369→   369→      'Vérifie l’organisation pratique du travail Excel du contrôleur : séparation données/présentation, tableau structuré pour l’extensibilité, automatisation de l’actualisation, contrôles intégrés. Le marqueur de maturité est la reproductibilité — un fichier reconstruit à la main chaque mois est un fichier fragile et non transmissible. L’onglet brut non retouché est aussi une exigence de traçabilité (piste d’audit interne du fichier).',
+   370→   370→    commonErrors: [
+   371→   371→      'Retravailler l’export à la main dans l’onglet source : la traçabilité est détruite et l’erreur de manipulation devient introuvable.',
+   372→   372→      'Formules avec plages figées en dur ($A$2:$A$5000) sur des données qui grandissent : les nouvelles lignes sortent du périmètre — d’où le tableau structuré.',
+   373→   373→      'Mélanger saisies manuelles et formules dans les mêmes colonnes : la fiabilité s’effondre.',
+   374→   374→      'Reconstruire le fichier chaque mois au lieu de l’actualiser : temps perdu, erreurs de version.',
+   375→   375→    ],
+   376→   376→    oralShort:
+   377→   377→      'Je sépare les couches : un onglet données brutes jamais retouché — c’est la trace ; un onglet base en tableau structuré avec les colonnes calculées ; un onglet tableau de bord avec le TCD et les formules qui pointent dessus ; un onglet paramètres. Le tableau structuré rend la plage extensible, l’actualisation se fait en quelques clics, et j’ajoute des contrôles automatiques de total. Le tout documenté pour la passation.',
+   378→   378→    oralLong:
+   379→   379→      'Par définition, un fichier de reporting fiable est un fichier en couches : la donnée, la mise en forme, la restitution — séparées. L’objectif est triple : fiabilité, rapidité de production mensuelle, et passabilité à un collègue. Concrètement, quatre onglets : Données brutes — l’export ERP collé tel quel, jamais modifié à la main, c’est ma trace ; Base — les données converties en tableau structuré, avec des colonnes calculées comme le mois ou la famille, et des contrôles de cohérence ; Tableau de bord — un tableau croisé dynamique alimenté par la base, quelques SOMME.SI.ENS et RECHERCHEX sur références structurées, les graphiques et segments ; Paramètres — seuils et tables de correspondance. Par exemple, sur mon stage fictif, la production mensuelle tenait en quinze minutes : importer l’export dans l’onglet brut, actualiser le TCD, vérifier l’onglet de contrôles — total de la base égal total affiché, détection de doublons sur la clé pièce — puis diffuser. En conclusion, les trois règles qui tiennent le fichier debout : données et présentation jamais mélangées, plages structurées plutôt que figées pour absorber les nouveaux mois, contrôles automatiques intégrés — et un mode opératoire écrit, parce qu’un reporting qu’une seule personne sait produire est un risque pour l’entreprise.',
+   380→   380→    followUp: 'Ton fichier met vingt minutes à recalculer chaque mois. Tu fais quoi pour l’accélérer ?',
+   381→   381→    grading: [
+   382→   382→      'Structure en couches : données brutes jamais retouchées / base / tableau de bord / paramètres.',
+   383→   383→      'Tableau structuré cité pour l’extensibilité des plages (TCD et formules).',
+   384→   384→      'Contrôles automatiques intégrés (totaux, doublons) et actualisation rapide.',
+   385→   385→      'Documenté pour la passation — reproductibilité comme critère de qualité.',
+   386→   386→    ],
+   387→   387→  },
+   388→   388→  {
+   389→   389→    id: 'qt-114',
+   390→   390→    job: 'controle-gestion',
+   391→   391→    category: 'definitions',
+   392→   392→    difficulty: 2,
+   393→   393→    skill: 'Coûts complets vs coûts partiels',
+   394→   394→    question: 'Coûts complets, coûts partiels, direct costing — c’est quoi la différence, et quand tu utilises l’un ou l’autre ?',
+   395→   395→    expectedAnswer:
+   396→   396→      'Coûts complets : toutes les charges sont imputées aux objets de coût — charges directes par affectation, charges indirectes via des centres d’analyse et des clés de répartition. Résultat : un coût de revient complet par produit, utile pour la politique de prix et l’analyse de rentabilité apparente des produits. Limite de fond : la répartition des charges communes comporte une part d’arbitraire — le coût complet est une convention, pas une vérité. Coûts partiels : on n’impute qu’une partie des charges — en direct costing, les seuls coûts variables : on obtient la marge sur coûts variables par produit, sa contribution à la couverture des charges fixes. Usages : décisions court terme — accepter ou non une commande additionnelle, arbitrer un mix, calculer le point mort — et pilotage de la performance commerciale. Règle d’emploi : coûts complets pour des questions de valorisation et de stratégie de prix (avec prudence), coûts partiels pour les décisions marginales de gestion. Dépendances à signaler : le choix dépend du système d’information — une petite structure avec peu d’indirects peut s’en tenir au direct costing simple ; une industrie multi-produits a besoin d’une imputation plus fine, au prix d’un coût administratif ; et pour la valorisation des stocks, c’est le référentiel comptable qui impose ses règles, pas la méthode de gestion choisie.',
+   397→   397→    reasoning:
+   398→   398→      'Le recruteur vérifie que le candidat connaît les deux familles de méthodes et surtout leurs finalités différentes : valorisation et stratégie de prix contre décision marginale et pilotage. Le piège du coût complet « vrai » doit être démonté — la répartition des charges indirects est un choix conventionnel. La mention des dépendances (taille, SI, référentiel comptable pour les stocks) signale le candidat qui a compris qu’une méthode est un choix de gestion contextualisé.',
+   399→   399→    commonErrors: [
+   400→   400→      'Présenter le coût complet comme la vérité : c’est une convention de répartition des charges communes.',
+
+[showing lines 1-400 of 593; use offset=401 with limit to continue reading]

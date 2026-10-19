@@ -1,0 +1,402 @@
+     1→     1→import type { Mission } from '@/lib/types'
+     2→     2→
+     3→     3→// =====================================================================
+     4→     4→// Fiche 1 — Fidumac (cabinet fictif) · Mission 1
+     5→     5→// Participation à deux missions d'audit : audit légal et audit contractuel
+     6→     6→// Scénario pédagogique fictif — janvier–mars 2026 — montants en MAD
+     7→     7→// =====================================================================
+     8→     8→
+     9→     9→export const fidumacMission1: Mission = {
+    10→    10→  id: 'fidumac-m1',
+    11→    11→  ficheId: 'fidumac',
+    12→    12→  order: 1,
+    13→    13→  title: 'Participation à deux missions d\'audit : audit légal et audit contractuel',
+    14→    14→  period: 'Janvier – Mars 2026 (scénario pédagogique)',
+    15→    15→  company: 'Fidumac (cabinet fictif)',
+    16→    16→  sector: 'Distribution et BTP (entreprises clientes fictives)',
+    17→    17→  referenceData: [
+    18→    18→    'Deux missions d\'audit menées en parallèle entre janvier et mars 2026 : une mission d\'audit légal (commissariat aux comptes) et une mission d\'audit contractuel',
+    19→    19→    'Secteurs des clients fictifs : distribution (Distra Maroc) et BTP (BâtiSud Maroc)',
+    20→    20→    'Exercice audité pour la mission légale : année comptable close le 31/12/2025',
+    21→    21→    'Phases couvertes : planification, prise de connaissance, identification des risques, stratégie d\'audit, collecte d\'éléments probants, synthèse, documentation, conclusions et limites',
+    22→    22→    'Référentiel de la mission légale : CGNC marocain (Code Général de Normalisation Comptable) — distinct du Plan Comptable Général français',
+    23→    23→    'Toutes les entreprises, personnes et montants sont fictifs ; montants exprimés en MAD (dirhams)',
+    24→    24→  ],
+    25→    25→  summary:
+    26→    26→    'Découvrir la grammaire commune des missions d\'audit en participant, au sein du cabinet fictif Fidumac, à un audit légal de commissariat aux comptes (distribution) et à un audit contractuel (BTP). Apprendre à distinguer les deux cadres, à suivre les étapes d\'une mission, à comprendre les risques sectoriels (stocks, marges, cut-off, avancement de chantier, provisions) et à raisonner en éléments probants avec leurs limites.',
+    27→    27→  comprehension: {
+    28→    28→    intro:
+    29→    29→      'Fidumac est un cabinet fictif d\'audit et de commissariat aux comptes installé à Casablanca. Dans ce scénario pédagogique, vous rejoignez pour un stage de fin d\'études l\'équipe de M. Sabri, chef de mission, entre janvier et mars 2026. Tout est inventé pour l\'entraînement : entreprises, personnes, montants.\n\nLa première mission est un audit légal : Fidumac est commissaire aux comptes de Distra Maroc (entreprise fictive de distribution) pour l\'exercice clos le 31/12/2025. L\'objectif est de certifier que les états de synthèse sont réguliers, sincères et donnent une image fidèle du patrimoine et du résultat.\n\nLa seconde mission est un audit contractuel commandité par la direction de BâtiSud Maroc (entreprise fictive de BTP) : une revue des situations de travaux et des marges prévisionnelles de ses chantiers. Aucune certification des comptes annuels n\'est attendue : le rapport répond au besoin défini dans la lettre de mission.\n\nLes deux missions suivent la même grammaire : planification, prise de connaissance de l\'entité, identification des risques, stratégie d\'audit, collecte d\'éléments probants, synthèse, documentation, conclusions et limites.\n\nLa distribution et le BTP exposent à des risques propres : stocks, marges et séparation des exercices (cut-off) pour l\'une ; avancement des chantiers, situations de travaux et provisions pour l\'autre.\n\nAttention au référentiel : les comptes sont tenus selon le CGNC marocain, qui n\'est pas le Plan Comptable Général français (classes et libellés différentes). Un entretien en France vous demandera de traduire votre expérience, pas de réciter des numéros de comptes marocains.\n\nEnfin, gardez le réflexe d\'honnêteté : ces missions n\'ont pas été réellement vécues. Les corrections sont formulées au conditionnel — « dans ce cas, je commencerais par… », « la procédure consisterait à… » — pour rester mobilisables sans être affirmées comme vécues.',
+    30→    30→    definitions: [
+    31→    31→      {
+    32→    32→        term: 'Audit légal (commissariat aux comptes)',
+    33→    33→        definition:
+    34→    34→          'Mission d\'audit rendue obligatoire par les textes (désignation en assemblée) et destinée aux actionnaires et aux tiers. Elle se conclut par une opinion sur la régularité, la sincérité et l\'image fidèle des états financiers.',
+    35→    35→      },
+    36→    36→      {
+    37→    37→        term: 'Audit contractuel',
+    38→    38→        definition:
+    39→    39→          'Mission convenu par contrat (lettre de mission) entre un commanditaire et le cabinet. L\'objectif est librement défini : revue d\'acquisition, fiabilisation d\'un processus, évaluation d\'un chantier… Aucune opinion de certification sur les comptes annuels.',
+    40→    40→      },
+    41→    41→      {
+    42→    42→        term: 'États de synthèse (CGNC)',
+    43→    43→        definition:
+    44→    44→          'Au Maroc, l\'ensemble des documents de synthèse : bilan, compte de produits et charges (CPC), tableau des flux de trésorerie et notes. Le PCG français parle d\'états financiers et présente le résultat en compte 12, alors que le CGNC utilise une classe 8 dédiée aux comptes de résultats.',
+    45→    45→      },
+    46→    46→      {
+    47→    47→        term: 'Image fidèle',
+    48→    48→        definition:
+    49→    49→          'Qualité exigée des états de synthèse : ils doivent traduire fidèlement la réalité économique de l\'entité, sous réserve des choix comptables autorisés et de l\'importance relative des anomalies.',
+    50→    50→      },
+    51→    51→      {
+    52→    52→        term: 'Élément probant',
+    53→    53→        definition:
+    54→    54→          'Information recueillie par l\'auditeur pour fonder son opinion. Il doit être pertinent (lié à l\'assertion testée) et suffisant (en quantité et en qualité). Une confirmation externe obtenue directement est plus fiable qu\'un document interne non diffusé.',
+    55→    55→      },
+    56→    56→      {
+    57→    57→        term: 'Seuil de signification',
+    58→    58→        definition:
+    59→    59→          'Montant au-delà duquel une anomalie (ou un cumul d\'anomalies) est susceptible d\'influencer le jugement des utilisateurs des états financiers. Il guide l\'étendue des travaux et l\'appréciation des incidences.',
+    60→    60→      },
+    61→    61→      {
+    62→    62→        term: 'Risque d\'anomalies significatives',
+    63→    63→        definition:
+    64→    64→          'Risque que les états de synthèse contiennent des anomalies supérieures au seuil de signification, avant prise en compte des contrôles de l\'entité. Il combine risque inhérent et risque lié au contrôle.',
+    65→    65→      },
+    66→    66→      {
+    67→    67→        term: 'Assurance raisonnable',
+    68→    68→        definition:
+    69→    69→          'Niveau d\'assurance élevé mais non absolu, obtenu par des diligences adaptées. L\'audit repose sur des sondages, des estimations et des jugements : il ne garantit pas l\'exactitude de chaque chiffre.',
+    70→    70→      },
+    71→    71→      {
+    72→    72→        term: 'Cut-off (séparation des exercices)',
+    73→    73→        definition:
+    74→    74→          'Contrôle de l\'affectation des opérations au bon exercice : une livraison de décembre doit fonder un produit de décembre, une prestation reçue en décembre doit donner une charge de décembre (ou une facture non parvenue), même si la facture arrive en janvier.',
+    75→    75→      },
+    76→    76→      {
+    77→    77→        term: 'Inventaire physique des stocks',
+    78→    78→        definition:
+    79→    79→          'Comptage des quantités réellement détenues à une date donnée, avec feuilles de comptage numérotées, double comptage et rapprochement avec le stock comptable, puis valorisation au coût (ou à la valeur nette de réalisation si inférieure).',
+    80→    80→      },
+    81→    81→      {
+    82→    82→        term: 'Avancement d\'un chantier',
+    83→    83→        definition:
+    84→    84→          'Pour un contrat de longue durée, pourcentage d\'avancement économique, généralement mesuré par le rapport entre les coûts engagés et le coût total estimé du chantier. Il sert à reconnaître le chiffre d\'affaires avant la facturation intégrale.',
+    85→    85→      },
+    86→    86→      {
+    87→    87→        term: 'Situation de travaux',
+    88→    88→        definition:
+    89→    89→          'Document contractuel du BTP constatant la valeur des travaux exécutés sur une période, visé par le maître d\'œuvre, déduction faite de la retenue de garantie, et qui sert de base à la facturation.',
+    90→    90→      },
+    91→    91→      {
+    92→    92→        term: 'Provision pour risques et charges',
+    93→    93→        definition:
+    94→    94→          'Passif dont l\'échéance ou le montant n\'est pas certain, mais dont l\'existence à la clôture est probable (par exemple une pénalité de retard de chantier). Au CGNC, la dotation passe par le compte 6195 ; en France, par le compte 6815.',
+    95→    95→      },
+    96→    96→      {
+    97→    97→        term: 'Rapport d\'audit et opinion',
+    98→    98→        definition:
+    99→    99→          'Document final de la mission : opinion (certification, certification avec réserve, refus) dans le cadre légal ; rapport de constats et de recommandations dans le cadre contractuel.',
+   100→   100→      },
+   101→   101→    ],
+   102→   102→    keyPoints: [
+   103→   103→      'Audit légal et audit contractuel partagent la méthode mais diffèrent par le destinataire, la base (textes contre contrat), l\'objectif et le rapport.',
+   104→   104→      'La chronologie de référence : planification, prise de connaissance, identification des risques, stratégie d\'audit, collecte d\'éléments probants, synthèse, documentation, conclusions et limites.',
+   105→   105→      'La documentation est transversale : chaque phase est documentée au fil de l\'eau, pas seulement à la fin.',
+   106→   106→      'Distribution : trois zones de risque prioritaires — réalité et valorisation des stocks, marge, cut-off des ventes.',
+   107→   107→      'BTP : le chiffre d\'affaires se reconnaît à l\'avancement (coûts engagés / coût total estimé), rapproché des situations facturées ; provisions et retenues de garantie complètent le contrôle.',
+   108→   108→      'Un élément probant se juge sur sa pertinence, sa fiabilité (hiérarchie des sources) et sa suffisance ; les preuves externes corrôborées priment.',
+   109→   109→      'L\'audit donne une assurance raisonnable : sondages, estimations, refus d\'accès ou rotation des interventions créent des limites à documenter.',
+   110→   110→      'Référentiel : le CGNC marocain n\'est pas le PCG français — même logique, numéros et libellés souvent différents (clients 3421 contre 410, ventes de marchandises 7111 contre 707, FNP 4417 contre 408).',
+   111→   111→      'Honnêteté : scénario fictif, correction au conditionnel ; en entretien, présentez la démarche, pas une expérience vécue inventée.',
+   112→   112→    ],
+   113→   113→  },
+   114→   114→  objectives: {
+   115→   115→    why:
+   116→   116→      'Comprendre la coexistence de deux cadres de mission permet de situer n\'importe quel travail d\'audit demandé ensuite. Savoir dérouler les étapes d\'une mission donne un fil conducteur réutilisable en entretien comme en pratique. Connaître les risques sectoriels (stocks, cut-off, avancement, provisions) montre une capacité à adapter la démarche au métier du client. Enfin, raisonner en éléments probants et en limites évite le piège du candidat qui « certifie » trop vite.',
+   117→   117→    infoSought: [
+   118→   118→      'Le destinataire du travail (actionnaires et tiers, ou commanditaire contractuel)',
+   119→   119→      'La base de la mission : textes et désignation, ou lettre de mission',
+   120→   120→      'L\'objectif précis et le livrable attendu (opinion ou rapport de constats)',
+   121→   121→      'La période couverte et le référentiel comptable applicable (CGNC)',
+   122→   122→      'Le seuil de signification retenu et son mode de calcul',
+   123→   123→      'Les interlocuteurs et les documents accessibles (dossier permanent, balances, contrats de chantiers)',
+   124→   124→      'Les limites prévisibles : accès aux documents, rotation des interventions, jugements et estimations',
+   125→   125→    ],
+   126→   126→    risksCovered: [
+   127→   127→      'Confusion entre audit légal et audit contractuel (objectif et rapport inadaptés)',
+   128→   128→      'Stocks surévalués ou inexacts en distribution',
+   129→   129→      'Chiffre d\'affaires mal séparé entre exercices (cut-off des ventes)',
+   130→   130→      'Marge déformée par des erreurs de valorisation ou de rattachement des charges',
+   131→   131→      'Avancement de chantier mal estimé (chiffre d\'affaires et production erronés)',
+   132→   132→      'Provisions insuffisantes (pénalités, pertes à terminer, retenues de garantie mal suivies)',
+   133→   133→      'Éléments probants insuffisants ou non pertinents pour fonder une conclusion',
+   134→   134→      'Méconnaissance du référentiel CGNC conduisant à des contrôles hors sujet pour un entretien en France',
+   135→   135→    ],
+   136→   136→  },
+   137→   137→  preparation: {
+   138→   138→    documents: [
+   139→   139→      'Lettre de mission ou extrait du mandat de commissaire aux comptes',
+   140→   140→      'Statuts, procès-verbaux d\'assemblées et rapports de l\'exercice précédent',
+   141→   141→      'États de synthèse N et N-1 (bilan, CPC, notes) selon le CGNC',
+   142→   142→      'Balances générales N et N-1 et grand livre des comptes significatifs',
+   143→   143→      'Dossier permanent du client et feuilles de roulement de l\'an dernier',
+   144→   144→      'Manuel de procédures et organigramme fonctionnel',
+   145→   145→      'Programme d\'inventaire physique et procès-verbal d\'inventaire du 31/12/2025',
+   146→   146→      'Fichiers clients et fournisseurs (balances âgées, comptes individuels)',
+   147→   147→      'Contrats de chantiers, situations de travaux, états de coûts et estimations à terminer (BTP)',
+   148→   148→      'Relevés bancaires et rapprochements de clôture',
+   149→   149→    ],
+   150→   150→    questionsToAsk: [
+   151→   151→      'Quel est le cadre exact de chaque mission : mandat légal ou contrat, et qui recevra le rapport ?',
+   152→   152→      'Quel référentiel comptable s\'applique et sous quelle version du CGNC ?',
+   153→   153→      'Quel seuil de signification a été retenu et comment a-t-il été calculé ?',
+   154→   154→      'Quels cycles et comptes sont jugés significatifs cette année ?',
+   155→   155→      'Qui sont les interlocuteurs clés côté client et quels accès aux documents sont prévus ?',
+   156→   156→      'Le planning intègre-t-il l\'inventaire physique, la visite de chantier et les dates de clôture ?',
+   157→   157→      'Quelles limites ont été identifiées lors du dernier exercice (refus d\'accès, estimations sensibles) ?',
+   158→   158→    ],
+   159→   159→    precautions: [
+   160→   160→      'Ne jamais présenter le scénario comme une expérience vécue : le contenu est fictif et conçu pour s\'entraîner.',
+   161→   161→      'Formuler les démarches au conditionnel (« je commencerais par… », « la procédure consisterait à… ») jusqu\'à ce qu\'elles soient réellement pratiquées.',
+   162→   162→      'Vérifier tout calcul avant de le citer : un chiffre faux détruit une démonstration juste.',
+   163→   163→      'Distinguer systématiquement les faits observés des interprétations, et documenter les deux séparément.',
+   164→   164→      'Respecter la confidentialité des documents du client, même fictifs, comme s\'ils étaient réels.',
+   165→   165→      'Se rappeler que le CGNC marocain n\'est pas le PCG français : traduire les libellés, pas seulement les chiffres.',
+   166→   166→    ],
+   167→   167→  },
+   168→   168→  method: [
+   169→   169→    {
+   170→   170→      title: 'Situer la mission dans son cadre',
+   171→   171→      description:
+   172→   172→        'Relire la lettre de mission ou l\'extrait de mandat : destinataire, base légale ou contractuelle, objectif, période, référentiel. En cas de doute, poser la question au chef de mission avant tout travail.',
+   173→   173→      why: 'Un même geste technique (confirmation, rapprochement, inventaire) ne se documente ni ne se conclut de la même manière selon le cadre de la mission.',
+   174→   174→    },
+   175→   175→    {
+   176→   176→      title: 'Planifier la participation du stagiaire',
+   177→   177→      description:
+   178→   178→        'Identifier les tâches confiées, le temps disponible, les interlocuteurs et les livrables attendus (feuilles de travail, notes, tableaux de rapprochement). Fixer les points d\'avance avec le chef de mission.',
+   179→   179→      why: 'La planification transforme une présence en participation mesurable et sécurise la relecture par le senior.',
+   180→   180→    },
+   181→   181→    {
+   182→   182→      title: 'Prendre connaissance de l\'entité',
+   183→   183→      description:
+   184→   184→        'Lire le dossier permanent, l\'organigramme, les états de synthèse N-1 et le secteur. Pour Distra Maroc (distribution) : poids des stocks, saisonnalité, marges par rayon. Pour BâtiSud Maroc (BTP) : carnet de chantiers, durée des contrats, mode de facturation.',
+   185→   185→      why: 'Les risques ne se devinent pas : ils se déduisent de l\'activité, de son cycle d\'exploitation et de son environnement.',
+   186→   186→    },
+   187→   187→    {
+   188→   188→      title: 'Identifier les risques et assertions sensibles',
+   189→   189→      description:
+   190→   190→        'Traduire l\'activité en assertions : réalité des stocks, valorisation, séparation des exercices (cut-off), réalité du chiffre d\'affaires, avancement des chantiers, exhaustivité des provisions.',
+   191→   191→      why: 'Chaque assertion sensible oriente le choix des contrôles et des documents à collecter.',
+   192→   192→    },
+   193→   193→    {
+   194→   194→      title: 'Fixer la stratégie d\'audit',
+   195→   195→      description:
+   196→   196→        'Arbitrer entre contrôles substantifs et approche par les risques, définir le seuil de signification, la taille des échantillons, les dates d\'intervention (intermédiaires, inventaire, clôture).',
+   197→   197→      why: 'La stratégie dimensionne l\'effort : elle décide où l\'équipe passe du temps et où elle s\'appuie sur des contrôles existants.',
+   198→   198→    },
+   199→   199→    {
+   200→   200→      title: 'Collecter les éléments probants',
+   201→   201→      description:
+   202→   202→        'Exécuter les programmes de travail : rapprochements (inventaire physique / stock comptable, situations / avancement), tests de détail, confirmations externes, revues analytiques. Croiser les sources.',
+   203→   203→      why: 'L\'opinion et le rapport ne valent que par la qualité et la suffisance des preuves recueillies.',
+   204→   204→    },
+   205→   205→    {
+   206→   206→      title: 'Contrôler le cut-off et la séparation des exercices',
+   207→   207→      description:
+   208→   208→        'Examiner les derniers bons de livraison de décembre et les premiers de janvier, les factures émises et reçues autour de la clôture, les situations de travaux visées en janvier pour des travaux de décembre.',
+   209→   209→      why: 'La frontière d\'exercice est le lieu privilégié des manipulations et des erreurs de chiffre d\'affaires et de charges.',
+   210→   210→    },
+   211→   211→    {
+   212→   212→      title: 'Apprécier provisions et estimations',
+   213→   213→      description:
+   214→   214→        'Revoir les hypothèses du client : coût total des chantiers, pénalités probables, dépréciations de stocks et de créances. Confronter les estimations aux données postérieures à la clôture.',
+   215→   215→      why: 'Les estimations contiennent le risque de manipulation le plus difficile à détecter : la démonstration doit être chiffrée et documentée.',
+   216→   216→    },
+   217→   217→    {
+   218→   218→      title: 'Synthétiser les constats',
+   219→   219→      description:
+   220→   220→        'Regrouper les anomalies chiffrées, évaluer leur incidence individuelle et cumulée au regard du seuil de signification, préparer les points à discuter avec le client.',
+   221→   221→      why: 'La synthèse transforme des constats épars en une conclusion argumentée et défendable.',
+   222→   222→    },
+   223→   223→    {
+   224→   224→      title: 'Documenter au fil de l\'eau',
+   225→   225→      description:
+   226→   226→        'Renseigner les feuilles de travail : objectif, source, échantillon, résultat, conclusion. Marquer les rapprochements, archiver les copies de documents référencées.',
+   227→   227→      why: 'Une conclusion non documentée est une conclusion non prouvée : la piste d\'audit doit permettre à un tiers de refaire le travail.',
+   228→   228→    },
+   229→   229→    {
+   230→   230→      title: 'Formuler conclusions et limites',
+   231→   231→      description:
+   232→   232→        'Rédiger la note de synthèse : ce qui a été contrôlé, ce qui a été trouvé, ce qui n\'a pas pu être vérifié et pourquoi (accès refusé, estimation non corroborable, rotation des interventions).',
+   233→   233→      why: 'Les limites assumées protègent le lecteur du rapport et crédibilisent le reste de la conclusion.',
+   234→   234→    },
+   235→   235→    {
+   236→   236→      title: 'Faire relire et capitaliser',
+   237→   237→      description:
+   238→   238→        'Soumettre les feuilles au senior, intégrer les corrections, mettre à jour le dossier permanent pour l\'exercice suivant.',
+   239→   239→      why: 'La relecture est un contrôle qualité interne ; la capitalisation évite de refaire deux fois la même prise de connaissance.',
+   240→   240→    },
+   241→   241→  ],
+   242→   242→  exercises: [
+   243→   243→    // ============================ EXERCICE 1 ============================
+   244→   244→    {
+   245→   245→      id: 'fidumac-m1-ex1',
+   246→   246→      title: 'Audit légal vs audit contractuel : le tableau qui clarifie tout',
+   247→   247→      cycle: 'Transversal',
+   248→   248→      context:
+   249→   249→        'Premier jour chez Fidumac (cabinet fictif). M. Sabri vous remet les deux dossiers : le mandat de commissaire aux comptes de Distra Maroc et la lettre de mission contractuelle de BâtiSud Maroc. Avant tout travail technique, il vous demande de restituer par écrit les différences entre les deux cadres. Scénario entièrement fictif ; montants en MAD.',
+   250→   250→      documents: [
+   251→   251→        {
+   252→   252→          kind: 'table',
+   253→   253→          name: 'Tableau comparatif — audit légal et audit contractuel (support fictif d\'entraînement)',
+   254→   254→          columns: ['Critère', 'Audit légal (commissariat aux comptes)', 'Audit contractuel'],
+   255→   255→          rows: [
+   256→   256→            ['Destinataire', 'Les actionnaires et les tiers', 'Le commanditaire : direction, acquéreur, prêteur… selon le contrat'],
+   257→   257→            ['Base de la mission', 'Désignation prévue par les textes (assemblée)', 'Contrat de mission (lettre de mission)'],
+   258→   258→            ['Cadre normatif', 'Normes d\'exercice professionnel du pays du mandat', 'Termes de référence convenus et méthodologie du cabinet'],
+   259→   259→            ['Objectif type', 'Certifier la régularité, la sincérité et l\'image fidèle des états de synthèse', 'Répondre à un besoin défini : acquisition, organisation, fiabilité d\'un processus'],
+   260→   260→            ['Rapport', 'Rapport général avec opinion (et rapports spéciaux éventuels)', 'Rapport de mission : constats, conclusions, recommandations'],
+   261→   261→            ['Exemplarité (périodicité)', 'Mandat pluriannuel encadré par les textes, avec rotation', 'Ponctuel ou récurrent selon la convention'],
+   262→   262→            ['Incidence sur les comptes annuels', 'Opinion : certification, certification avec réserve, ou refus', 'Aucune opinion de certification'],
+   263→   263→          ],
+   264→   264→          note: 'Document fictif destiné à l\'entraînement. Les règles précises de durée et de rotation des mandats dépendent des textes de chaque pays : citez le principe, pas un chiffre appris par cœur.',
+   265→   265→        },
+   266→   266→      ],
+   267→   267→      questions: [
+   268→   268→        {
+   269→   269→          id: 'fidumac-m1-ex1-q1',
+   270→   270→          question: 'Qui est le destinataire principal du rapport d\'audit légal ?',
+   271→   271→          type: 'mcq',
+   272→   272→          options: [
+   273→   273→            'La direction générale de l\'entreprise auditée',
+   274→   274→            'Les actionnaires et les tiers',
+   275→   275→            'Le cabinet d\'audit lui-même',
+   276→   276→            'L\'administration fiscale',
+   277→   277→          ],
+   278→   278→          expected: '1',
+   279→   279→          explanation:
+   280→   280→            'L\'audit légal est une mission d\'intérêt collectif : le rapport s\'adresse aux actionnaires et, au-delà, aux tiers (prêteurs, fournisseurs, salariés). La direction est un interlocuteur, pas le destinataire du rapport.',
+   281→   281→        },
+   282→   282→        {
+   283→   283→          id: 'fidumac-m1-ex1-q2',
+   284→   284→          question: 'Sur quoi repose l\'audit contractuel de BâtiSud Maroc ?',
+   285→   285→          type: 'mcq',
+   286→   286→          options: [
+   287→   287→            'Un contrat de mission (lettre de mission) définissant l\'objectif',
+   288→   288→            'Une désignation obligatoire en assemblée générale',
+   289→   289→            'Une obligation fiscale annuelle',
+   290→   290→            'Un règlement intérieur du cabinet',
+   291→   291→          ],
+   292→   292→          expected: '0',
+   293→   293→          explanation:
+   294→   294→            'L\'audit contractuel est un engagement convenu : sa base est la lettre de mission, qui fixe l\'objectif (ici la revue des situations de travaux et des marges prévisionnelles), le périmètre et le rapport attendu.',
+   295→   295→        },
+   296→   296→        {
+   297→   297→          id: 'fidumac-m1-ex1-q3',
+   298→   298→          question: 'Parmi ces caractéristiques, lesquelles sont propres à l\'audit légal ?',
+   299→   299→          type: 'multi',
+   300→   300→          options: [
+   301→   301→            'Il débouche sur une opinion sur les états de synthèse',
+   302→   302→            'Son mandat est pluriannuel et encadré par les textes',
+   303→   303→            'Son objectif est librement défini par le client',
+   304→   304→            'Son rapport est remis au seul commanditaire',
+   305→   305→            'Il peut aboutir à une certification avec réserve ou à un refus de certifier',
+   306→   306→          ],
+   307→   307→          expected: ['0', '1', '4'],
+   308→   308→          explanation:
+   309→   309→            'L\'objectif librement défini et le rapport remis au seul commanditaire caractérisent l\'audit contractuel. L\'opinion, le mandat encadré et les réserves ou refus relèvent de l\'audit légal.',
+   310→   310→        },
+   311→   311→        {
+   312→   312→          id: 'fidumac-m1-ex1-q4',
+   313→   313→          question: 'Un audit contractuel se conclut normalement par une opinion de certification sur les comptes annuels.',
+   314→   314→          type: 'truefalse',
+   315→   315→          options: ['Vrai', 'Faux'],
+   316→   316→          expected: '1',
+   317→   317→          explanation:
+   318→   318→            'Faux. L\'audit contractuel produit un rapport de mission (constats, conclusions, recommandations) sur le périmètre convenu. Seul l\'audit légal certifie les comptes annuels.',
+   319→   319→        },
+   320→   320→        {
+   321→   321→          id: 'fidumac-m1-ex1-q5',
+   322→   322→          question: 'Que peut produire un audit légal si des anomalies significatives restent non corrigées ?',
+   323→   323→          type: 'mcq',
+   324→   324→          options: [
+   325→   325→            'Une certification avec réserve, un refus de certifier, ou une certification sans incidence si les anomalies restent très en deçà du seuil de signification',
+   326→   326→            'Rien : le commissaire aux comptes ne peut que certifier',
+   327→   327→            'Une amende à la charge du client',
+   328→   328→            'Un simple courrier sans portée sur le rapport',
+   329→   329→          ],
+   330→   330→          expected: '0',
+   331→   331→          explanation:
+   332→   332→            'Tout dépend de l\'incidence au regard du seuil de signification : négligeable, l\'opinion peut rester sans réserve ; significative, elle appelle une réserve ; généralisée, un refus de certifier.',
+   333→   333→        },
+   334→   334→        {
+   335→   335→          id: 'fidumac-m1-ex1-q6',
+   336→   336→          question: 'Que signifie la ligne « exemplarité (périodicité) » du tableau ?',
+   337→   337→          type: 'mcq',
+   338→   338→          options: [
+   339→   339→            'L\'audit légal s\'exerce sur plusieurs exercices dans les limites fixées par les textes (avec rotation), alors que la mission contractuelle dure ce que dure le contrat',
+   340→   340→            'L\'audit légal est renouvelé librement à l\'infini',
+   341→   341→            'L\'audit contractuel est forcément annuel',
+   342→   342→            'Les deux missions ont toujours la même durée',
+   343→   343→          ],
+   344→   344→          expected: '0',
+   345→   345→          explanation:
+   346→   346→            '« Exemplarité » désigne ici le fait que la mission légale se répète d\'exercice en exercice sous mandat encadré (rotation prévue par les textes), quand la mission contractuelle est ponctuelle ou récurrente selon la seule volonté des parties.',
+   347→   347→        },
+   348→   348→        {
+   349→   349→          id: 'fidumac-m1-ex1-q7',
+   350→   350→          question:
+   351→   351→            'Expliquez en trois phrases les deux différences essentielles entre audit légal et audit contractuel : destinataire et base de la mission.',
+   352→   352→          type: 'open',
+   353→   353→          keywords: ['destinataire', 'actionnaires', 'tiers', 'contrat', 'opinion', 'certification', 'mandat'],
+   354→   354→          explanation:
+   355→   355→            'Réponse attendue (exemple) : l\'audit légal s\'adresse aux actionnaires et aux tiers, tandis que l\'audit contractuel s\'adresse au commanditaire défini par le contrat. L\'audit légal repose sur une désignation prévue par les textes, l\'audit contractuel sur une lettre de mission. Seul l\'audit légal débouche sur une opinion de certification des états de synthèse.',
+   356→   356→        },
+   357→   357→      ],
+   358→   358→      risks: ['Confusion des cadres de mission', 'Rapport inadapté au destinataire', 'Objectif mal compris'],
+   359→   359→      solutionSummary:
+   360→   360→        'Dans ce cas, je commencerais par relire la lettre de mission et l\'extrait de mandat pour vérifier destinataire, base, objectif et rapport attendu, puis je remplirais le tableau comparatif. Les deux missions de la fiche illustrent parfaitement le tableau : le mandat de commissaire aux comptes de Distra Maroc (distribution, exercice 2025) vise la certification des états de synthèse ; la mission contractuelle de BâtiSud Maroc (BTP) vise une revue des situations de travaux et des marges prévisionnelles, sans opinion. La procédure consisterait ensuite à vérifier que chaque feuille de travail précise le cadre dans lequel elle est réalisée, car un même constat (par exemple un avancement de chantier discuté) ne se documente ni ne se communique de la même manière selon que la mission est légale ou contractuelle. En entretien, cette capacité à qualifier le cadre avant de décrire le geste technique est un marqueur de maturité.',
+   361→   361→      interviewTips: [
+   362→   362→        'Commencez toujours par qualifier le cadre (« mission légale, destinataire : actionnaires et tiers ») avant de décrire les travaux.',
+   363→   363→        'Si on vous demande la durée exacte d\'un mandat de commissaire aux comptes, répondez sur le principe (mandat encadré, rotation) sans inventer de chiffre.',
+   364→   364→      ],
+   365→   365→    },
+   366→   366→    // ============================ EXERCICE 2 ============================
+   367→   367→    {
+   368→   368→      id: 'fidumac-m1-ex2',
+   369→   369→      title: 'Les étapes d\'une mission d\'audit : remettre la chronologie en ordre',
+   370→   370→      cycle: 'Transversal',
+   371→   371→      context:
+   372→   372→        'Pour l\'onboarding, Mme Idrissi (associée fictive) vous demande de restituer la chronologie d\'une mission d\'audit, telle qu\'utilisée chez Fidumac : planification, prise de connaissance, identification des risques, stratégie d\'audit, collecte d\'éléments probants, synthèse, documentation, conclusions et limites. Scénario fictif.',
+   373→   373→      documents: [
+   374→   374→        {
+   375→   375→          kind: 'text',
+   376→   376→          name: 'Feuille de route des phases (support fictif d\'entraînement)',
+   377→   377→          content:
+   378→   378→            'PHASE 1 — PLANIFICATION\nAcceptation (ou maintien) de la mission, évaluation de l\'indépendance,\nchoix de l\'équipe, budget et calendrier, rédaction du plan de mission\net fixation du seuil de signification.\n\nPHASE 2 — PRISE DE CONNAISSANCE\nEntité, activité, secteur, organisation, systèmes comptables et d\'information,\nrevue du dossier permanent, entretiens avec les opérationnels.\n\nPHASE 3 — IDENTIFICATION DES RISQUES\nTraduction de la prise de connaissance en assertions sensibles\n(réalité, exhaustivité, valorisation, rattachement, présentation).\n\nPHASE 4 — STRATÉGIE D\'AUDIT\nArbitrage entre approche substantive et fiabilité des contrôles du client,\ndimensionnement des échantillons, dates d\'intervention.\n\nPHASE 5 — COLLECTE D\'ÉLÉMENTS PROBANTS\nExécution des programmes de travail : tests de détail, confirmations,\nrapprochements, revues analytiques, assistance à l\'inventaire,\nvisite de chantier pour le BTP.\n\nPHASE 6 — SYNTHÈSE\nCumul des anomalies, incidence au seuil de signification,\npoints à discuter avec le client, révision des estimations.\n\nPHASE 7 — DOCUMENTATION\nFeuilles de travail référencées et datées, piste d\'audit, dossier permanent\nmis à jour. Étape transversale : chaque phase est documentée au fil de l\'eau.\n\nPHASE 8 — CONCLUSIONS ET LIMITES\nNote de synthèse, opinion (mission légale) ou rapport de mission (contractuel),\nexpression des limites : sondages, estimations, refus d\'accès, rotation.',
+   379→   379→          note: 'Support fictif. Les découpages varient d\'un cabinet à l\'autre ; l\'ordre logique, lui, est stable.',
+   380→   380→        },
+   381→   381→      ],
+   382→   382→      questions: [
+   383→   383→        {
+   384→   384→          id: 'fidumac-m1-ex2-q1',
+   385→   385→          question: 'Quelle phase ouvre la mission ?',
+   386→   386→          type: 'mcq',
+   387→   387→          options: [
+   388→   388→            'La collecte d\'éléments probants',
+   389→   389→            'La planification (acceptation, équipe, calendrier, seuil de signification)',
+   390→   390→            'La rédaction du rapport',
+   391→   391→            'La synthèse des anomalies',
+   392→   392→          ],
+   393→   393→          expected: '1',
+   394→   394→          explanation:
+   395→   395→            'Tout commence par la planification : accepter la mission, vérifier l\'indépendance, dimensionner l\'équipe, fixer le calendrier et le seuil de signification. On ne collecte des preuves qu\'une fois la stratégie posée.',
+   396→   396→        },
+   397→   397→        {
+   398→   398→          id: 'fidumac-m1-ex2-q2',
+   399→   399→          question: 'Que fait-on immédiatement après l\'identification des risques ?',
+   400→   400→          type: 'mcq',
+
+[showing lines 1-400 of 902; use offset=401 with limit to continue reading]

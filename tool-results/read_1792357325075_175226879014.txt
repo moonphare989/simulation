@@ -1,0 +1,402 @@
+   301→   301→        {
+   302→   302→          id: 'fidumac-m3-ex1-q2',
+   303→   303→          question: 'Quel est le taux de variation du compte 6125 (en %) ?',
+   304→   304→          type: 'numeric',
+   305→   305→          expected: 210.44,
+   306→   306→          explanation:
+   307→   307→            '177 400,00 / 84 300,00 = 210,44 %. Un triplement d\'une charge de structure sur un exercice est une variation inhabituelle typique : elle appelle une explication et un test de détail.',
+   308→   308→        },
+   309→   309→        {
+   310→   310→          id: 'fidumac-m3-ex1-q3',
+   311→   311→          question: 'De combien la provision pour dépréciation des clients (3940) a-t-elle diminué ?',
+   312→   312→          type: 'numeric',
+   313→   313→          expected: 41700,
+   314→   314→          explanation:
+   315→   315→            '46 200,00 − 4 500,00 = 41 700,00 MAD de diminution (−90,26 %). Combinée aux comptes 6194 (dotation nulle en N) et 7194 (reprise de 41 700,00), cette baisse suggère que le client a repris l\'essentiel de ses provisions sans reconstituer la couverture des créances actuelles.',
+   316→   316→        },
+   317→   317→        {
+   318→   318→          id: 'fidumac-m3-ex1-q4',
+   319→   319→          question: 'Quels comptes présentent la variation la plus inhabituelle au vu du tableau ?',
+   320→   320→          type: 'mcq',
+   321→   321→          options: [
+   322→   322→            '3421 Clients (+8,87 %) et 4411 Fournisseurs (+11,46 %), en phase avec l\'activité',
+   323→   323→            '6125 Fournitures de bureau (+210,44 %) d\'une part, et l\'ensemble 3940 / 6194 / 7194 (provision divisée par dix, dotation nulle, reprise intégrale) d\'autre part',
+   324→   324→            '6131 Locations (0,00 %) et 6171 Charges de personnel (+5,00 %)',
+   325→   325→            '5141 Banque (+10,75 %)',
+   326→   326→          ],
+   327→   327→          expected: '1',
+   328→   328→          explanation:
+   329→   329→            'Les variations de clients, fournisseurs, banque et personnel sont cohérentes avec une activité en croissance (~+9 à +11 %) ; le loyer stable et les effectifs à +5 % restent plausibles. En revanche, +210,44 % sur une charge de structure et l\'évaporation des provisions de créances (3940 −90,26 %, 6194 nul, 7194 nouveau) sont les deux signaux à creuser en priorité.',
+   330→   330→        },
+   331→   331→        {
+   332→   332→          id: 'fidumac-m3-ex1-q5',
+   333→   333→          question: 'Ventes +8,68 % et achats de marchandises +10,00 % : que déduisez-vous ?',
+   334→   334→          type: 'mcq',
+   335→   335→          options: [
+   336→   336→            'Rien : ces deux comptes n\'ont aucun lien',
+   337→   337→            'La marge commerciale est vraisemblablement dégradée : les achats croissent plus vite que les ventes, ce qu\'il faut corroborer (prix d\'achat, mix produits, dépréciations de stocks, erreurs d\'imputation)',
+   338→   338→            'Le chiffre d\'affaires est forcément surévalué',
+   339→   339→            'La TVA a été mal comptabilisée',
+   340→   340→          ],
+   341→   341→          expected: '1',
+   342→   342→          explanation:
+   343→   343→            'C\'est la lecture croisée type de la revue analytique : un écart de 1,32 point entre la croissance des achats et celle des ventes comprime la marge commerciale. La déduction reste une hypothèse à corroborer (évolution des prix d\'achat, mix, stocks, imputations) — pas une conclusion.',
+   344→   344→        },
+   345→   345→        {
+   346→   346→          id: 'fidumac-m3-ex1-q6',
+   347→   347→          question:
+   348→   348→            'Le compte 6125 a triplé. Formulez vos hypothèses et décrivez (au conditionnel) votre premier contrôle.',
+   349→   349→          type: 'open',
+   350→   350→          keywords: ['imputation', 'justificatif', 'échantillon', 'budget', 'population', 'variation', 'sondage'],
+   351→   351→          explanation:
+   352→   352→            'Réponse attendue (exemple) : hypothèses — erreur d\'imputation (des charges d\'exploitation saisies au 6125), changement de périmètre ou de fournisseur, consommations exceptionnelles, ou charge gonflée à des fins de résultat. Le premier contrôle serait de demander l\'explication du client, puis d\'examiner un échantillon de factures du 6125 : contenu des pièces, concordance avec la nature « fournitures de bureau », rapprochement du budget, et recherche d\'imputations à reclasser (par exemple des achats de marchandises passés au 6125). La variation serait documentée avec son explication et, le cas échéant, la correction chiffrée.',
+   353→   353→        },
+   354→   354→      ],
+   355→   355→      risks: ['Variations inhabituelles inexpliquées', 'Provisions évaporées', 'Marge dégradée', 'Erreur d\'imputation'],
+   356→   356→      solutionSummary:
+   357→   357→        'La démarche consisterait à recalculer d\'abord chaque variation (le tableau se vérifie : +163 340,00 sur les clients, +1 848 000,00 sur les ventes, −41 700,00 sur la provision), puis à trier les signaux : inhabituel — le 6125 à +210,44 % et le trio 3940 / 6194 / 7194 (provision quasi annulée, dotation nulle, reprise de 41 700,00) ; cohérent — clients, fournisseurs, banque et personnel suivent l\'activité (+5 à +11 %) ; à surveiller — achats (+10,00 %) supérieurs aux ventes (+8,68 %), soit une marge commerciale sous pression à corroborer. Dans ce cas, je demanderais les explications du client sur le 6125 et les provisions, puis j\'examinerais un échantillon de pièces du 6125 (nature, justificatif, imputation) et je testerais la balance âgée pour reconstituer la dépréciation nécessaire — ce que fait l\'exercice 4. À l\'oral, l\'important est de montrer qu\'une balance se lit en trois familles : cohérent, inexpliqué, à corroborer.',
+   358→   358→      interviewTips: [
+   359→   359→        'Annoncez toujours le recalcul avant l\'interprétation : « je vérifie 261 700 − 84 300 = 177 400, soit +210,44 % ».',
+   360→   360→        'Ne concluez jamais « anomalie » sur une variation : dites « variation inhabituelle, hypothèses à corroborer ».',
+   361→   361→      ],
+   362→   362→    },
+   363→   363→    // ============================ EXERCICE 2 ============================
+   364→   364→    {
+   365→   365→      id: 'fidumac-m3-ex2',
+   366→   366→      title: 'Prioriser les risques sur quarante comptes',
+   367→   367→      cycle: 'Révision comptable',
+   368→   368→      context:
+   369→   369→        'M. Sabri vous confie maintenant la balance complète des quarante comptes à réviser chez Distra Maroc (fictif). Avant de lancer les tests de détail, vous devez hiérarchiser : quels comptes appellent un test approfondi, lesquels une simple revue analytique ? Seuil de signification : 250 000,00 MAD. Scénario fictif ; montants en MAD.',
+   370→   370→      documents: [
+   371→   371→        {
+   372→   372→          kind: 'table',
+   373→   373→          name: 'Balance des quarante comptes révisés — N et N-1 (fictif)',
+   374→   374→          columns: ['N° compte', 'Libellé', 'Solde N (MAD)', 'Solde N-1 (MAD)', 'Variation (MAD)'],
+   375→   375→          rows: [
+   376→   376→            ['1111', 'Capital social', 5000000.0, 5000000.0, 0.0],
+   377→   377→            ['1140', 'Réserve légale', 262500.0, 237500.0, 25000.0],
+   378→   378→            ['1191', 'Résultat net de l\'exercice', 1386420.0, 1204800.0, 181620.0],
+   379→   379→            ['1481', 'Emprunts auprès des établissements de crédit', 1250000.0, 1600000.0, -350000.0],
+   380→   380→            ['2210', 'Frais préliminaires', 84000.0, 120000.0, -36000.0],
+   381→   381→            ['2811', 'Amortissements des frais préliminaires', 84000.0, 72000.0, 12000.0],
+   382→   382→            ['2332', 'Matériel et outillage', 980000.0, 940000.0, 40000.0],
+   383→   383→            ['28332', 'Amortissements du matériel et outillage', 462000.0, 398000.0, 64000.0],
+   384→   384→            ['2333', 'Matériel de transport', 1720000.0, 1480000.0, 240000.0],
+   385→   385→            ['28333', 'Amortissements du matériel de transport', 790000.0, 640000.0, 150000.0],
+   386→   386→            ['2355', 'Matériel informatique', 462500.0, 350000.0, 112500.0],
+   387→   387→            ['28355', 'Amortissements du matériel informatique', 187500.0, 140000.0, 47500.0],
+   388→   388→            ['3111', 'Marchandises', 3180000.0, 2940000.0, 240000.0],
+   389→   389→            ['3413', 'Fournisseurs, avances et acomptes', 94600.0, 71200.0, 23400.0],
+   390→   390→            ['3421', 'Clients', 2005640.0, 1842300.0, 163340.0],
+   391→   391→            ['3424', 'Clients douteux ou litigieux', 58750.0, 21400.0, 37350.0],
+   392→   392→            ['3940', 'Provisions pour dépréciation des clients', 4500.0, 46200.0, -41700.0],
+   393→   393→            ['3455', 'État - TVA récupérable', 104250.0, 96400.0, 7850.0],
+   394→   394→            ['3488', 'Débiteurs divers', 38900.0, 22300.0, 16600.0],
+   395→   395→            ['4411', 'Fournisseurs', 1388400.0, 1245600.0, 142800.0],
+   396→   396→            ['4415', 'Fournisseurs, effets à payer', 186000.0, 210000.0, -24000.0],
+   397→   397→            ['4417', 'Fournisseurs, factures non parvenues', 21400.0, 19800.0, 1600.0],
+   398→   398→            ['4432', 'Rémunérations dues au personnel', 148300.0, 139800.0, 8500.0],
+   399→   399→            ['4488', 'Créditeurs divers', 24700.0, 31200.0, -6500.0],
+   400→   400→            ['5141', 'Banque', 352900.0, 318640.0, 34260.0],
+   401→   401→            ['5161', 'Caisse', 42350.0, 38900.0, 3450.0],
+   402→   402→            ['6111', 'Achats de marchandises', 15620000.0, 14200000.0, 1420000.0],
+   403→   403→            ['6114', 'Variation de stocks de marchandises', -240000.0, -180000.0, -60000.0],
+   404→   404→            ['6125', 'Achats de fournitures de bureau', 261700.0, 84300.0, 177400.0],
+   405→   405→            ['6131', 'Locations et charges locatives', 312000.0, 312000.0, 0.0],
+   406→   406→            ['6135', 'Primes d\'assurances', 96500.0, 92000.0, 4500.0],
+   407→   407→            ['6137', 'Rémunérations d\'intermédiaires et honoraires', 138000.0, 86000.0, 52000.0],
+   408→   408→            ['6142', 'Transports', 246800.0, 219300.0, 27500.0],
+   409→   409→            ['6171', 'Charges de personnel', 5040000.0, 4800000.0, 240000.0],
+   410→   410→            ['6193', 'Dotations d\'exploitation aux amortissements (immobilisations corporelles)', 274000.0, 251000.0, 23000.0],
+   411→   411→            ['6194', 'Dotations aux provisions pour dépréciation des créances', 0.0, 46200.0, -46200.0],
+   412→   412→            ['6311', 'Intérêts des emprunts et dettes', 118750.0, 152400.0, -33650.0],
+   413→   413→            ['7111', 'Ventes de marchandises', 23148000.0, 21300000.0, 1848000.0],
+   414→   414→            ['7194', 'Reprises sur provisions pour dépréciation des créances', 41700.0, 0.0, 41700.0],
+   415→   415→            ['7381', 'Intérêts et produits assimilés', 9400.0, 8200.0, 1200.0],
+   416→   416→          ],
+   417→   417→          note: 'Document fictif. Balance simplifiée pour l\'entraînement : chaque variation se vérifie (solde N − solde N-1). La cohérence 3940 N-1 (46 200,00) + dotation N (0,00) − reprise N (41 700,00) = solde N (4 500,00) se constate sur trois comptes.',
+   418→   418→        },
+   419→   419→      ],
+   420→   420→      questions: [
+   421→   421→        {
+   422→   422→          id: 'fidumac-m3-ex2-q1',
+   423→   423→          question: 'Quels comptes méritent une priorité de test au regard du tableau ?',
+   424→   424→          type: 'multi',
+   425→   425→          options: [
+   426→   426→            '3424 Clients douteux ou litigieux : +37 350,00 MAD (+174,53 %)',
+   427→   427→            '6125 Achats de fournitures de bureau : +177 400,00 MAD (+210,44 %)',
+   428→   428→            '3940 Provisions pour dépréciation des clients : −41 700,00 MAD (−90,26 %)',
+   429→   429→            '6131 Locations et charges locatives : 0,00 MAD de variation',
+   430→   430→            '7194 Reprises sur provisions pour dépréciation des créances : +41 700,00 MAD (compte apparu en N)',
+   431→   431→            '4432 Rémunérations dues au personnel : +8 500,00 MAD (+6,08 %)',
+   432→   432→            '6135 Primes d\'assurances : +4 500,00 MAD (+4,89 %)',
+   433→   433→          ],
+   434→   434→          expected: ['0', '1', '2', '4'],
+   435→   435→          explanation:
+   436→   436→            'Quatre signaux de priorité : la montée des clients douteux (3424, +174,53 %) combinée à l\'effondrement de la provision (3940, −90,26 %) et à la reprise intégrale (7194) dessine un risque de dépréciation insuffisante ; le 6125 (+210,44 %) reste une charge à expliquer et à tester sur pièces. Les comptes stables ou évoluant modérément (6131, 4432, 6135) relèvent de la revue analytique seule.',
+   437→   437→        },
+   438→   438→        {
+   439→   439→          id: 'fidumac-m3-ex2-q2',
+   440→   440→          question: 'Quel couple de comptes se corrobore mutuellement et explique une variation a priori surprenante ?',
+   441→   441→          type: 'mcq',
+   442→   442→          options: [
+   443→   443→            '1111 Capital social et 1140 Réserve légale',
+   444→   444→            '1481 Emprunts (−350 000,00 MAD) et 6311 Intérêts des emprunts (−33 650,00 MAD, −22,08 %) : le remboursement d\'emprunt explique la baisse des intérêts',
+   445→   445→            '5161 Caisse et 6142 Transports',
+   446→   446→            '2355 Matériel informatique et 7381 Intérêts et produits assimilés',
+   447→   447→          ],
+   448→   448→          expected: '1',
+   449→   449→          explanation:
+   450→   450→            'La lecture croisée est la force de la revue analytique : la dette de financement baisse de 21,88 % (1 600 000 → 1 250 000) et, dans les mêmes proportions, les intérêts passent de 152 400,00 à 118 750,00 (−22,08 %). La variation du 6311, inhabituelle isolément, devient cohérente corroborée par le 1481 : hypothèse validée, pas d\'anomalie a priori.',
+   451→   451→        },
+   452→   452→        {
+   453→   453→          id: 'fidumac-m3-ex2-q3',
+   454→   454→          question: 'Quel est le taux de variation du compte 3424 (clients douteux) (en %) ?',
+   455→   455→          type: 'numeric',
+   456→   456→          expected: 174.53,
+   457→   457→          explanation:
+   458→   458→            '37 350,00 / 21 400,00 = 174,53 %. Des clients douteux qui ont presque triplé pendant que la provision fond : la combinaison justifie un test de la balance âgée (exercice 4).',
+   459→   459→        },
+   460→   460→        {
+   461→   461→          id: 'fidumac-m3-ex2-q4',
+   462→   462→          question: 'Quel travail spécifique le couple 3424 / 3940 appelle-t-il en priorité ?',
+   463→   463→          type: 'mcq',
+   464→   464→          options: [
+   465→   465→            'Une confirmation des fournisseurs',
+   466→   466→            'Une revue de la balance âgée clients et le recalcul de la dépréciation nécessaire au 3940, avec test des recouvrements postérieurs à la clôture',
+   467→   467→            'Un contrôle des dotations aux amortissements',
+   468→   468→            'Une revue des états de rapprochement bancaire',
+   469→   469→          ],
+   470→   470→          expected: '1',
+   471→   471→          explanation:
+   472→   472→            'Clients douteux en hausse forte + provision en chute libre : le poste clients est probablement surévalué. Le travail type : reprendre la balance âgée, identifier les créances anciennes, appliquer la politique de dépréciation, comparer au 3940 (4 500,00) et proposer la dotation complémentaire (6194).',
+   473→   473→        },
+   474→   474→        {
+   475→   475→          id: 'fidumac-m3-ex2-q5',
+   476→   476→          question:
+   477→   477→            'Rédigez (au conditionnel) le programme de travail des comptes prioritaires identifiés : quels tests, sur quels documents, avec quelle logique d\'échantillonnage ?',
+   478→   478→          type: 'open',
+   479→   479→          keywords: ['matérialité', 'variation', 'risque', 'sondage', 'justificatif', 'cut-off', 'confirmation', 'dépréciation'],
+   480→   480→          explanation:
+   481→   481→            'Réponse attendue (exemple) : sur le 6125, test de détail par sondage sur factures (nature des pièces, budget, recherche d\'imputations erronées) ; sur le poste clients (3424 / 3940 / 7194), revue de la balance âgée, recalcul de la dépréciation selon la politique, confirmations directes des clients douteux et recouvrements postérieurs ; sur le 6111 / 7111, revue analytique croisées avec le 3111 (stock) et contrôle du cut-off aux dates de clôture ; sur le 1481 / 6311, simple corroboration par le tableau de remboursement. Chaque test serait dimensionné par la matérialité (seuil de 250 000,00 MAD) et le risque, avec échantillon justifié et documentation des conclusions.',
+   482→   482→        },
+   483→   483→      ],
+   484→   484→      risks: ['Priorisation mal fondée', 'Dépréciation insuffisante', 'Charge inexpliquée', 'Matérialité mal appréciée'],
+   485→   485→      solutionSummary:
+   486→   486→        'La procédure consisterait à trier les quarante comptes en trois familles. Prioritaires (tests de détail) : 3424 + 3940 + 7194 (le trio des dépréciations, avec 6194 à zéro — risque de clients surévalués), 6125 (+210,44 % à justifier sur pièces), et par matérialité 6111 / 7111 / 3111 (les masses de l\'exploitation, avec cut-off systématique). Corroborés sans test lourd : 1481 avec 6311 (remboursement d\'emprunt expliquant −22,08 % d\'intérêts), 2355 avec 28355 et 6193 (renouvellement informatique cohérent), 2210 avec 2811 (frais préliminaires totalement amortis). Revue analytique seule : comptes stables ou peu significatifs (6131, 6135, 4432, 5161, 7381, 3455…). Dans ce cas, je documenterais ce classement avec les trois critères (matérialité au seuil de 250 000,00 MAD, risque par nature, variation surprenante) pour qu\'il soit discutable et refaisable. À l\'oral, montrer que l\'on sait NE PAS tout tester est aussi important que savoir tester : la révision est un art du triage raisonné.',
+   487→   487→      interviewTips: [
+   488→   488→        'Structurez votre réponse par familles (prioritaire / corroboré / analytique) : le recruteur entend alors un plan, pas une liste.',
+   489→   489→        'Citez la cohérence 1481-6311 : les corroborations croisées entre comptes sont ce qui distingue une vraie revue analytique d\'un simple contrôle de variation.',
+   490→   490→      ],
+   491→   491→    },
+   492→   492→    // ============================ EXERCICE 3 ============================
+   493→   493→    {
+   494→   494→      id: 'fidumac-m3-ex3',
+   495→   495→      title: 'Test de détail et cut-off : CCA et FNP à la clôture',
+   496→   496→      cycle: 'Révision comptable',
+   497→   497→      context:
+   498→   498→        'Vous testez la séparation des exercices de Distra Maroc (fictif) au 31/12/2025. M. Sabri vous remet la liste des factures de charges de fin et de début d\'exercice, avec les dates de service fait, de facturation et de comptabilisation. Objectif : identifier les charges constatées d\'avance (CCA) et les factures non parvenues (FNP) à comptabiliser. Scénario fictif ; montants en MAD.',
+   499→   499→      documents: [
+   500→   500→        {
+   501→   501→          kind: 'table',
+   502→   502→          name: 'Factures de charges autour de la clôture du 31/12/2025 (fictif)',
+   503→   503→          columns: ['N° facture', 'Prestataire', 'Nature', 'Service fait', 'Date facture', 'Comptabilisée le', 'Montant TTC (MAD)'],
+   504→   504→          rows: [
+   505→   505→            ['FAC-1201', 'Sud Net', 'Nettoyage des locaux — décembre', '12/2025', '12/12/2025', '12/12/2025', 8400.0],
+   506→   506→            ['FAC-1202', 'Atlas Info', 'Maintenance informatique (contrat annuel, exercice 2025)', '12/2025', '03/01/2026', '03/01/2026', 6300.0],
+   507→   507→            ['FAC-1203', 'Immobilier Rif', 'Loyer de janvier 2026, réglé le 28/12/2025', '01/2026', '28/12/2025', '28/12/2025', 9800.0],
+   508→   508→            ['FAC-1204', 'Assurance Atlas', 'Prime annuelle couvrant 01/01/2026 au 31/12/2026', '01/2026 à 12/2026', '15/12/2025', '15/12/2025', 12000.0],
+   509→   509→            ['FAC-1205', 'Trans Maroc', 'Transport de marchandises — fin décembre', '28/12/2025', '02/01/2026', '02/01/2026', 4650.0],
+   510→   510→            ['FAC-1206', 'Lydec Fiction', 'Électricité consommée en décembre 2025', '12/2025', '05/01/2026', 'Non comptabilisée', 3750.0],
+   511→   511→          ],
+   512→   512→          note: 'Document fictif. TVA fictive de 20 % incluse. Rappel : le rattachement d\'une charge suit le service fait ; la CCA (compte 3491) neutralise les charges payées d\'avance, la FNP (compte 4417) constate les dettes pour services faits non facturés.',
+   513→   513→        },
+   514→   514→      ],
+   515→   515→      questions: [
+   516→   516→        {
+   517→   517→          id: 'fidumac-m3-ex3-q1',
+   518→   518→          question: 'Quel est le montant total des factures non parvenues (FNP) à comptabiliser au 31/12/2025 ?',
+   519→   519→          type: 'numeric',
+   520→   520→          expected: 14700,
+   521→   521→          explanation:
+   522→   522→            'Trois services faits en 2025 facturés ou saisis en 2026 : FAC-1202 (6 300,00), FAC-1205 (4 650,00) et FAC-1206 (3 750,00). Total FNP : 6 300,00 + 4 650,00 + 3 750,00 = 14 700,00 MAD à constater au 4417.',
+   523→   523→        },
+   524→   524→        {
+   525→   525→          id: 'fidumac-m3-ex3-q2',
+   526→   526→          question: 'Quel est le montant total des charges constatées d\'avance (CCA) à isoler au 31/12/2025 ?',
+   527→   527→          type: 'numeric',
+   528→   528→          expected: 21800,
+   529→   529→          explanation:
+   530→   530→            'Deux charges de 2025 dont le service profite à 2026 : FAC-1203 (loyer de janvier 2026, 9 800,00) et FAC-1204 (prime d\'assurance couvrant 2026, 12 000,00). Total CCA : 9 800,00 + 12 000,00 = 21 800,00 MAD à activer au 3491.',
+   531→   531→        },
+   532→   532→        {
+   533→   533→          id: 'fidumac-m3-ex3-q3',
+   534→   534→          question: 'Au CGNC, dans quel compte constate-t-on une facture non parvenue fournisseur ?',
+   535→   535→          type: 'mcq',
+   536→   536→          options: [
+   537→   537→            '3491 Charges constatées d\'avance',
+   538→   538→            '4417 Fournisseurs, factures non parvenues',
+   539→   539→            '4411 Fournisseurs',
+   540→   540→            '6194 Dotations aux provisions pour dépréciation des créances',
+   541→   541→          ],
+   542→   542→          expected: '1',
+   543→   543→          explanation:
+   544→   544→            'La FNP est une dette : au CGNC elle se constate au 4417 « Fournisseurs, factures non parvenues » (408 en PCG français), en débitant la charge concernée. Le 3491 est l\'actif régularisateur symétrique pour les charges d\'avance.',
+   545→   545→        },
+   546→   546→        {
+   547→   547→          id: 'fidumac-m3-ex3-q4',
+   548→   548→          question: 'Quelle écriture enregistre la charge constatée d\'avance sur le loyer FAC-1203 ?',
+   549→   549→          type: 'mcq',
+   550→   550→          options: [
+   551→   551→            'Débit 6131 Locations et charges locatives 9 800,00 / Crédit 4411 Fournisseurs 9 800,00',
+   552→   552→            'Débit 3491 Charges constatées d\'avance 9 800,00 / Crédit 6131 Locations et charges locatives 9 800,00',
+   553→   553→            'Débit 6131 9 800,00 / Crédit 3491 9 800,00',
+   554→   554→            'Aucune écriture : il suffit d\'une note explicative',
+   555→   555→          ],
+   556→   556→          expected: '1',
+   557→   557→          explanation:
+   558→   558→            'Le loyer de janvier 2026 a été comptabilisé en charges de 2025 (avec le paiement) : il faut le neutraliser au 31/12/2025 en soldant la charge (crédit 6131) par l\'actif régularisateur (débit 3491). L\'extourne le 01/01/2026 le remettra en charges de 2026. L\'option 3 double la charge au lieu de la neutraliser.',
+   559→   559→        },
+   560→   560→        {
+   561→   561→          id: 'fidumac-m3-ex3-q5',
+   562→   562→          question: 'Quelle situation du tableau génère une FNP ?',
+   563→   563→          type: 'mcq',
+   564→   564→          options: [
+   565→   565→            'Un paiement effectué en décembre pour un service de janvier',
+   566→   566→            'Un service rendu en décembre 2025, facturé et comptabilisé en janvier 2026',
+   567→   567→            'Une facture de décembre comptabilisée en décembre',
+   568→   568→            'Une prime d\'assurance couvrant l\'exercice suivant',
+   569→   569→          ],
+   570→   570→          expected: '1',
+   571→   571→          explanation:
+   572→   572→            'La FNP naît du décalage service fait / facturation : le service appartient à 2025, la charge doit donc figurer en 2025 (avec la dette au 4417) même si la facture arrive en 2026. Les options 1 et 4 génèrent des CCA ; l\'option 3 est conforme.',
+   573→   573→        },
+   574→   574→        {
+   575→   575→          id: 'fidumac-m3-ex3-q6',
+   576→   576→          question:
+   577→   577→            'Rédigez (au conditionnel) les écritures de régularisation au 31/12/2025 et expliquez le principe de séparation des exercices qui les fonde.',
+   578→   578→          type: 'open',
+   579→   579→          keywords: ['cut-off', '4417', '3491', 'rattachement', 'service fait', 'charge', 'extourne'],
+   580→   580→          explanation:
+   581→   581→            'Réponse attendue (exemple) : principe — chaque charge se rattache à l\'exercice du service fait, indépendamment de la date de facturation ou de paiement. Écritures : pour les FNP, débit des charges concernées (6133 entretien ou 6145 électricité par exemple) et crédit 4417 pour 14 700,00 MAD (6 300,00 + 4 650,00 + 3 750,00), en distinguant HT et TVA si le détail est connu ; pour les CCA, débit 3491 et crédit des charges (6131 loyers 9 800,00 ; 6135 assurances 12 000,00) pour 21 800,00 MAD. Toutes ces écritures seraient extournées à l\'ouverture de 2026. L\'incidence nette sur le résultat 2025 serait documentée et rapprochée du seuil.',
+   582→   582→        },
+   583→   583→      ],
+   584→   584→      risks: ['Cut-off des charges', 'CCA omises', 'FNP omises', 'Rattachement erroné'],
+   585→   585→      solutionSummary:
+   586→   586→        'La démarche consisterait à classer chaque facture selon deux questions : le service a-t-il été rendu avant ou après le 31/12/2025 ? la charge a-t-elle été comptabilisée dans le bon exercice ? Résultat : trois FNP pour 14 700,00 MAD (FAC-1202, 1205, 1206 — services faits en 2025, factures de janvier) à constater au 4417 ; deux CCA pour 21 800,00 MAD (FAC-1203 loyer de janvier, FAC-1204 prime 2026) à isoler au 3491 ; une facture conforme (FAC-1201). Les écritures : débit charges / crédit 4417 pour les FNP, débit 3491 / crédit charges pour les CCA, avec extourne au 01/01/2026. L\'incidence nette sur le résultat 2025 serait chiffrée (les FNP majorent les charges de 14 700,00, les CCA les minorent de 21 800,00) et confrontée au seuil de signification. À l\'oral, ayez le réflexe des deux questions — « quand le service ? » puis « quand la saisie ? » — et le mot « extourne » : ce sont les marqueurs du cut-off bien maîtrisé.',
+   587→   587→      interviewTips: [
+   588→   588→        'Les deux comptes CGNC à connaître par cœur pour le cut-off : 3491 (CCA) et 4417 (FNP) — avec leurs équivalents PCG (486, 408) si l\'entretien est en France.',
+   589→   589→        'Précisez toujours que ces écritures s\'extournent à l\'ouverture : le cut-off est un jeu de frontières, pas une modification définitive.',
+   590→   590→      ],
+   591→   591→    },
+   592→   592→    // ============================ EXERCICE 4 ============================
+   593→   593→    {
+   594→   594→      id: 'fidumac-m3-ex4',
+   595→   595→      title: 'Provisions et dépréciations : recalculer la couverture des créances',
+   596→   596→      cycle: 'Révision comptable',
+   597→   597→      context:
+   598→   598→        'Suite logique de la priorisation : le poste clients de Distra Maroc (fictif) avec un soupçon de dépréciation insuffisante (3940 à 4 500,00 MAD alors que les clients douteux ont triplé). Vous reprenez la balance âgée au 31/12/2025 et la politique de dépréciation du client. Scénario fictif ; montants en MAD, créances hors taxes.',
+   599→   599→      documents: [
+   600→   600→        {
+   601→   601→          kind: 'table',
+   602→   602→          name: 'Balance âgée clients au 31/12/2025 — huit clients (fictif)',
+   603→   603→          columns: ['Client', 'Non échu (MAD)', '1-30 j (MAD)', '31-60 j (MAD)', '61-90 j (MAD)', 'Plus de 90 j (MAD)', 'Total dû (MAD)'],
+   604→   604→          rows: [
+   605→   605→            ['Comptoir du Sud', 30000.0, 12000.0, 6200.0, 0.0, 0.0, 48200.0],
+   606→   606→            ['Grenier Distribution', 40000.0, 15500.0, 8000.0, 0.0, 0.0, 63500.0],
+   607→   607→            ['Atlas Restauration', 14900.0, 5000.0, 3000.0, 5000.0, 0.0, 27900.0],
+   608→   608→            ['Menara Épicerie', 8400.0, 4000.0, 2000.0, 2000.0, 2000.0, 18400.0],
+   609→   609→            ['Rif Distribution', 12000.0, 4000.0, 2000.0, 4750.0, 9000.0, 31750.0],
+   610→   610→            ['Tanger Loisirs', 9600.0, 4000.0, 2000.0, 0.0, 0.0, 15600.0],
+   611→   611→            ['Fès Catering', 12300.0, 6000.0, 4000.0, 0.0, 0.0, 22300.0],
+   612→   612→            ['Agadir Hôtellerie', 5850.0, 2000.0, 2000.0, 0.0, 0.0, 9850.0],
+   613→   613→            ['TOTAL', '', '', 29200.0, 11750.0, 11000.0, 237500.0],
+   614→   614→          ],
+   615→   615→          note: 'Document fictif. Politique de dépréciation de Distra Maroc : 0 % (non échu et 1-30 j) ; 10 % (31-60 j) ; 25 % (61-90 j) ; 50 % (plus de 90 j) ; cas particulier : Rif Distribution en liquidation judiciaire (fictive) — dépréciation de 100 % sur ses 9 000,00 MAD de plus de 90 jours. Solde du compte 3940 avant correction : 4 500,00 MAD.',
+   616→   616→        },
+   617→   617→      ],
+   618→   618→      questions: [
+   619→   619→        {
+   620→   620→          id: 'fidumac-m3-ex4-q1',
+   621→   621→          question: 'Quel est le montant total des créances de la balance âgée ?',
+   622→   622→          type: 'numeric',
+   623→   623→          expected: 237500,
+   624→   624→          explanation:
+   625→   625→            '48 200 + 63 500 + 27 900 + 18 400 + 31 750 + 15 600 + 22 300 + 9 850 = 237 500,00 MAD. Vérifiez aussi les tranches : 29 200,00 (31-60 j), 11 750,00 (61-90 j) et 11 000,00 (plus de 90 j).',
+   626→   626→        },
+   627→   627→        {
+   628→   628→          id: 'fidumac-m3-ex4-q2',
+   629→   629→          question: 'Quel est le montant de la dépréciation totale nécessaire au 31/12/2025 selon la politique ?',
+   630→   630→          type: 'numeric',
+   631→   631→          expected: 15857.5,
+   632→   632→          explanation:
+   633→   633→            'Tranche 31-60 j : 29 200,00 × 10 % = 2 920,00. Tranche 61-90 j : 11 750,00 × 25 % = 2 937,50. Tranche plus de 90 j : 2 000,00 (Menara) × 50 % = 1 000,00, plus Rif Distribution en liquidation : 9 000,00 × 100 % = 9 000,00. Total : 2 920,00 + 2 937,50 + 1 000,00 + 9 000,00 = 15 857,50 MAD.',
+   634→   634→        },
+   635→   635→        {
+   636→   636→          id: 'fidumac-m3-ex4-q3',
+   637→   637→          question: 'Quelle dotation complémentaire faut-il enregistrer, sachant que le 3940 est déjà crédité de 4 500,00 MAD ?',
+   638→   638→          type: 'numeric',
+   639→   639→          expected: 11357.5,
+   640→   640→          explanation:
+   641→   641→            'Dépréciation nécessaire (15 857,50) − provision existante (4 500,00) = dotation complémentaire de 11 357,50 MAD à comptabiliser : débit 6194 (dotations aux provisions pour dépréciation des créances) / crédit 3940.',
+   642→   642→        },
+   643→   643→        {
+   644→   644→          id: 'fidumac-m3-ex4-q4',
+   645→   645→          question: 'Quelles étapes accompagnent le calcul pour en faire un élément probant ?',
+   646→   646→          type: 'multi',
+   647→   647→          options: [
+   648→   648→            'Reclasser les créances douteuses au compte 3424 et le justifier (litiges, insolvabilité déclarée)',
+   649→   649→            'Demander des confirmations directes aux clients significatifs, dont Rif Distribution',
+   650→   650→            'Tester les recouvrements postérieurs à la clôture (encaissements de janvier-février 2026)',
+   651→   651→            'Comparer la politique appliquée à celle de N-1 pour vérifier la cohérence',
+   652→   652→            'Attendre la décision du client pour compter la provision comme certaine',
+   653→   653→          ],
+   654→   654→          expected: ['0', '1', '2', '3'],
+   655→   655→          explanation:
+   656→   656→            'Le calcul seul ne suffit pas : reclassement au 3424 documenté, confirmations directes, recouvrements postérieurs et cohérence de la politique avec N-1 transforment la balance âgée en élément probant. La provision reste une estimation : elle n\'attend pas la « décision » du client pour être nécessaire, elle se déduit des faits.',
+   657→   657→        },
+   658→   658→        {
+   659→   659→          id: 'fidumac-m3-ex4-q5',
+   660→   660→          question:
+   661→   661→            'Expliquez (au conditionnel) votre raisonnement complet : de la balance âgée à l\'écriture de dotation, en passant par la critique de la situation actuelle.',
+   662→   662→          type: 'open',
+   663→   663→          keywords: ['balance âgée', 'politique', 'tranches', '3424', '3940', '6194', 'recouvrement', 'dotation'],
+   664→   664→          explanation:
+   665→   665→            'Réponse attendue (exemple) : je reprendrais la balance âgée (237 500,00 MAD, dont 11 000,00 de plus de 90 jours), j\'appliquerais la politique par tranche (10 % / 25 % / 50 %) en traitant Rif Distribution à 100 % (liquidation), soit une dépréciation nécessaire de 15 857,50 MAD. Constatant que le 3940 ne porte que 4 500,00 (et que la dotation 6194 est nulle avec une reprise de 41 700,00 au 7194), je proposerais une dotation complémentaire de 11 357,50 MAD (débit 6194 / crédit 3940) après reclassement des créances concernées au 3424. Les preuves : confirmations clients, recouvrements postérieurs, cohérence de la politique avec N-1. L\'incidence (11 357,50 sur le résultat) serait portée au récapitulatif des anomalies face au seuil de 250 000,00 MAD.',
+   666→   666→        },
+   667→   667→      ],
+   668→   668→      risks: ['Dépréciation insuffisante', 'Reprise injustifiée', 'Créances douteuses non reclassées', 'Estimation non corroborée'],
+   669→   669→      solutionSummary:
+   670→   670→        'Dans ce cas, je recalculerais tout : total de la balance âgée (237 500,00 MAD), tranches (29 200,00 / 11 750,00 / 11 000,00), puis dépréciation nécessaire selon la politique — 2 920,00 (10 % de 29 200,00) + 2 937,50 (25 % de 11 750,00) + 1 000,00 (50 % de 2 000,00 Menara) + 9 000,00 (100 % Rif Distribution, liquidation) = 15 857,50 MAD. Face au 3940 de 4 500,00, la dotation complémentaire serait de 11 357,50 MAD (6194 / 3940), après reclassement des créances concernées au 3424. La situation actuelle serait critiquée pour ce qu\'elle est : une reprise de 41 700,00 (7194) sans reconstitution de la couverture alors que les douteux triplaient — le schéma type de la dépréciation insuffisante. Les preuves à réunir : confirmations directes, recouvrements postérieurs, cohérence de la politique avec N-1. À l\'oral, l\'exercice se raconte en une phrase : « une politique × une balance âgée × des faits postérieurs = un montant, et l\'écart avec le solde du 3940 fait la dotation ».',
+   671→   671→      interviewTips: [
+   672→   672→        'Déroulez le calcul tranche par tranche à l\'oral : 10 % de 29 200 = 2 920 ; 25 % de 11 750 = 2 937,50 — le recruteur teste votre sûreté numérique.',
+   673→   673→        'Rappelez la triade de comptes CGNC : 3424 (douteux), 3940 (dépréciation), 6194 (dotation) — et leurs cousins PCG 416 / 491 / 6817 si l\'entretien est français.',
+   674→   674→      ],
+   675→   675→    },
+   676→   676→    // ============================ EXERCICE 5 ============================
+   677→   677→    {
+   678→   678→      id: 'fidumac-m3-ex5',
+   679→   679→      title: 'CGNC marocain contre PCG français : traduire son expérience',
+   680→   680→      cycle: 'Révision comptable',
+   681→   681→      context:
+   682→   682→        'Dernier exercice de la mission, orienté entretien. Vous préparez un entretien en France et vous devez savoir traduire votre expérience de révision menée au CGNC marocain : mêmes assertions, mêmes tests, numéros et libellés différents. Scénario fictif ; équivalences usuelles (les libellés exacts peuvent varier selon les plans de comptes internes).',
+   683→   683→      documents: [
+   684→   684→        {
+   685→   685→          kind: 'table',
+   686→   686→          name: 'Table d\'équivalence usuelle CGNC (Maroc) / PCG (France) (fictif)',
+   687→   687→          columns: ['Poste', 'Compte CGNC (Maroc)', 'Compte PCG (France)'],
+   688→   688→          rows: [
+   689→   689→            ['Clients', '3421', '410'],
+   690→   690→            ['Clients douteux ou litigieux', '3424', '416'],
+   691→   691→            ['Provisions pour dépréciation des clients', '3940', '491'],
+   692→   692→            ['Fournisseurs', '4411', '400'],
+   693→   693→            ['Fournisseurs, factures non parvenues', '4417', '408'],
+   694→   694→            ['Charges constatées d\'avance', '3491', '486'],
+   695→   695→            ['Achats de marchandises', '6111', '607'],
+   696→   696→            ['Ventes de marchandises', '7111', '707'],
+   697→   697→            ['Banque', '5141', '512'],
+   698→   698→            ['Caisse', '5161', '530'],
+   699→   699→          ],
+   700→   700→          note: 'Document fictif d\'entraînement. Équivalences usuelles entre CGNC marocain et PCG français : la logique comptable (assertions, cut-off, dépréciations) est commune, la numérotation diffère. Vérifiez toujours le libellé avant de citer un numéro.',
+
+[showing lines 301-700 of 919; use offset=701 with limit to continue reading]

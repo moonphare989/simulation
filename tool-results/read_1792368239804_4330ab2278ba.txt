@@ -1,0 +1,1021 @@
+     1→'use client'
+     2→
+     3→import { useMemo, useState, useSyncExternalStore } from 'react'
+     4→import type { ReactNode } from 'react'
+     5→import {
+     6→  AlertTriangle,
+     7→  BookOpen,
+     8→  Brain,
+     9→  CheckCircle2,
+    10→  ChevronDown,
+    11→  Eye,
+    12→  HelpCircle,
+    13→  ListChecks,
+    14→  Loader2,
+    15→  MessageCircle,
+    16→  Mic,
+    17→  Play,
+    18→  RotateCcw,
+    19→  Search,
+    20→  Target,
+    21→} from 'lucide-react'
+    22→import { bankQuestions } from '@/lib/content/questions'
+    23→import { useAppStore } from '@/lib/store'
+    24→import type {
+    25→  BankQuestion,
+    26→  Difficulty,
+    27→  JobTarget,
+    28→  QuestionCategory,
+    29→  QuestionStat,
+    30→} from '@/lib/types'
+    31→import { Badge } from '@/components/ui/badge'
+    32→import { Button } from '@/components/ui/button'
+    33→import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+    34→import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
+    35→import { Input } from '@/components/ui/input'
+    36→import { Progress } from '@/components/ui/progress'
+    37→import { ScrollArea } from '@/components/ui/scroll-area'
+    38→import {
+    39→  Select,
+    40→  SelectContent,
+    41→  SelectItem,
+    42→  SelectTrigger,
+    43→  SelectValue,
+    44→} from '@/components/ui/select'
+    45→import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+    46→import { Textarea } from '@/components/ui/textarea'
+    47→import { cn } from '@/lib/utils'
+    48→
+    49→// =====================================================================
+    50→// AuditLab — Questions rapides : parcours filtrable de la banque,
+    51→// sessions de révision auto-évaluées (10 questions, tirage biaisé vers
+    52→// les questions jamais réussies) et notions dues via la répétition
+    53→// espacée du store. Aucune correction automatique des réponses libres :
+    54→// la comparaison avec la réponse attendue est honnête, l’évaluation
+    55→// appartient à l’utilisateur.
+    56→// =====================================================================
+    57→
+    58→const MAX_DISPLAYED = 30
+    59→const SESSION_SIZE = 10
+    60→
+    61→type TabValue = 'browse' | 'session' | 'due'
+    62→type JobFilter = 'all' | JobTarget
+    63→type CategoryFilter = 'all' | QuestionCategory
+    64→type DifficultyFilter = 'all' | Difficulty
+    65→
+    66→const JOB_LABELS: Record<JobTarget, string> = {
+    67→  'audit-externe': 'Audit externe / légal',
+    68→  'audit-interne': 'Audit interne',
+    69→  'controle-interne': 'Contrôle interne',
+    70→  comptabilite: 'Comptabilité générale',
+    71→  revision: 'Révision comptable',
+    72→  tresorerie: 'Trésorerie',
+    73→  'controle-gestion': 'Contrôle de gestion',
+    74→  general: 'Général',
+    75→}
+    76→
+    77→const CATEGORY_LABELS: Record<QuestionCategory, string> = {
+    78→  definitions: 'Définitions',
+    79→  procedures: 'Procédures',
+    80→  justificatifs: 'Choix des justificatifs',
+    81→  'risques-controles': 'Risques et contrôles',
+    82→  calculs: 'Calculs et interprétation',
+    83→  'cas-pratiques': 'Cas pratiques',
+    84→  anomalies: 'Anomalies et erreurs',
+    85→  justification: 'Justification d’une conclusion',
+    86→  pieges: 'Questions pièges',
+    87→  relances: 'Relances d’un auditeur senior',
+    88→  rh: 'Questions RH',
+    89→  'communication-client': 'Communication client',
+    90→  organisation: 'Organisation et priorisation',
+    91→  limites: 'Limites d’une procédure',
+    92→  referentiels: 'Référentiels comptables',
+    93→  excel: 'Excel et données',
+    94→}
+    95→
+    96→const JOB_OPTIONS: { value: JobFilter; label: string }[] = [
+    97→  { value: 'all', label: 'Tous les métiers' },
+    98→  ...(Object.keys(JOB_LABELS) as JobTarget[]).map((job) => ({
+    99→    value: job,
+   100→    label: JOB_LABELS[job],
+   101→  })),
+   102→]
+   103→
+   104→const CATEGORY_OPTIONS: { value: CategoryFilter; label: string }[] = [
+   105→  { value: 'all', label: 'Toutes les catégories' },
+   106→  ...(Object.keys(CATEGORY_LABELS) as QuestionCategory[]).map((category) => ({
+   107→    value: category,
+   108→    label: CATEGORY_LABELS[category],
+   109→  })),
+   110→]
+   111→
+   112→const DIFFICULTY_OPTIONS: { value: DifficultyFilter; label: string }[] = [
+   113→  { value: 'all', label: 'Tous niveaux' },
+   114→  { value: 1, label: 'D1 · Initiation' },
+   115→  { value: 2, label: 'D2 · Guidé' },
+   116→  { value: 3, label: 'D3 · Standard' },
+   117→  { value: 4, label: 'D4 · Confirmé' },
+   118→  { value: 5, label: 'D5 · Expert' },
+   119→]
+   120→
+   121→const DIFFICULTY_BADGE_CLASS: Record<Difficulty, string> = {
+   122→  1: 'bg-emerald-600',
+   123→  2: 'bg-lime-600',
+   124→  3: 'bg-amber-600',
+   125→  4: 'bg-orange-600',
+   126→  5: 'bg-rose-600',
+   127→}
+   128→
+   129→const SELF_EVALUATION = [
+   130→  {
+   131→    label: 'Je savais',
+   132→    correct: true,
+   133→    quality: 3,
+   134→    className: 'border-emerald-600/50 text-emerald-700 hover:bg-emerald-600/10 dark:text-emerald-300',
+   135→  },
+   136→  {
+   137→    label: 'À peu près',
+   138→    correct: true,
+   139→    quality: 2,
+   140→    className: 'border-lime-600/50 text-lime-700 hover:bg-lime-600/10 dark:text-lime-300',
+   141→  },
+   142→  {
+   143→    label: 'Vaguement',
+   144→    correct: false,
+   145→    quality: 1,
+   146→    className: 'border-amber-600/50 text-amber-700 hover:bg-amber-600/10 dark:text-amber-400',
+   147→  },
+   148→  {
+   149→    label: 'Pas du tout',
+   150→    correct: false,
+   151→    quality: 0,
+   152→    className: 'border-rose-600/50 text-rose-700 hover:bg-rose-600/10 dark:text-rose-300',
+   153→  },
+   154→]
+   155→
+   156→const QUALITY_LABELS: Record<number, string> = {
+   157→  3: 'Je savais',
+   158→  2: 'À peu près',
+   159→  1: 'Vaguement',
+   160→  0: 'Pas du tout',
+   161→}
+   162→
+   163→function qualityBadgeClass(quality: number): string {
+   164→  if (quality >= 3) return 'border-emerald-600/40 text-emerald-700 dark:text-emerald-300'
+   165→  if (quality === 2) return 'border-lime-600/40 text-lime-700 dark:text-lime-300'
+   166→  if (quality === 1) return 'border-amber-600/40 text-amber-700 dark:text-amber-400'
+   167→  return 'border-rose-600/40 text-rose-700 dark:text-rose-300'
+   168→}
+   169→
+   170→/** Minuscules + suppression des diacritiques pour la recherche plein texte. */
+   171→function normalizeText(value: string): string {
+   172→  return value
+   173→    .toLowerCase()
+   174→    .normalize('NFD')
+   175→    .replace(/[\u0300-\u036f]/g, '')
+   176→    .trim()
+   177→}
+   178→
+   179→function questionHaystack(q: BankQuestion): string {
+   180→  return normalizeText(
+   181→    [
+   182→      q.question,
+   183→      q.expectedAnswer,
+   184→      q.reasoning,
+   185→      q.skill,
+   186→      q.oralShort,
+   187→      q.oralLong,
+   188→      q.commonErrors.join(' '),
+   189→    ].join(' '),
+   190→  )
+   191→}
+   192→
+   193→/**
+   194→ * Tirage aléatoire biaisé : chaque question reçoit Math.random() + 1 si elle
+   195→ * existe dans les statistiques avec correct < attempts (jamais entièrement
+   196→ * réussie), ce qui la fait remonter dans le tri décroissant.
+   197→ */
+   198→function pickSessionQuestions(
+   199→  pool: BankQuestion[],
+   200→  stats: Record<string, QuestionStat>,
+   201→): BankQuestion[] {
+   202→  return pool
+   203→    .map((question) => {
+   204→      const stat = stats[question.id]
+   205→      const bonus = stat && stat.correct < stat.attempts ? 1 : 0
+   206→      return { question, key: Math.random() + bonus }
+   207→    })
+   208→    .sort((a, b) => b.key - a.key)
+   209→    .slice(0, SESSION_SIZE)
+   210→    .map((scored) => scored.question)
+   211→}
+   212→
+   213→// ---------------------------------------------------------------------
+   214→// Horloge (notions dues) : instantané aligné à la minute pour rester
+   215→// stable entre deux rendus ; instantané serveur à 0 pour éviter tout
+   216→// écart d’hydratation (aucune notion due avant le montage client).
+   217→// ---------------------------------------------------------------------
+   218→
+   219→const MINUTE_MS = 60_000
+   220→
+   221→function subscribeToClock(onStoreChange: () => void) {
+   222→  const timer = setInterval(onStoreChange, MINUTE_MS)
+   223→  return () => clearInterval(timer)
+   224→}
+   225→
+   226→function getClockSnapshot(): number {
+   227→  return Math.floor(Date.now() / MINUTE_MS) * MINUTE_MS
+   228→}
+   229→
+   230→function getServerClockSnapshot(): number {
+   231→  return 0
+   232→}
+   233→
+   234→function useNow(): number {
+   235→  return useSyncExternalStore(subscribeToClock, getClockSnapshot, getServerClockSnapshot)
+   236→}
+   237→
+   238→// ---------------------------------------------------------------------
+   239→// Session de révision
+   240→// ---------------------------------------------------------------------
+   241→
+   242→interface SessionEntry {
+   243→  questionId: string
+   244→  answer: string
+   245→  /** Auto-évaluation : 3 = je savais, 2 = à peu près, 1 = vaguement, 0 = pas du tout */
+   246→  quality: number
+   247→}
+   248→
+   249→interface ActiveSession {
+   250→  questionIds: string[]
+   251→  index: number
+   252→  phase: 'answer' | 'feedback' | 'done'
+   253→  answer: string
+   254→  entries: SessionEntry[]
+   255→  /** true = session relancée depuis le bilan, restreinte aux notions faibles */
+   256→  targeted: boolean
+   257→}
+   258→
+   259→// ---------------------------------------------------------------------
+   260→// Petits composants de rendu
+   261→// ---------------------------------------------------------------------
+   262→
+   263→function LabeledSection({
+   264→  icon: Icon,
+   265→  label,
+   266→  children,
+   267→  className,
+   268→}: {
+   269→  icon?: React.ComponentType<{ className?: string }>
+   270→  label: string
+   271→  children: ReactNode
+   272→  className?: string
+   273→}) {
+   274→  return (
+   275→    <div className={className}>
+   276→      <p className="mb-1.5 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+   277→        {Icon ? <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden /> : null}
+   278→        {label}
+   279→      </p>
+   280→      {children}
+   281→    </div>
+   282→  )
+   283→}
+   284→
+   285→/**
+   286→ * Détail de la correction. Variante « compare » (session) : réponse attendue,
+   287→ * raisonnement, erreurs fréquentes. Variante « full » (parcours / notions
+   288→ * dues) : ajoute la réponse orale courte, la réponse développée et la relance.
+   289→ */
+   290→function AnswerDetails({ q, variant }: { q: BankQuestion; variant: 'full' | 'compare' }) {
+   291→  return (
+   292→    <div className="space-y-4">
+   293→      <LabeledSection icon={BookOpen} label="Réponse attendue">
+   294→        <div className="rounded-lg border border-primary/40 bg-primary/5 p-3 text-sm leading-relaxed">
+   295→          {q.expectedAnswer}
+   296→        </div>
+   297→      </LabeledSection>
+   298→      <LabeledSection icon={Brain} label="Raisonnement technique">
+   299→        <p className="text-sm leading-relaxed text-foreground/90">{q.reasoning}</p>
+   300→      </LabeledSection>
+   301→      {q.commonErrors.length > 0 ? (
+   302→        <LabeledSection icon={AlertTriangle} label="Erreurs fréquentes">
+   303→          <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed">
+   304→            {q.commonErrors.map((error, i) => (
+   305→              <li key={i}>{error}</li>
+   306→            ))}
+   307→          </ul>
+   308→        </LabeledSection>
+   309→      ) : null}
+   310→      {variant === 'full' ? (
+   311→        <>
+   312→          <LabeledSection icon={Mic} label="Réponse orale courte (20-30 s)">
+   313→            <p className="border-l-2 border-primary/40 pl-3 text-sm leading-relaxed">
+   314→              {q.oralShort}
+   315→            </p>
+   316→          </LabeledSection>
+   317→          <LabeledSection label="Réponse développée">
+   318→            <p className="text-sm leading-relaxed">{q.oralLong}</p>
+   319→          </LabeledSection>
+   320→          <LabeledSection icon={MessageCircle} label="Relance possible">
+   321→            <p className="rounded-lg border border-dashed px-3 py-2 text-sm leading-relaxed">
+   322→              {q.followUp}
+   323→            </p>
+   324→          </LabeledSection>
+   325→        </>
+   326→      ) : null}
+   327→    </div>
+   328→  )
+   329→}
+   330→
+   331→/**
+   332→ * Carte repliable d’une question : badges (difficulté, catégorie, métier,
+   333→ * statistiques), révélation progressive de la réponse puis enregistrement
+   334→ * « Je la maîtrise / À revoir » via recordQuestionResult.
+   335→ */
+   336→function QuestionCard({ q, defaultOpen = false }: { q: BankQuestion; defaultOpen?: boolean }) {
+   337→  const [open, setOpen] = useState(defaultOpen)
+   338→  const [revealed, setRevealed] = useState(false)
+   339→  const [recorded, setRecorded] = useState<'mastered' | 'review' | null>(null)
+   340→  const recordQuestionResult = useAppStore((s) => s.recordQuestionResult)
+   341→  const stat = useAppStore((s) => s.questionStats[q.id])
+   342→
+   343→  const handleRecord = (correct: boolean, quality: number, kind: 'mastered' | 'review') => {
+   344→    recordQuestionResult(q.id, correct, quality)
+   345→    setRecorded(kind)
+   346→  }
+   347→
+   348→  return (
+   349→    <Collapsible open={open} onOpenChange={setOpen}>
+   350→      <Card className="gap-4 py-4">
+   351→        <CardHeader className="pb-0">
+   352→          <CollapsibleTrigger asChild>
+   353→            <button
+   354→              type="button"
+   355→              className="group flex w-full items-start justify-between gap-3 text-left"
+   356→              aria-expanded={open}
+   357→            >
+   358→              <span className="min-w-0">
+   359→                <span className="block text-sm font-medium leading-snug">{q.question}</span>
+   360→                <span className="mt-1 block text-xs text-muted-foreground">{q.skill}</span>
+   361→              </span>
+   362→              <ChevronDown
+   363→                className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-180"
+   364→                aria-hidden
+   365→              />
+   366→            </button>
+   367→          </CollapsibleTrigger>
+   368→        </CardHeader>
+   369→        <CollapsibleContent>
+   370→          <CardContent className="space-y-4">
+   371→            <div className="flex flex-wrap items-center gap-1.5">
+   372→              <Badge
+   373→                className={cn('text-[10px] font-medium', DIFFICULTY_BADGE_CLASS[q.difficulty])}
+   374→                title={`Difficulté ${q.difficulty} sur 5`}
+   375→              >
+   376→                D{q.difficulty}
+   377→              </Badge>
+   378→              <Badge variant="outline" className="text-[10px] font-normal">
+   379→                {CATEGORY_LABELS[q.category]}
+   380→              </Badge>
+   381→              <Badge variant="outline" className="text-[10px] font-normal">
+   382→                {JOB_LABELS[q.job]}
+   383→              </Badge>
+   384→              {stat && stat.attempts > 0 ? (
+   385→                <Badge
+   386→                  variant="secondary"
+   387→                  className="text-[10px] font-normal"
+   388→                  title={`Réussie ${stat.correct} fois sur ${stat.attempts} tentative(s)`}
+   389→                >
+   390→                  {stat.correct}/{stat.attempts} réussie{stat.correct > 1 ? 's' : ''}
+   391→                </Badge>
+   392→              ) : null}
+   393→            </div>
+   394→
+   395→            {revealed ? (
+   396→              <AnswerDetails q={q} variant="full" />
+   397→            ) : (
+   398→              <div className="space-y-2">
+   399→                <Button variant="outline" size="sm" onClick={() => setRevealed(true)}>
+   400→                  <Eye className="h-4 w-4" aria-hidden /> Révéler la réponse attendue
+   401→                </Button>
+   402→                <p className="text-xs leading-relaxed text-muted-foreground">
+   403→                  Formulez d’abord votre réponse à voix haute : la comparaison honnête avec la
+   404→                  réponse attendue vaut mieux qu’une lecture passive.
+   405→                </p>
+   406→              </div>
+   407→            )}
+   408→
+   409→            {revealed ? (
+   410→              <div className="space-y-2 border-t pt-3">
+   411→                <p className="text-xs font-medium text-muted-foreground">
+   412→                  Comment évaluez-vous cette notion ?
+   413→                </p>
+   414→                <div className="flex flex-wrap gap-2">
+   415→                  <Button
+   416→                    size="sm"
+   417→                    variant="outline"
+   418→                    disabled={recorded !== null}
+   419→                    onClick={() => handleRecord(true, 2, 'mastered')}
+   420→                    className="border-emerald-600/50 text-emerald-700 hover:bg-emerald-600/10 dark:text-emerald-300"
+   421→                  >
+   422→                    <CheckCircle2 className="h-3.5 w-3.5" aria-hidden /> Je la maîtrise
+   423→                  </Button>
+   424→                  <Button
+   425→                    size="sm"
+   426→                    variant="outline"
+   427→                    disabled={recorded !== null}
+   428→                    onClick={() => handleRecord(false, 0, 'review')}
+   429→                    className="border-amber-600/50 text-amber-700 hover:bg-amber-600/10 dark:text-amber-400"
+   430→                  >
+   431→                    <RotateCcw className="h-3.5 w-3.5" aria-hidden /> À revoir
+   432→                  </Button>
+   433→                </div>
+   434→                {recorded === 'mastered' ? (
+   435→                  <p className="text-xs text-emerald-700 dark:text-emerald-300">
+   436→                    Enregistré : notion maîtrisée — sa prochaine révision s’espace.
+   437→                  </p>
+   438→                ) : null}
+   439→                {recorded === 'review' ? (
+   440→                  <p className="text-xs text-amber-700 dark:text-amber-400">
+   441→                    Enregistré : à revoir — elle reviendra bientôt dans « Notions dues ».
+   442→                  </p>
+   443→                ) : null}
+   444→              </div>
+   445→            ) : null}
+   446→          </CardContent>
+   447→        </CollapsibleContent>
+   448→      </Card>
+   449→    </Collapsible>
+   450→  )
+   451→}
+   452→
+   453→// ---------------------------------------------------------------------
+   454→// Section principale
+   455→// ---------------------------------------------------------------------
+   456→
+   457→export default function QuizSection() {
+   458→  const [tab, setTab] = useState<TabValue>('browse')
+   459→  const [jobFilter, setJobFilter] = useState<JobFilter>('all')
+   460→  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('all')
+   461→  const [difficultyFilter, setDifficultyFilter] = useState<DifficultyFilter>('all')
+   462→  const [search, setSearch] = useState('')
+   463→  const [session, setSession] = useState<ActiveSession | null>(null)
+   464→  /** Horloge alignée à la minute : 0 côté serveur, donc aucune notion due avant le montage. */
+   465→  const now = useNow()
+   466→
+   467→  const questionStats = useAppStore((s) => s.questionStats)
+   468→  const reviewCards = useAppStore((s) => s.reviewCards)
+   469→  const recordQuestionResult = useAppStore((s) => s.recordQuestionResult)
+   470→
+   471→  const byId = useMemo(
+   472→    () => new Map<string, BankQuestion>(bankQuestions.map((q) => [q.id, q])),
+   473→    [bankQuestions],
+   474→  )
+   475→
+   476→  const haystacks = useMemo(() => {
+   477→    const map = new Map<string, string>()
+   478→    for (const q of bankQuestions) map.set(q.id, questionHaystack(q))
+   479→    return map
+   480→  }, [bankQuestions])
+   481→
+   482→  const filtered = useMemo(() => {
+   483→    const needle = normalizeText(search)
+   484→    return bankQuestions.filter((q) => {
+   485→      if (jobFilter !== 'all' && q.job !== jobFilter) return false
+   486→      if (categoryFilter !== 'all' && q.category !== categoryFilter) return false
+   487→      if (difficultyFilter !== 'all' && q.difficulty !== difficultyFilter) return false
+   488→      if (needle !== '') {
+   489→        const haystack = haystacks.get(q.id) ?? ''
+   490→        if (!haystack.includes(needle)) return false
+   491→      }
+   492→      return true
+   493→    })
+   494→  }, [bankQuestions, jobFilter, categoryFilter, difficultyFilter, search, haystacks])
+   495→
+   496→  /** Questions dont la carte de révision est échue (dueAt <= maintenant). */
+   497→  const dueItems = useMemo(() => {
+   498→    if (now === 0) return []
+   499→    return Object.values(reviewCards)
+   500→      .filter((card) => card.dueAt <= now)
+   501→      .sort((a, b) => a.dueAt - b.dueAt)
+   502→      .flatMap((card) => {
+   503→        const question = byId.get(card.questionId)
+   504→        return question ? [{ question, dueAt: card.dueAt }] : []
+   505→      })
+   506→  }, [reviewCards, now, byId])
+   507→
+   508→  const practicedCount = useMemo(
+   509→    () => Object.keys(questionStats).filter((id) => byId.has(id)).length,
+   510→    [questionStats, byId],
+   511→  )
+   512→
+   513→  // --- Banque vide : l’agrégation peut être branchée après ce composant ---
+   514→  if (bankQuestions.length === 0) {
+   515→    return (
+   516→      <div className="space-y-6">
+   517→        <div className="flex items-start gap-3">
+   518→          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+   519→            <HelpCircle className="h-4.5 w-4.5 text-primary" aria-hidden />
+   520→          </div>
+   521→          <div>
+   522→            <h1 className="text-2xl font-semibold tracking-tight">Questions rapides</h1>
+   523→            <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+   524→              Banque de questions d’entretien pour préparer les PFE : parcours filtrable, sessions
+   525→              de révision auto-évaluées et répétition espacée des notions fragiles.
+   526→            </p>
+   527→          </div>
+   528→        </div>
+   529→        <div className="flex flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-4 py-16 text-center">
+   530→          <Loader2 className="h-6 w-6 animate-spin text-primary" aria-hidden />
+   531→          <p className="text-sm font-medium">Banque de questions en cours de chargement.</p>
+   532→          <p className="max-w-md text-xs leading-relaxed text-muted-foreground">
+   533→            L’agrégation des questions est en cours de branchement. Cette interface deviendra
+   534→            utilisable dès que la banque est disponible — aucun réglage n’est nécessaire de votre
+   535→            part.
+   536→          </p>
+   537→        </div>
+   538→      </div>
+   539→    )
+   540→  }
+   541→
+   542→  const hasActiveFilters =
+   543→    jobFilter !== 'all' ||
+   544→    categoryFilter !== 'all' ||
+   545→    difficultyFilter !== 'all' ||
+   546→    search.trim() !== ''
+   547→
+   548→  const resetFilters = () => {
+   549→    setJobFilter('all')
+   550→    setCategoryFilter('all')
+   551→    setDifficultyFilter('all')
+   552→    setSearch('')
+   553→  }
+   554→
+   555→  // --- Session ---
+   556→
+   557→  const startSession = (pool: BankQuestion[], targeted: boolean) => {
+   558→    if (pool.length === 0) return
+   559→    const stats = useAppStore.getState().questionStats
+   560→    const questions = pickSessionQuestions(pool, stats)
+   561→    setSession({
+   562→      questionIds: questions.map((q) => q.id),
+   563→      index: 0,
+   564→      phase: 'answer',
+   565→      answer: '',
+   566→      entries: [],
+   567→      targeted,
+   568→    })
+   569→  }
+   570→
+   571→  const handleValidate = () => {
+   572→    if (!session) return
+   573→    setSession({ ...session, phase: 'feedback' })
+   574→  }
+   575→
+   576→  const handleSelfEval = (correct: boolean, quality: number) => {
+   577→    if (!session) return
+   578→    const currentId = session.questionIds[session.index]
+   579→    if (currentId === undefined) return
+   580→    recordQuestionResult(currentId, correct, quality)
+   581→    const entries: SessionEntry[] = [
+   582→      ...session.entries,
+   583→      { questionId: currentId, answer: session.answer, quality },
+   584→    ]
+   585→    if (session.index + 1 < session.questionIds.length) {
+   586→      setSession({ ...session, entries, index: session.index + 1, phase: 'answer', answer: '' })
+   587→    } else {
+   588→      setSession({ ...session, entries, phase: 'done' })
+   589→    }
+   590→  }
+   591→
+   592→  const quitSession = () => setSession(null)
+   593→
+   594→  const currentQuestion =
+   595→    session && session.phase !== 'done' ? byId.get(session.questionIds[session.index]) : undefined
+   596→
+   597→  const sessionScore = session ? session.entries.filter((e) => e.quality >= 2).length : 0
+   598→  const weakEntries = session ? session.entries.filter((e) => e.quality <= 1) : []
+   599→  const weakQuestions = weakEntries
+   600→    .map((e) => byId.get(e.questionId))
+   601→    .filter((q): q is BankQuestion => q !== undefined)
+   602→
+   603→  const sessionLabel = `Démarrer ${
+   604→    filtered.length > 0 ? Math.min(SESSION_SIZE, filtered.length) : SESSION_SIZE
+   605→  } questions`
+   606→
+   607→  return (
+   608→    <div className="space-y-6">
+   609→      {/* En-tête */}
+   610→      <div className="flex items-start gap-3">
+   611→        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10">
+   612→          <HelpCircle className="h-4.5 w-4.5 text-primary" aria-hidden />
+   613→        </div>
+   614→        <div>
+   615→          <h1 className="text-2xl font-semibold tracking-tight">Questions rapides</h1>
+   616→          <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+   617→            {bankQuestions.length} questions d’entretien couvrant les huit métiers ciblés :
+   618→            parcourez-les par métier, catégorie et difficulté, entraînez-vous en sessions de dix
+   619→            questions, et laissez la répétition espacée ramener les notions mal maîtrisées au bon
+   620→            moment.
+   621→          </p>
+   622→        </div>
+   623→      </div>
+   624→
+   625→      {/* Filtres (partagés par les trois onglets) */}
+   626→      <Card className="gap-4 py-4">
+   627→        <CardContent className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+   628→          <div className="relative">
+   629→            <Search
+   630→              className="pointer-events-none absolute top-1/2 left-2.5 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+   631→              aria-hidden
+   632→            />
+   633→            <Input
+   634→              value={search}
+   635→              onChange={(e) => setSearch(e.target.value)}
+   636→              placeholder="Rechercher une notion, un mot-clé…"
+   637→              className="pl-8"
+   638→              aria-label="Recherche plein texte dans les questions"
+   639→            />
+   640→          </div>
+   641→          <Select value={jobFilter} onValueChange={(v) => setJobFilter(v as JobFilter)}>
+   642→            <SelectTrigger className="w-full" aria-label="Filtrer par métier">
+   643→              <SelectValue placeholder="Métier" />
+   644→            </SelectTrigger>
+   645→            <SelectContent>
+   646→              {JOB_OPTIONS.map((option) => (
+   647→                <SelectItem key={option.value} value={option.value}>
+   648→                  {option.label}
+   649→                </SelectItem>
+   650→              ))}
+   651→            </SelectContent>
+   652→          </Select>
+   653→          <Select
+   654→            value={categoryFilter}
+   655→            onValueChange={(v) => setCategoryFilter(v as CategoryFilter)}
+   656→          >
+   657→            <SelectTrigger className="w-full" aria-label="Filtrer par catégorie">
+   658→              <SelectValue placeholder="Catégorie" />
+   659→            </SelectTrigger>
+   660→            <SelectContent>
+   661→              {CATEGORY_OPTIONS.map((option) => (
+   662→                <SelectItem key={option.value} value={option.value}>
+   663→                  {option.label}
+   664→                </SelectItem>
+   665→              ))}
+   666→            </SelectContent>
+   667→          </Select>
+   668→          <Select
+   669→            value={String(difficultyFilter)}
+   670→            onValueChange={(v) =>
+   671→              setDifficultyFilter(v === 'all' ? 'all' : (Number(v) as Difficulty))
+   672→            }
+   673→          >
+   674→            <SelectTrigger className="w-full" aria-label="Filtrer par difficulté">
+   675→              <SelectValue placeholder="Difficulté" />
+   676→            </SelectTrigger>
+   677→            <SelectContent>
+   678→              {DIFFICULTY_OPTIONS.map((option) => (
+   679→                <SelectItem key={String(option.value)} value={String(option.value)}>
+   680→                  {option.label}
+   681→                </SelectItem>
+   682→              ))}
+   683→            </SelectContent>
+   684→          </Select>
+   685→        </CardContent>
+   686→        <div className="flex flex-wrap items-center gap-2 px-6">
+   687→          <Badge variant="secondary" className="text-xs font-normal">
+   688→            {filtered.length} question{filtered.length > 1 ? 's' : ''} correspond
+   689→            {filtered.length > 1 ? 'ent' : ''}
+   690→          </Badge>
+   691→          {hasActiveFilters ? (
+   692→            <Button variant="ghost" size="sm" onClick={resetFilters}>
+   693→              <RotateCcw className="h-3.5 w-3.5" aria-hidden /> Réinitialiser les filtres
+   694→            </Button>
+   695→          ) : null}
+   696→        </div>
+   697→      </Card>
+   698→
+   699→      <Tabs value={tab} onValueChange={(v) => setTab(v as TabValue)}>
+   700→        <TabsList className="grid w-full gap-1 sm:inline-flex sm:w-auto">
+   701→          <TabsTrigger value="browse">Parcourir</TabsTrigger>
+   702→          <TabsTrigger value="session">Session de révision</TabsTrigger>
+   703→          <TabsTrigger value="due">
+   704→            Notions dues
+   705→            {dueItems.length > 0 ? (
+   706→              <Badge className="h-5 px-1.5 text-[10px] leading-none">{dueItems.length}</Badge>
+   707→            ) : null}
+   708→          </TabsTrigger>
+   709→        </TabsList>
+   710→
+   711→        {/* ----- Onglet Parcourir ----- */}
+   712→        <TabsContent value="browse" className="mt-4">
+   713→          {filtered.length === 0 ? (
+   714→            <div className="flex flex-col items-start gap-3 rounded-xl border border-dashed px-4 py-8 text-sm text-muted-foreground">
+   715→              <p>Aucune question ne correspond à ces filtres.</p>
+   716→              <Button variant="outline" size="sm" onClick={resetFilters}>
+   717→                <RotateCcw className="h-3.5 w-3.5" aria-hidden /> Réinitialiser les filtres
+   718→              </Button>
+   719→            </div>
+   720→          ) : (
+   721→            <ScrollArea className="max-h-[75vh] pr-3">
+   722→              <div className="space-y-3">
+   723→                {filtered.slice(0, MAX_DISPLAYED).map((q) => (
+   724→                  <QuestionCard key={q.id} q={q} />
+   725→                ))}
+   726→                {filtered.length > MAX_DISPLAYED ? (
+   727→                  <p className="rounded-lg border border-dashed bg-muted/30 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
+   728→                    + {filtered.length - MAX_DISPLAYED} autres questions correspondent encore à
+   729→                    ces filtres — affinez la recherche ou lancez une session pour les travailler.
+   730→                  </p>
+   731→                ) : null}
+   732→              </div>
+   733→            </ScrollArea>
+   734→          )}
+   735→        </TabsContent>
+   736→
+   737→        {/* ----- Onglet Session de révision ----- */}
+   738→        <TabsContent value="session" className="mt-4">
+   739→          {session === null ? (
+   740→            <Card>
+   741→              <CardHeader>
+   742→                <CardTitle className="text-base">Session de révision</CardTitle>
+   743→                <CardDescription>
+   744→                  Dix questions tirées au hasard dans la sélection actuelle, pondérées en faveur
+   745→                  des questions que vous n’avez jamais réussies. Vous répondez par écrit, vous
+   746→                  comparez avec la réponse attendue, puis vous vous évaluez vous-même : c’est
+   747→                  cette évaluation honnête qui alimente la répétition espacée.
+   748→                </CardDescription>
+   749→              </CardHeader>
+   750→              <CardContent className="space-y-4">
+   751→                <ul className="list-disc space-y-1 pl-5 text-sm leading-relaxed text-muted-foreground">
+   752→                  <li>Réponse libre rédigée, comme à l’oral.</li>
+   753→                  <li>
+   754→                    Comparaison systématique : votre réponse, la réponse attendue, le raisonnement
+   755→                    technique et les erreurs fréquentes.
+   756→                  </li>
+   757→                  <li>Auto-évaluation en quatre niveaux, sans complaisance.</li>
+   758→                  <li>
+   759→                    Bilan final avec, si besoin, une session ciblée sur vos lacunes de la session.
+   760→                  </li>
+   761→                </ul>
+   762→                <div className="flex flex-wrap items-center gap-3">
+   763→                  <Button onClick={() => startSession(filtered, false)} disabled={filtered.length === 0}>
+   764→                    <Play className="h-4 w-4" aria-hidden /> {sessionLabel}
+   765→                  </Button>
+   766→                  {filtered.length === 0 ? (
+   767→                    <p className="text-sm text-muted-foreground">
+   768→                      Aucune question ne correspond aux filtres — réinitialisez-les pour démarrer.
+   769→                    </p>
+   770→                  ) : (
+   771→                    <p className="text-xs text-muted-foreground">
+   772→                      Sélection : {filtered.length} question{filtered.length > 1 ? 's' : ''}
+   773→                      {practicedCount > 0
+   774→                        ? ` · ${practicedCount} déjà travaillée${practicedCount > 1 ? 's' : ''}`
+   775→                        : ''}
+   776→                    </p>
+   777→                  )}
+   778→                </div>
+   779→              </CardContent>
+   780→            </Card>
+   781→          ) : session.phase === 'done' ? (
+   782→            <Card>
+   783→              <CardHeader>
+   784→                <CardTitle className="flex items-center gap-2 text-base">
+   785→                  <ListChecks className="h-4.5 w-4.5 text-primary" aria-hidden />
+   786→                  Bilan de la session
+   787→                </CardTitle>
+   788→                <CardDescription>
+   789→                  {session.targeted
+   790→                    ? 'Session ciblée sur les notions repérées comme fragiles.'
+   791→                    : `${session.entries.length} question${
+   792→                        session.entries.length > 1 ? 's' : ''
+   793→                      } travaillée${session.entries.length > 1 ? 's' : ''}, auto-évaluées sans complaisance.`}
+   794→                </CardDescription>
+   795→              </CardHeader>
+   796→              <CardContent className="space-y-5">
+   797→                <div className="flex flex-wrap items-center gap-4">
+   798→                  <p className="flex items-baseline gap-1.5">
+   799→                    <span className="text-3xl font-semibold tabular-nums">{sessionScore}</span>
+   800→                    <span className="text-sm text-muted-foreground">
+   801→                      / {session.entries.length} réussie{sessionScore > 1 ? 's' : ''}
+   802→                    </span>
+   803→                  </p>
+   804→                  <Progress
+   805→                    value={
+   806→                      session.entries.length > 0
+   807→                        ? (sessionScore / session.entries.length) * 100
+   808→                        : 0
+   809→                    }
+   810→                    className="h-2 min-w-40 flex-1"
+   811→                    aria-label="Taux de réussite de la session"
+   812→                  />
+   813→                </div>
+   814→
+   815→                <div className="space-y-2">
+   816→                  {session.entries.map((entry) => {
+   817→                    const q = byId.get(entry.questionId)
+   818→                    return (
+   819→                      <div
+   820→                        key={entry.questionId}
+   821→                        className="flex items-start justify-between gap-3 rounded-lg border px-3 py-2"
+   822→                      >
+   823→                        <p className="min-w-0 text-sm leading-snug">
+   824→                          {q ? q.question : entry.questionId}
+   825→                        </p>
+   826→                        <Badge
+   827→                          variant="outline"
+   828→                          className={cn('shrink-0 text-[10px]', qualityBadgeClass(entry.quality))}
+   829→                        >
+   830→                          {QUALITY_LABELS[entry.quality] ?? '—'}
+   831→                        </Badge>
+   832→                      </div>
+   833→                    )
+   834→                  })}
+   835→                </div>
+   836→
+   837→                <div className="rounded-xl border-2 border-amber-500/40 bg-amber-500/5 p-4">
+   838→                  <p className="mb-2 flex items-center gap-2 text-sm font-semibold">
+   839→                    <AlertTriangle className="h-4 w-4 text-amber-600" aria-hidden />
+   840→                    Notions à revoir ({weakEntries.length})
+   841→                  </p>
+   842→                  {weakEntries.length === 0 ? (
+   843→                    <p className="text-sm leading-relaxed text-muted-foreground">
+   844→                      Aucune notion marquée « vaguement » ou « pas du tout » dans cette session.
+   845→                      Continuez ainsi.
+   846→                    </p>
+   847→                  ) : (
+   848→                    <ul className="list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
+   849→                      {weakEntries.map((entry) => {
+   850→                        const q = byId.get(entry.questionId)
+   851→                        return <li key={entry.questionId}>{q ? q.question : entry.questionId}</li>
+   852→                      })}
+   853→                    </ul>
+   854→                  )}
+   855→                </div>
+   856→
+   857→                <div className="flex flex-wrap gap-2">
+   858→                  <Button
+   859→                    disabled={weakQuestions.length === 0}
+   860→                    onClick={() => startSession(weakQuestions, true)}
+   861→                  >
+   862→                    <Target className="h-4 w-4" aria-hidden /> Session ciblée sur mes lacunes
+   863→                  </Button>
+   864→                  <Button variant="outline" onClick={quitSession}>
+   865→                    Nouvelle session
+   866→                  </Button>
+   867→                </div>
+   868→                <p className="text-xs leading-relaxed text-muted-foreground">
+   869→                  Chaque auto-évaluation est enregistrée localement et programme la revue de la
+   870→                  notion : « Je savais » espace la révision, « Pas du tout » la ramène dès que
+   871→                  possible dans l’onglet « Notions dues ».
+   872→                </p>
+   873→              </CardContent>
+   874→            </Card>
+   875→          ) : (
+   876→            <div className="space-y-4">
+   877→              <div className="flex flex-wrap items-center justify-between gap-2">
+   878→                <p className="text-sm font-medium">
+   879→                  Question {session.index + 1} / {session.questionIds.length}
+   880→                  {session.targeted ? (
+   881→                    <span className="ml-2 text-xs font-normal text-muted-foreground">
+   882→                      session ciblée sur vos lacunes
+   883→                    </span>
+   884→                  ) : null}
+   885→                </p>
+   886→                <Button variant="ghost" size="sm" onClick={quitSession}>
+   887→                  Interrompre
+   888→                </Button>
+   889→              </div>
+   890→              <Progress
+   891→                value={(session.entries.length / session.questionIds.length) * 100}
+   892→                aria-label={`Progression ${session.entries.length} sur ${session.questionIds.length}`}
+   893→              />
+   894→
+   895→              {currentQuestion ? (
+   896→                <Card>
+   897→                  <CardHeader className="pb-0">
+   898→                    <div className="flex flex-wrap gap-1.5">
+   899→                      <Badge
+   900→                        className={cn(
+   901→                          'text-[10px] font-medium',
+   902→                          DIFFICULTY_BADGE_CLASS[currentQuestion.difficulty],
+   903→                        )}
+   904→                      >
+   905→                        D{currentQuestion.difficulty}
+   906→                      </Badge>
+   907→                      <Badge variant="outline" className="text-[10px] font-normal">
+   908→                        {CATEGORY_LABELS[currentQuestion.category]}
+   909→                      </Badge>
+   910→                      <Badge variant="outline" className="text-[10px] font-normal">
+   911→                        {JOB_LABELS[currentQuestion.job]}
+   912→                      </Badge>
+   913→                    </div>
+   914→                    <CardTitle className="pt-2 text-base leading-snug">
+   915→                      {currentQuestion.question}
+   916→                    </CardTitle>
+   917→                    <CardDescription>{currentQuestion.skill}</CardDescription>
+   918→                  </CardHeader>
+   919→                  <CardContent className="mt-4 space-y-4">
+   920→                    {session.phase === 'answer' ? (
+   921→                      <>
+   922→                        <Textarea
+   923→                          value={session.answer}
+   924→                          onChange={(e) => setSession({ ...session, answer: e.target.value })}
+   925→                          placeholder="Rédigez votre réponse comme si vous étiez à l’oral : définition, démarche, exemple concret…"
+   926→                          rows={7}
+   927→                          aria-label="Votre réponse libre"
+   928→                        />
+   929→                        <div>
+   930→                          <Button onClick={handleValidate}>
+   931→                            <CheckCircle2 className="h-4 w-4" aria-hidden /> Valider
+   932→                          </Button>
+   933→                          <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">
+   934→                            La comparaison ne note pas à votre place : lisez la réponse attendue,
+   935→                            repérez vos oublis, puis évaluez-vous honnêtement.
+   936→                          </p>
+   937→                        </div>
+   938→                      </>
+   939→                    ) : (
+   940→                      <>
+   941→                        <LabeledSection label="Votre réponse">
+   942→                          <blockquote className="border-l-2 border-muted-foreground/40 pl-3 text-sm leading-relaxed text-foreground/90">
+   943→                            {session.answer.trim() !== ''
+   944→                              ? session.answer
+   945→                              : 'Aucune réponse rédigée — comparez tout de même la réponse attendue avant de vous évaluer.'}
+   946→                          </blockquote>
+   947→                        </LabeledSection>
+   948→                        <AnswerDetails q={currentQuestion} variant="compare" />
+   949→                        <div className="space-y-2 rounded-lg border bg-muted/30 p-3 sm:p-4">
+   950→                          <p className="text-sm font-semibold">Auto-évaluation</p>
+   951→                          <p className="text-xs leading-relaxed text-muted-foreground">
+   952→                            Soyez exigeant : « Je savais » suppose une réponse structurée et juste,
+   953→                            « À peu près » une réponse incomplète mais dans le vrai.
+   954→                          </p>
+   955→                          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+   956→                            {SELF_EVALUATION.map((option) => (
+   957→                              <Button
+   958→                                key={option.label}
+   959→                                variant="outline"
+   960→                                size="sm"
+   961→                                className={option.className}
+   962→                                onClick={() => handleSelfEval(option.correct, option.quality)}
+   963→                              >
+   964→                                {option.label}
+   965→                              </Button>
+   966→                            ))}
+   967→                          </div>
+   968→                        </div>
+   969→                      </>
+   970→                    )}
+   971→                  </CardContent>
+   972→                </Card>
+   973→              ) : (
+   974→                <div className="flex flex-col items-start gap-3 rounded-xl border border-dashed px-4 py-6 text-sm text-muted-foreground">
+   975→                  <p>Cette question n’est plus disponible dans la banque.</p>
+   976→                  <Button variant="outline" size="sm" onClick={quitSession}>
+   977→                    Quitter la session
+   978→                  </Button>
+   979→                </div>
+   980→              )}
+   981→            </div>
+   982→          )}
+   983→        </TabsContent>
+   984→
+   985→        {/* ----- Onglet Notions dues ----- */}
+   986→        <TabsContent value="due" className="mt-4">
+   987→          {dueItems.length === 0 ? (
+   988→            <div className="rounded-xl border border-dashed px-4 py-10 text-center text-sm leading-relaxed text-muted-foreground">
+   989→              Aucune notion n’est due pour l’instant — les questions mal maîtrisées reviendront au
+   990→              bon moment.
+   991→            </div>
+   992→          ) : (
+   993→            <div className="space-y-3">
+   994→              <p className="text-sm leading-relaxed text-muted-foreground">
+   995→                {dueItems.length} notion{dueItems.length > 1 ? 's' : ''} à réviser maintenant :
+   996→                relisez la question, répondez à voix haute, révélez la réponse puis évaluez-vous.
+   997→              </p>
+   998→              <ScrollArea className="max-h-[75vh] pr-3">
+   999→                <div className="space-y-3">
+  1000→                  {dueItems.map(({ question, dueAt }) => (
+  1001→                    <div key={question.id} className="space-y-1">
+  1002→                      <p className="px-1 text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+  1003→                        Due depuis le{' '}
+  1004→                        {new Date(dueAt).toLocaleDateString('fr-FR', {
+  1005→                          day: 'numeric',
+  1006→                          month: 'long',
+  1007→                        })}
+  1008→                      </p>
+  1009→                      <QuestionCard q={question} defaultOpen />
+  1010→                    </div>
+  1011→                  ))}
+  1012→                </div>
+  1013→              </ScrollArea>
+  1014→            </div>
+  1015→          )}
+  1016→        </TabsContent>
+  1017→      </Tabs>
+  1018→    </div>
+  1019→  )
+  1020→}
+  1021→

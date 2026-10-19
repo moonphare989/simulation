@@ -1,0 +1,382 @@
+   355→            'Réponse attendue (exemple) : l\'audit légal s\'adresse aux actionnaires et aux tiers, tandis que l\'audit contractuel s\'adresse au commanditaire défini par le contrat. L\'audit légal repose sur une désignation prévue par les textes, l\'audit contractuel sur une lettre de mission. Seul l\'audit légal débouche sur une opinion de certification des états de synthèse.',
+   356→        },
+   357→      ],
+   358→      risks: ['Confusion des cadres de mission', 'Rapport inadapté au destinataire', 'Objectif mal compris'],
+   359→      solutionSummary:
+   360→        'Dans ce cas, je commencerais par relire la lettre de mission et l\'extrait de mandat pour vérifier destinataire, base, objectif et rapport attendu, puis je remplirais le tableau comparatif. Les deux missions de la fiche illustrent parfaitement le tableau : le mandat de commissaire aux comptes de Distra Maroc (distribution, exercice 2025) vise la certification des états de synthèse ; la mission contractuelle de BâtiSud Maroc (BTP) vise une revue des situations de travaux et des marges prévisionnelles, sans opinion. La procédure consisterait ensuite à vérifier que chaque feuille de travail précise le cadre dans lequel elle est réalisée, car un même constat (par exemple un avancement de chantier discuté) ne se documente ni ne se communique de la même manière selon que la mission est légale ou contractuelle. En entretien, cette capacité à qualifier le cadre avant de décrire le geste technique est un marqueur de maturité.',
+   361→      interviewTips: [
+   362→        'Commencez toujours par qualifier le cadre (« mission légale, destinataire : actionnaires et tiers ») avant de décrire les travaux.',
+   363→        'Si on vous demande la durée exacte d\'un mandat de commissaire aux comptes, répondez sur le principe (mandat encadré, rotation) sans inventer de chiffre.',
+   364→      ],
+   365→    },
+   366→    // ============================ EXERCICE 2 ============================
+   367→    {
+   368→      id: 'fidumac-m1-ex2',
+   369→      title: 'Les étapes d\'une mission d\'audit : remettre la chronologie en ordre',
+   370→      cycle: 'Transversal',
+   371→      context:
+   372→        'Pour l\'onboarding, Mme Idrissi (associée fictive) vous demande de restituer la chronologie d\'une mission d\'audit, telle qu\'utilisée chez Fidumac : planification, prise de connaissance, identification des risques, stratégie d\'audit, collecte d\'éléments probants, synthèse, documentation, conclusions et limites. Scénario fictif.',
+   373→      documents: [
+   374→        {
+   375→          kind: 'text',
+   376→          name: 'Feuille de route des phases (support fictif d\'entraînement)',
+   377→          content:
+   378→            'PHASE 1 — PLANIFICATION\nAcceptation (ou maintien) de la mission, évaluation de l\'indépendance,\nchoix de l\'équipe, budget et calendrier, rédaction du plan de mission\net fixation du seuil de signification.\n\nPHASE 2 — PRISE DE CONNAISSANCE\nEntité, activité, secteur, organisation, systèmes comptables et d\'information,\nrevue du dossier permanent, entretiens avec les opérationnels.\n\nPHASE 3 — IDENTIFICATION DES RISQUES\nTraduction de la prise de connaissance en assertions sensibles\n(réalité, exhaustivité, valorisation, rattachement, présentation).\n\nPHASE 4 — STRATÉGIE D\'AUDIT\nArbitrage entre approche substantive et fiabilité des contrôles du client,\ndimensionnement des échantillons, dates d\'intervention.\n\nPHASE 5 — COLLECTE D\'ÉLÉMENTS PROBANTS\nExécution des programmes de travail : tests de détail, confirmations,\nrapprochements, revues analytiques, assistance à l\'inventaire,\nvisite de chantier pour le BTP.\n\nPHASE 6 — SYNTHÈSE\nCumul des anomalies, incidence au seuil de signification,\npoints à discuter avec le client, révision des estimations.\n\nPHASE 7 — DOCUMENTATION\nFeuilles de travail référencées et datées, piste d\'audit, dossier permanent\nmis à jour. Étape transversale : chaque phase est documentée au fil de l\'eau.\n\nPHASE 8 — CONCLUSIONS ET LIMITES\nNote de synthèse, opinion (mission légale) ou rapport de mission (contractuel),\nexpression des limites : sondages, estimations, refus d\'accès, rotation.',
+   379→          note: 'Support fictif. Les découpages varient d\'un cabinet à l\'autre ; l\'ordre logique, lui, est stable.',
+   380→        },
+   381→      ],
+   382→      questions: [
+   383→        {
+   384→          id: 'fidumac-m1-ex2-q1',
+   385→          question: 'Quelle phase ouvre la mission ?',
+   386→          type: 'mcq',
+   387→          options: [
+   388→            'La collecte d\'éléments probants',
+   389→            'La planification (acceptation, équipe, calendrier, seuil de signification)',
+   390→            'La rédaction du rapport',
+   391→            'La synthèse des anomalies',
+   392→          ],
+   393→          expected: '1',
+   394→          explanation:
+   395→            'Tout commence par la planification : accepter la mission, vérifier l\'indépendance, dimensionner l\'équipe, fixer le calendrier et le seuil de signification. On ne collecte des preuves qu\'une fois la stratégie posée.',
+   396→        },
+   397→        {
+   398→          id: 'fidumac-m1-ex2-q2',
+   399→          question: 'Que fait-on immédiatement après l\'identification des risques ?',
+   400→          type: 'mcq',
+   401→          options: [
+   402→            'On rédige le rapport final',
+   403→            'On élabore la stratégie d\'audit (nature, étendue, calendrier des travaux)',
+   404→            'On clôture le dossier permanent',
+   405→            'On sollicite la confirmation des fournisseurs',
+   406→          ],
+   407→          expected: '1',
+   408→          explanation:
+   409→            'Les risques identifiés déterminent la réponse d\'audit : contrôles substantifs ou appui sur les contrôles du client, taille des échantillons, dates d\'intervention. C\'est la stratégie d\'audit.',
+   410→        },
+   411→        {
+   412→          id: 'fidumac-m1-ex2-q3',
+   413→          question: 'Quel enchaînement est correct ?',
+   414→          type: 'mcq',
+   415→          options: [
+   416→            'Prise de connaissance → identification des risques → stratégie d\'audit → collecte d\'éléments probants → synthèse → conclusions et limites',
+   417→            'Collecte d\'éléments probants → prise de connaissance → stratégie d\'audit → identification des risques → synthèse',
+   418→            'Synthèse → documentation → identification des risques → stratégie d\'audit → éléments probants',
+   419→            'Stratégie d\'audit → planification → documentation → risques → synthèse',
+   420→          ],
+   421→          expected: '0',
+   422→          explanation:
+   423→            'La logique est : comprendre (prise de connaissance), en déduire les risques, décider de la réponse (stratégie), exécuter (preuves), conclure (synthèse puis conclusions et limites).',
+   424→        },
+   425→        {
+   426→          id: 'fidumac-m1-ex2-q4',
+   427→          question: 'Où se situe la documentation dans le déroulement de la mission ?',
+   428→          type: 'mcq',
+   429→          options: [
+   430→            'Uniquement à la fin, au moment du rapport',
+   431→            'Tout au long de la mission : chaque phase est documentée au fil de l\'eau',
+   432→            'Seulement pendant la collecte des éléments probants',
+   433→            'Après la remise du rapport, à titre d\'archive',
+   434→          ],
+   435→          expected: '1',
+   436→          explanation:
+   437→            'La documentation est transversale : une feuille de travail datée et référencée pour chaque contrôle effectué. Rédiger tout à la fin expose à l\'oubli et rend la piste d\'audit invérifiable.',
+   438→        },
+   439→        {
+   440→          id: 'fidumac-m1-ex2-q5',
+   441→          question: 'Décrivez la phase de planification : contenu et livrables.',
+   442→          type: 'open',
+   443→          keywords: ['acceptation', 'indépendance', 'plan de mission', 'seuil de signification', 'équipe', 'calendrier', 'budget'],
+   444→          explanation:
+   445→            'Réponse attendue (exemple) : la planification couvre l\'acceptation ou le maintien de la mission, la vérification de l\'indépendance, la constitution de l\'équipe, le budget et le calendrier. Elle aboutit au plan de mission, qui fixe notamment le seuil de signification et la répartition des cycles entre les membres de l\'équipe.',
+   446→        },
+   447→      ],
+   448→      risks: ['Démarche désordonnée', 'Confusion des phases', 'Documentation tardive'],
+   449→      solutionSummary:
+   450→        'La procédure consisterait à mémoriser la chaîne : planification → prise de connaissance → identification des risques → stratégie d\'audit → collecte d\'éléments probants → synthèse → documentation (transversale) → conclusions et limites. Un moyen simple de la retenir : on ne peut pas dimensionner des travaux (stratégie) sans avoir compris l\'entité (prise de connaissance) ni traduit cette compréhension en risques ; et on ne peut pas conclure sans preuves ni synthèse. Dans un entretien, dérouler spontanément cette chaîne avant de répondre à une question technique montre que votre démarche est structurée, pas improvisée.',
+   451→      interviewTips: [
+   452→        'Ancrez chaque phase sur un livrable : plan de mission, note de risques, programme de travail, feuilles de travail, note de synthèse.',
+   453→        'Précisez que la documentation est transversale : c\'est une réponse qui différencie un candidat préparé.',
+   454→      ],
+   455→    },
+   456→    // ============================ EXERCICE 3 ============================
+   457→    {
+   458→      id: 'fidumac-m1-ex3',
+   459→      title: 'Particularités du secteur distribution : stocks, marges et cut-off',
+   460→      cycle: 'Ventes-Clients / Stocks',
+   461→      context:
+   462→        'Mission d\'audit légal de Distra Maroc (entreprise fictive de distribution), clôture au 31/12/2025. Vous assistez à l\'inventaire physique du rayon produits de grande consommation le 31/12/2025 au soir, puis vous rapprochez le stock comptable du stock compté. Vous contrôlez également le cut-off des dernières livraisons de décembre. Tous les montants sont en MAD et fictifs.',
+   463→      documents: [
+   464→        {
+   465→          kind: 'table',
+   466→          name: 'Rapprochement inventaire physique / stock comptable au 31/12/2025 — rayon PGC (fictif)',
+   467→          columns: [
+   468→            'Référence',
+   469→            'Désignation',
+   470→            'Stock comptable (qté)',
+   471→            'Stock physique (qté)',
+   472→            'Écart (qté)',
+   473→            'Coût unitaire (MAD)',
+   474→            'Écart valorisé (MAD)',
+   475→          ],
+   476→          rows: [
+   477→            ['PGC-101', 'Huile de table 5 L', 420, 415, -5, 78.5, -392.5],
+   478→            ['PGC-102', 'Sucre 1 kg', 1250, 1262, 12, 9.2, 110.4],
+   479→            ['PGC-103', 'Farine 25 kg', 80, 74, -6, 182.0, -1092.0],
+   480→            ['PGC-104', 'Thé vert 200 g', 640, 640, 0, 24.0, 0.0],
+   481→            ['PGC-105', 'Café 500 g', 310, 298, -12, 68.0, -816.0],
+   482→            ['TOTAL', 'Écart net du rayon', '', '', -11, '', -2190.1],
+   483→          ],
+   484→          note: 'Document fictif. Écart valorisé = écart de quantité × coût unitaire. L\'écart net négatif signifie un stock comptable supérieur au stock physique (surévaluation).',
+   485→        },
+   486→        {
+   487→          kind: 'table',
+   488→          name: 'Contrôle du cut-off des ventes — dernières livraisons de décembre 2025 (fictif)',
+   489→          columns: ['N° BL', 'Date de livraison', 'Client', 'N° facture', 'Date de facturation', 'Comptabilisée le', 'Montant HT (MAD)'],
+   490→          rows: [
+   491→            ['BL-2025-4910', '29/12/2025', 'Comptoir du Sud', 'FV-2025-1389', '29/12/2025', '29/12/2025', 18400.0],
+   492→            ['BL-2025-4915', '30/12/2025', 'Ste Grenier Distribution', 'FV-2026-0012', '05/01/2026', '05/01/2026', 31200.0],
+   493→            ['BL-2025-4918', '30/12/2025', 'Atlas Restauration', 'FV-2026-0018', '04/01/2026', '04/01/2026', 15800.0],
+   494→            ['BL-2026-0003', '02/01/2026', 'Atlas Restauration', 'FV-2025-1396', '31/12/2025', '31/12/2025', 9600.0],
+   495→          ],
+   496→          note: 'Document fictif. La vente de marchandises se rattache à l\'exercice de la livraison effective (bon de livraison signé), pas à la date de facturation.',
+   497→        },
+   498→      ],
+   499→      questions: [
+   500→        {
+   501→          id: 'fidumac-m1-ex3-q1',
+   502→          question:
+   503→            'L\'écart net du rayon correspond à une surévaluation du stock comptable. Quel est son montant (MAD) ?',
+   504→          type: 'numeric',
+   505→          expected: 2190.1,
+   506→          explanation:
+   507→            'Écarts valorisés : -392,50 + 110,40 - 1 092,00 + 0,00 - 816,00 = -2 190,10 MAD. Le stock comptable est surévalué de 2 190,10 MAD par rapport au stock physique compté.',
+   508→        },
+   509→        {
+   510→          id: 'fidumac-m1-ex3-q2',
+   511→          question: 'Quelle est l\'incidence de la correction de cet écart de stock sur le résultat 2025 ?',
+   512→          type: 'mcq',
+   513→          options: [
+   514→            'Le résultat 2025 diminue de 2 190,10 MAD : la correction baisse le stock final et augmente la charge de marchandises vendues',
+   515→            'Le résultat 2025 augmente de 2 190,10 MAD',
+   516→            'Aucune incidence : un écart de stock n\'affecte que la trésorerie',
+   517→            'L\'incidence ne se ressent qu\'en 2026',
+   518→          ],
+   519→          expected: '0',
+   520→          explanation:
+   521→            'Stock final surévalué de 2 190,10 MAD : en corrigeant, le stock final baisse, la variation de stocks se dégrade et le résultat 2025 diminue d\'autant.',
+   522→        },
+   523→        {
+   524→          id: 'fidumac-m1-ex3-q3',
+   525→          question:
+   526→            'Sur le tableau de cut-off, quel est le montant total du chiffre d\'affaires 2025 sous-évalué (livraisons de décembre facturées en 2026) ?',
+   527→          type: 'numeric',
+   528→          expected: 47000,
+   529→          explanation:
+   530→            'BL-2025-4915 (31 200,00 MAD) et BL-2025-4918 (15 800,00 MAD) ont été livrés en décembre 2025 mais facturés et comptabilisés en janvier 2026 : 31 200,00 + 15 800,00 = 47 000,00 MAD de chiffre d\'affaires 2025 à reclasser. À l\'inverse, BL-2026-0003 (9 600,00 MAD) livré en janvier a été facturé en décembre 2025 et devra être retiré du chiffre d\'affaires 2025.',
+   531→        },
+   532→        {
+   533→          id: 'fidumac-m1-ex3-q4',
+   534→          question: 'Quel document fait foi pour dater une vente de marchandises livrées ?',
+   535→          type: 'mcq',
+   536→          options: [
+   537→            'La facture, quelle que soit sa date',
+   538→            'Le bon de livraison signé (date de livraison effective)',
+   539→            'Le bon de commande du client',
+   540→            'Le relevé de compte client',
+   541→          ],
+   542→          expected: '1',
+   543→          explanation:
+   544→            'Le transfert des risques suit la livraison : le bon de livraison signé, daté, est la pièce qui rattache la vente à l\'exercice. La facture peut être émise avant ou après.',
+   545→        },
+   546→        {
+   547→          id: 'fidumac-m1-ex3-q5',
+   548→          question:
+   549→            'En distribution, le stock est valorisé au coût, sauf si sa valeur nette de réalisation lui est inférieure.',
+   550→          type: 'truefalse',
+   551→          options: ['Vrai', 'Faux'],
+   552→          expected: '0',
+   553→          explanation:
+   554→            'Vrai : c\'est le principe commun au CGNC marocain et au PCG français (et aux IFRS). Un article dont le prix de vente probable passe sous le coût doit être déprécié.',
+   555→        },
+   556→        {
+   557→          id: 'fidumac-m1-ex3-q6',
+   558→          question:
+   559→            'Décrivez votre démarche de contrôle : assistance à l\'inventaire, exploitation de l\'écart, marges et cut-off.',
+   560→          type: 'open',
+   561→          keywords: ['inventaire', 'physique', 'comptable', 'écart', 'valorisation', 'cut-off', 'bon de livraison', 'correction'],
+   562→          explanation:
+   563→            'Réponse attendue (exemple) : lors de l\'inventaire physique, je vérifierais la discipline du comptage (feuillets numérotés, double comptage, mouvements bloqués), puis je rapprocherais stock comptable et stock physique référence par référence. J\'exploiterais chaque écart (surévaluation nette de 2 190,10 MAD ici) en valorisant au coût unitaire et en proposant la correction. Enfin, sur le cut-off, je passerais en revue les derniers bons de livraison signés de décembre et les premiers de janvier pour reclasser les 47 000,00 MAD de ventes livrées non facturées en 2025, et retirer les 9 600,00 MAD facturés avant livraison.',
+   564→        },
+   565→      ],
+   566→      risks: ['Stocks surévalués', 'Chiffre d\'affaires mal séparé entre exercices', 'Marges déformées', 'Valorisation inadaptée'],
+   567→      solutionSummary:
+   568→        'Dans ce cas, je commencerais par assister à l\'inventaire physique en observant la méthode (comptage, feuillets numérotés, double comptage, blocage des mouvements), puis je rapprocherais le stock compté du stock comptable : ici, surévaluation nette de 2 190,10 MAD (écarts valorisés : -392,50 + 110,40 - 1 092,00 - 816,00), à corriger par une baisse du stock final et une hausse de la charge de marchandises vendues, ce qui diminue le résultat 2025 d\'autant. La procédure consisterait ensuite à vérifier la valorisation (coût, ou valeur nette de réalisation si inférieure) et le bien-fondé des dépréciations sur les références à rotation lente. Sur le cut-off, je retiendrais les livraisons de décembre 2025 facturées en janvier (31 200,00 + 15 800,00 = 47 000,00 MAD à reclasser en 2025) et la livraison de janvier facturée en décembre (9 600,00 MAD à retirer du chiffre d\'affaires 2025). Selon le référentiel et l\'importance relative, ces reclassements se traduiraient par des écritures de produits à recevoir ou de produits constatés d\'avance. Le rapprochement « inventaire physique / stock comptable » et le tableau de cut-off seraient conservés comme éléments probants dans le dossier.',
+   569→      interviewTips: [
+   570→        'Citez le trio gagnant du secteur distribution : réalité des stocks, valorisation, cut-off.',
+   571→        'Chiffrez toujours l\'incidence (2 190,10 MAD sur le résultat ; 47 000,00 MAD de chiffre d\'affaires reclassé) : les recruteurs adorent les candidats qui concluent en montants.',
+   572→      ],
+   573→    },
+   574→    // ============================ EXERCICE 4 ============================
+   575→    {
+   576→      id: 'fidumac-m1-ex4',
+   577→      title: 'Particularités du secteur BTP : avancement, situations de travaux et provisions',
+   578→      cycle: 'Production / Chantiers',
+   579→      context:
+   580→        'Mission contractuelle chez BâtiSud Maroc (entreprise fictive de BTP) : revue du chantier « Résidence Les Palmiers », immeuble de bureaux sur 18 mois (juillet 2025 – décembre 2026). Vous devez rapprocher l\'avancement économique du chantier des situations de travaux facturées et apprécier les provisions. Montants fictifs en MAD HT.',
+   581→      documents: [
+   582→        {
+   583→          kind: 'table',
+   584→          name: 'Situations de travaux visées — chantier « Résidence Les Palmiers » (fictif)',
+   585→          columns: ['N° situation', 'Période', 'Montant HT (MAD)', 'Cumul facturé HT (MAD)', 'Visa maître d\'œuvre', 'Date de facturation'],
+   586→          rows: [
+   587→            ['SIT-01', 'Juillet – septembre 2025', 1150000.0, 1150000.0, 'Visée', '06/10/2025'],
+   588→            ['SIT-02', 'Octobre – décembre 2025', 850000.0, 2000000.0, 'Visée', '08/01/2026'],
+   589→          ],
+   590→          note: 'Document fictif. Retenue de garantie contractuelle : 5 % du montant de chaque situation, libérée à la réception définitive des travaux.',
+   591→        },
+   592→        {
+   593→          kind: 'table',
+   594→          name: 'Estimation à fin décembre 2025 (fictif)',
+   595→          columns: ['Élément', 'Montant (MAD HT)', 'Observation'],
+   596→          rows: [
+   597→            ['Marché initial HT', 4800000.0, 'Immeuble de bureaux, 18 mois (juillet 2025 – décembre 2026)'],
+   598→            ['Coûts engagés cumulés à fin 2025', 1920000.0, 'État des coûts du chantier validé par le conducteur de travaux'],
+   599→            ['Coût total estimé du chantier', 4000000.0, 'Estimation du conducteur de travaux, à confronter'],
+   600→            ['Situations facturées cumulées', 2000000.0, 'SIT-01 et SIT-02'],
+   601→            ['Pénalité de retard probable', 120000.0, 'Le retard constaté déclencherait la clause pénale du marché'],
+   602→          ],
+   603→          note: 'Document fictif. Avancement économique = coûts engagés cumulés / coût total estimé.',
+   604→        },
+   605→      ],
+   606→      questions: [
+   607→        {
+   608→          id: 'fidumac-m1-ex4-q1',
+   609→          question: 'Quel est l\'avancement économique du chantier au 31/12/2025 (en %) ?',
+   610→          type: 'numeric',
+   611→          expected: 48,
+   612→          explanation:
+   613→            'Avancement = coûts engagés cumulés / coût total estimé = 1 920 000,00 / 4 000 000,00 = 48 %.',
+   614→        },
+   615→        {
+   616→          id: 'fidumac-m1-ex4-q2',
+   617→          question: 'Quel chiffre d\'affaires total faut-il reconnaître au 31/12/2025 selon la méthode à l\'avancement (MAD) ?',
+   618→          type: 'numeric',
+   619→          expected: 2304000,
+   620→          explanation:
+   621→            'Chiffre d\'affaires à reconnaître = avancement × montant du marché = 48 % × 4 800 000,00 = 2 304 000,00 MAD.',
+   622→        },
+   623→        {
+   624→          id: 'fidumac-m1-ex4-q3',
+   625→          question: 'Quel est l\'écart entre le chiffre d\'affaires à reconnaître et les situations facturées (MAD) ?',
+   626→          type: 'numeric',
+   627→          expected: 304000,
+   628→          explanation:
+   629→            '2 304 000,00 (à reconnaître) - 2 000 000,00 (facturé via situations) = 304 000,00 MAD : des travaux exécutés mais non encore facturés, à constater à la clôture (créances sur travaux non encore facturables / production en cours).',
+   630→        },
+   631→        {
+   632→          id: 'fidumac-m1-ex4-q4',
+   633→          question: 'Quel est le montant cumulé de la retenue de garantie sur les situations facturées (MAD) ?',
+   634→          type: 'numeric',
+   635→          expected: 100000,
+   636→          explanation:
+   637→            'Retenue de garantie = 5 % × 2 000 000,00 = 100 000,00 MAD. Cette somme est retenue sur les règlements et ne sera libérée qu\'à la réception définitive : elle doit rester identifiable dans les comptes clients.',
+   638→        },
+   639→        {
+   640→          id: 'fidumac-m1-ex4-q5',
+   641→          question: 'Comment traiter la pénalité de retard probable de 120 000,00 MAD ?',
+   642→          type: 'mcq',
+   643→          options: [
+   644→            'L\'ignorer tant que le client ne l\'a pas réclamée',
+   645→            'Constituer une provision pour risques et charges (dotation via le compte 6195 au CGNC), car l\'obligation est probable à la clôture',
+   646→            'La comptabiliser en charge certaine de l\'exercice suivant',
+   647→            'En faire une simple note annexée sans écriture',
+   648→          ],
+   649→          expected: '1',
+   650→          explanation:
+   651→            'Une pénalité probable à la clôture (clause pénale déclenchée par le retard) appelle une provision pour risques et charges : dotation d\'exploitation via 6195 au CGNC marocain (6815 en PCG français). L\'attendre serait sous-évaluer les charges.',
+   652→        },
+   653→        {
+   654→          id: 'fidumac-m1-ex4-q6',
+   655→          question:
+   656→            'Pourquoi le BTP ne peut-il pas attendre la facturation pour reconnaître l\'activité, et quelles limites de la méthode ?',
+   657→          type: 'open',
+   658→          keywords: ['avancement', 'coûts', 'coût total', 'production', 'situation', 'estimation', 'incertitude', 'provision'],
+   659→          explanation:
+   660→            'Réponse attendue (exemple) : un chantier de 18 mois chevauche deux exercices : attendre la facturation concentrerait tout le chiffre d\'affaires en 2026 et fausserait la comparabilité. La méthode à l\'avancement (coûts engagés / coût total estimé) lisse l\'activité : ici 48 % d\'avancement, soit 2 304 000,00 MAD à reconnaître. Ses limites : le coût total estimé (4 000 000,00) est un jugement, révisable ; l\'avancement coûté peut être auto-évalué ; des provisions pour pertes à terminer ou pénalités (120 000,00) peuvent s\'ajouter.',
+   661→        },
+   662→      ],
+   663→      risks: ['Avancement mal estimé', 'Chiffre d\'affaires de chantier erroné', 'Provisions insuffisantes', 'Retenues de garantie mal suivies'],
+   664→      solutionSummary:
+   665→        'Dans ce cas, je commencerais par reconstituer l\'avancement économique : 1 920 000,00 / 4 000 000,00 = 48 %, soit un chiffre d\'affaires à reconnaître de 48 % × 4 800 000,00 = 2 304 000,00 MAD. La procédure consisterait ensuite à le rapprocher des situations facturées (2 000 000,00) : il manque 304 000,00 de travaux exécutés non facturés, à constater à la clôture ; à vérifier la retenue de garantie (5 % × 2 000 000,00 = 100 000,00 MAD, créance à suivre jusqu\'à la réception définitive) ; et à apprécier les provisions : le marché reste bénéficiaire (4 800 000,00 de produits contre 4 000 000,00 de coûts, soit 800 000,00 de marge prévisionnelle), mais la pénalité de retard probable de 120 000,00 MAD appelle une provision pour risques et charges (dotation 6195 au CGNC ; 6815 en France). Je confronterais enfin l\'estimation du coût total à des éléments probants : devis complémentaires, historique de chantiers similaires, confirmation du conducteur de travaux. Toute révision du coût total modifierait mécaniquement l\'avancement et le chiffre d\'affaires : c\'est la principale zone de jugement du secteur.',
+   666→      interviewTips: [
+   667→        'Donnez la formule d\'avancement (coûts engagés / coût total estimé) et appliquez-la immédiatement au chiffre du cas : 48 %.',
+   668→        'Terminez par les provisions : pénalités et pertes à terminer sont le complément obligatoire de tout raisonnement BTP.',
+   669→      ],
+   670→    },
+   671→    // ============================ EXERCICE 5 ============================
+   672→    {
+   673→      id: 'fidumac-m1-ex5',
+   674→      title: 'Éléments probants et limites des travaux : le réflexe du conditionnel',
+   675→      cycle: 'Transversal',
+   676→      context:
+   677→        'Fin de mission. M. Sabri (chef de mission fictif) vous laisse cette note sur la qualité des preuves et les limites de l\'audit, avant de vous demander de préparer la note de synthèse. Scénario fictif.',
+   678→      documents: [
+   679→        {
+   680→          kind: 'text',
+   681→          name: 'Note interne — éléments probants et limites (fictive)',
+   682→          content:
+   683→            'NOTE DE M. SABRI — ÉLÉMENTS PROBANTS ET LIMITES DES TRAVAUX (fictive)\n\n1. Qualités d\'un élément probant\n   - Pertinence : la preuve doit tester l\'assertion visée\n     (réalité, exhaustivité, valorisation, rattachement, présentation).\n   - Suffisance : nombre et qualité suffisants au regard du risque\n     et du seuil de signification.\n   - Fiabilité de la source, par ordre décroissant :\n     a) preuve obtenue directement par l\'auditeur\n        (confirmation tiers, observation physique) ;\n     b) document externe remis par le client\n        (relevé bancaire, facture originale) ;\n     c) document interne diffusé à l\'extérieur\n        (bon de livraison signé par le client) ;\n     d) document interne non diffusé (feuille de stock théorique).\n\n2. Corroboration\n   Croiser systématiquement : un montant de facture se confronte\n   au bon de réception, au contrat tarifaire et, si utile,\n   à la confirmation directe du tiers.\n\n3. Limites des travaux\n   - Sondages : l\'audit n\'examine pas 100 % des opérations.\n   - Estimations : avancement, provisions, dépréciations\n     reposent sur des jugements du client.\n   - Jugements : seuils, classifications, présentation.\n   - Accès : un document refusé ou détruit limite la portée.\n   - Rotation des interventions : la réglementation impose\n     des alternances qui empêchent de tout vérifier chaque année.\n   - Événements postérieurs : l\'auditeur arrête ses travaux\n     à une date donnée.\n\n4. Conséquence\n   L\'audit apporte une assurance RAISONNABLE, pas absolue.\n   Une limite non documentée est une opinion fragile : chaque\n   restriction doit figurer dans le dossier et, le cas échéant,\n   dans le rapport.',
+   684→          note: 'Document fictif destiné à l\'entraînement. La terminologie « assurance raisonnable » est commune aux normes internationales et aux cadres nationaux.',
+   685→        },
+   686→      ],
+   687→      questions: [
+   688→        {
+   689→          id: 'fidumac-m1-ex5-q1',
+   690→          question: 'Parmi ces sources, laquelle est la plus fiable pour attester la réalité d\'une créance client ?',
+   691→          type: 'mcq',
+   692→          options: [
+   693→            'La balance âgée imprimée par le client',
+   694→            'La confirmation directe du client obtenue par l\'auditeur (lettre de circularisation)',
+   695→            'La copie de la facture conservée par le service commercial',
+   696→            'L\'explication orale du responsable de la recouvrance',
+   697→          ],
+   698→          expected: '1',
+   699→          explanation:
+   700→            'La confirmation directe est recueillie par l\'auditeur auprès du tiers : source externe, obtenue directement — en haut de la hiérarchie des preuves. La balance âgée est un document interne ; la copie de facture un document interne non diffusé ; l\'oral n\'est pas une preuve.',
+   701→        },
+   702→        {
+   703→          id: 'fidumac-m1-ex5-q2',
+   704→          question: 'Quelles qualités doit réunir un élément probant ?',
+   705→          type: 'multi',
+   706→          options: [
+   707→            'Être pertinent au regard de l\'assertion contrôlée',
+   708→            'Être suffisant en quantité et en qualité',
+   709→            'Provenir d\'une source fiable, externe de préférence',
+   710→            'Être recueilli directement par l\'auditeur lorsque c\'est possible',
+   711→            'Être fourni spontanément par le client sans aucune vérification',
+   712→          ],
+   713→          expected: ['0', '1', '2', '3'],
+   714→          explanation:
+   715→            'Pertinence, suffisance, fiabilité de la source et collecte directe quand c\'est possible : les quatre qualités attendues. Une preuve « fournie spontanément sans vérification » n\'a aucune valeur probante.',
+   716→        },
+   717→        {
+   718→          id: 'fidumac-m1-ex5-q3',
+   719→          question: 'L\'audit apporte une assurance absolue sur l\'exactitude de chaque chiffre des comptes.',
+   720→          type: 'truefalse',
+   721→          options: ['Vrai', 'Faux'],
+   722→          expected: '1',
+   723→          explanation:
+   724→            'Faux : sondages, estimations, jugements et limites d\'accès font que l\'audit apporte une assurance raisonnable — un niveau élevé, mais non absolu.',
+   725→        },
+   726→        {
+   727→          id: 'fidumac-m1-ex5-q4',
+   728→          question: 'Que faire si les éléments probants restent insuffisants sur un point sensible ?',
+   729→          type: 'mcq',
+   730→          options: [
+   731→            'Conclure quand même favorablement pour ne pas retarder le rapport',
+   732→            'Étendre les travaux ; à défaut, exprimer une réserve ou une limite dans le rapport',
+   733→            'Demander au client de signer une décharge',
+   734→            'Remplacer la preuve manquante par une explication orale du comptable',
+
+[showing lines 355-734 of 902; use offset=735 with limit to continue reading]

@@ -1,0 +1,402 @@
+    30→    name: 'SOMME.SI',
+    31→    syntax: '=SOMME.SI(plage; critère; [plage_somme])',
+    32→    purpose:
+    33→      'Totaliser uniquement les lignes qui répondent à UN critère : montant total d’un fournisseur, d’un mois, d’un type de pièce — l’agrégation la plus fréquente des tableaux de bord comptables.',
+    34→    example:
+    35→      '=SOMME.SI(B2:B31;"Éleclairs Énergie";D2:D31) renvoie 65 947,35 € : le total du trimestre pour ce fournisseur, sans filtre ni copier-coller.',
+    36→    oldVersionAlternative:
+    37→      'Filtre + SOUS.TOTAL(109;plage) : le total suit le filtre mais disparaît au changement de filtre et ne se recopie pas dans un tableau de bord — lecture instantanée, résultat non traçable.',
+    38→  },
+    39→  {
+    40→    id: 'fc-somme-si-ens',
+    41→    name: 'SOMME.SI.ENS',
+    42→    syntax: '=SOMME.SI.ENS(plage_somme; plage_critères1; critère1; [plage_critères2; critère2]; …)',
+    43→    purpose:
+    44→      'Totaliser sous PLUSIEURS critères simultanés (fournisseur ET mois, type ET seuil). Attention à l’ordre : la plage à sommer vient EN PREMIER, contrairement à SOMME.SI.',
+    45→    example:
+    46→      '=SOMME.SI.ENS(D2:D31;B2:B31;"Laiterie du Nord";C2:C31;"Septembre 2024") renvoie 33 010,00 € : le total septembre du fournisseur, critère par critère.',
+    47→    oldVersionAlternative:
+    48→      'SOMME.SI sur une colonne de clé concaténée (=B2&"|"&C2) : fonctionne, mais la clé doit être maintenue et se documente mal — un critère par colonne reste lisible et auditable.',
+    49→  },
+    50→  {
+    51→    id: 'fc-nb-si',
+    52→    name: 'NB.SI',
+    53→    syntax: '=NB.SI(plage; critère)',
+    54→    purpose:
+    55→      'Compter les cellules qui répondent à un critère : nombre de factures d’un fournisseur, de pièces hors délai, d’anomalies résolues — le compteur de base du tableau de bord.',
+    56→    example:
+    57→      '=NB.SI(F2:F16;">5") renvoie 4 : les pièces saisies en plus de 5 jours — à diviser par =NB(F2:F16) pour un pourcentage (4 ÷ 15 = 26,7 %).',
+    58→    oldVersionAlternative:
+    59→      'Filtre + comptage manuel (ou SOUS.TOTAL(103;plage)) : non figé, non recopiable, source d’écarts entre deux tirages successifs.',
+    60→  },
+    61→  {
+    62→    id: 'fc-nb-si-ens',
+    63→    name: 'NB.SI.ENS',
+    64→    syntax: '=NB.SI.ENS(plage_critères1; critère1; [plage_critères2; critère2]; …)',
+    65→    purpose:
+    66→      'Compter sous plusieurs critères : anomalies « haute » ET « ouvertes », factures d’un fournisseur ET d’un mois — chaque critère doit correspondre à une intention, jamais à une prudence automatique.',
+    67→    example:
+    68→      '=NB.SI.ENS(C2:C16;"haute";E2:E16;"ouverte") renvoie 3 : les anomalies de criticité haute encore ouvertes — la priorité n° 1 du tableau de bord « Anomalies ».',
+    69→    oldVersionAlternative:
+    70→      'Filtres multiples + SOUS.TOTAL(103;plage) : la lecture est instantanée mais le résultat ne vit pas dans une cellule — impossible à recouper ou à archiver.',
+    71→  },
+    72→  {
+    73→    id: 'fc-si',
+    74→    name: 'SI',
+    75→    syntax: '=SI(test_logique; valeur_si_vrai; valeur_si_faux)',
+    76→    purpose:
+    77→      'Décider dans une cellule : ok/écart, dans les temps/hors délai — le statut calculé de chaque ligne, dénombrable ensuite par NB.SI.',
+    78→    example:
+    79→      '=SI(F2>5;"hors délai";"ok") marque chaque pièce au-delà du seuil de saisie : le tableau de bord compte alors les « hors délai » au lieu de les chercher au filtre.',
+    80→    oldVersionAlternative:
+    81→      'Aucune — fonction fondatrice. Sa limite : UN seul test par formule ; au-delà, les SI imbriqués deviennent illisibles — d’où SI.CONDITIONS.',
+    82→  },
+    83→  {
+    84→    id: 'fc-si-conditions',
+    85→    name: 'SI.CONDITIONS',
+    86→    syntax: '=SI.CONDITIONS(test1; valeur1; [test2; valeur2]; …; [VRAI; valeur_si_aucun_test])',
+    87→    purpose:
+    88→      'Enchaîner plusieurs tests sans imbrication : échelles de criticité, tranches d’ancienneté, statuts selon des seuils. La première condition vraie gagne — l’ordre des tests est le cœur de la formule.',
+    89→    example:
+    90→      '=SI.CONDITIONS(C2>=1000;"haute";C2>=100;"moyenne";VRAI;"basse") classe une anomalie par montant : 2 500 € → « haute » ; 300 € → « moyenne » ; 40 € → « basse ».',
+    91→    oldVersionAlternative:
+    92→      'SI imbriqués : =SI(C2>=1000;"haute";SI(C2>=100;"moyenne";"basse")) — fonctionnent sur toutes les versions mais deviennent vite illisibles. SI.CONDITIONS exige Excel 2019/365.',
+    93→  },
+    94→  {
+    95→    id: 'fc-recherchex',
+    96→    name: 'RECHERCHEX',
+    97→    syntax:
+    98→      '=RECHERCHEX(valeur_cherchée; tableau_recherche; tableau_renvoyé; [si_non_trouvé]; [si_mode_correspondance]; [si_mode_recherche])',
+    99→    purpose:
+   100→      'Retrouver une valeur dans une plage et renvoyer la cellule correspondante d’une autre colonne : correspondance exacte par défaut, recherche à droite comme à gauche, et [si_non_trouvé] gère l’absence proprement.',
+   101→    example:
+   102→      '=RECHERCHEX(A2;Journal!$C$2:$C$19;Journal!$F$2:$F$19;"absente") renvoie le montant comptabilisé de la facture A2 — ou « absente » au lieu d’un #N/A brut.',
+   103→    oldVersionAlternative:
+   104→      '=SIERREUR(RECHERCHEV(A2;Journal!$C$2:$F$19;4;FAUX);"absente") ou =INDEX(Journal!$F$2:$F$19;EQUIV(A2;Journal!$C$2:$C$19;0)) : à privilégier dès que le fichier voyage vers des Excel antérieurs à 2019/365 — RECHERCHEX y renvoie #NOM?.',
+   105→  },
+   106→  {
+   107→    id: 'fc-recherchev',
+   108→    name: 'RECHERCHEV',
+   109→    syntax: '=RECHERCHEV(valeur_cherchée; table_matrice; no_index_col; [valeur_approximative])',
+   110→    purpose:
+   111→      'La recherche historique : retrouver une valeur dans la PREMIÈRE colonne d’une table et renvoyer la cellule de la colonne no_index_col. Le FAUX final (correspondance exacte) est indispensable en comptabilité.',
+   112→    example:
+   113→      '=RECHERCHEV(A2;$A$2:$D$20;4;FAUX) renvoie le montant (colonne 4) de la facture A2. Limites à connaître : (1) no_index_col est FIGÉ — insérer une colonne entre A et D décale le résultat SANS déclencher d’erreur ; (2) la valeur cherchée doit être à GAUCHE du résultat ; (3) l’oubli du FAUX provoque des correspondances approximatives silencieuses.',
+   114→    oldVersionAlternative:
+   115→      'C’est elle, l’ancienne formule — encore omniprésente dans les fichiers clients. La migration naturelle : INDEX+EQUIV (supprime les trois limites) ou RECHERCHEX si les versions le permettent.',
+   116→  },
+   117→  {
+   118→    id: 'fc-index-equiv',
+   119→    name: 'INDEX + EQUIV',
+   120→    syntax: '=INDEX(plage_renvoi; EQUIV(valeur_cherchée; plage_recherche; 0))',
+   121→    purpose:
+   122→      'La recherche robuste : EQUIV localise la position exacte (le 0 final = correspondance exacte), INDEX renvoie la valeur à cette position — insensible aux insertions de colonnes, indifférent au sens gauche/droite.',
+   123→    example:
+   124→      '=INDEX($D$2:$D$20;EQUIV(A2;$A$2:$A$20;0)) renvoie le montant de la facture A2 : insérer une colonne entre A et D ne change rien, les plages suivent — là où RECHERCHEV se décale.',
+   125→    oldVersionAlternative:
+   126→      'C’EST l’alternative ancienne — toujours d’actualité pour la compatibilité et les recherches à gauche ; RECHERCHEX en est la version moderne, pas la remplacent sur tous les parcs.',
+   127→  },
+   128→  {
+   129→    id: 'fc-estna',
+   130→    name: 'ESTNA',
+   131→    syntax: '=ESTNA(valeur)',
+   132→    purpose:
+   133→      'Tester si une formule renvoie #N/A — l’erreur d’ABSENCE. C’est le détecteur du rapprochement de deux listes : une valeur cherchée introuvable, rien d’autre.',
+   134→    example:
+   135→      '=SI(ESTNA(RECHERCHEX(A2;Journal!$C$2:$C$19;Journal!$C$2:$C$19));"écart";"ok") : ESTNA ne renvoie VRAI que sur #N/A — l’absence du journal, pas une formule cassée.',
+   136→    oldVersionAlternative:
+   137→      'ESTERREUR capte TOUTES les erreurs (#DIV/0!, #REF!, #VALEUR!…) et brouille le diagnostic : sur un rapprochement, on veut précisément distinguer l’absence d’une erreur de formule.',
+   138→  },
+   139→  {
+   140→    id: 'fc-sierreur',
+   141→    name: 'SIERREUR',
+   142→    syntax: '=SIERREUR(valeur; valeur_si_erreur)',
+   143→    purpose:
+   144→      'Remplacer toute erreur par une valeur choisie — habiller une RECHERCHEV pour livrer un fichier lisible. Réserve d’usage : masquer une erreur n’est pas la corriger — à réserver aux absences attendues.',
+   145→    example:
+   146→      '=SIERREUR(RECHERCHEV(A2;$A$2:$D$20;4;FAUX);"non trouvé") affiche « non trouvé » à la place du #N/A — le lecteur voit un statut, pas un plantage.',
+   147→    oldVersionAlternative:
+   148→      '=SI(ESTNA(RECHERCHEV(…));"non trouvé";RECHERCHEV(…)) : la formule est calculée deux fois ; SIERREUR (Excel 2007+) l’écrit une seule fois.',
+   149→  },
+   150→  {
+   151→    id: 'fc-sommeprod',
+   152→    name: 'SOMMEPROD',
+   153→    syntax: '=SOMMEPROD(matrice1; [matrice2]; …)',
+   154→    purpose:
+   155→      'Multiplier deux plages terme à terme puis additionner : la moyenne PONDÉRÉE en une formule — délai pondéré par les montants, ancienneté pondérée par les soldes.',
+   156→    example:
+   157→      '=SOMMEPROD(F2:F16;E2:E16)/SOMME(E2:E16) renvoie 6,6 jours de délai moyen pondéré par les montants, contre 3,8 jours en moyenne simple — les grosses pièces traînent davantage.',
+   158→    oldVersionAlternative:
+   159→      'Colonne intermédiaire =F2*E2 puis =SOMME : même résultat, mais une colonne de plus à maintenir, documenter et protéger.',
+   160→  },
+   161→  {
+   162→    id: 'fc-doublons-mefc',
+   163→    name: 'Détection des doublons — NB.SI en mise en forme conditionnelle',
+   164→    syntax: '=NB.SI($A$2:$A$100;A2)>1  (règle « Utiliser une formule », appliquée à la plage A2:A100)',
+   165→    purpose:
+   166→      'Faire s’auto-signaler les valeurs présentes plusieurs fois : références de factures, n° de pièce, RIB — sans tri ni revue visuelle, la mise à jour est automatique.',
+   167→    example:
+   168→      'Sélectionner A2:A100 > Accueil > Mise en forme conditionnelle > Nouvelle règle > Utiliser une formule > =NB.SI($A$2:$A$100;A2)>1 > fond rouge. Pour les doublons SUBTILS (référence erronée), construire d’abord une clé composite en colonne F (=C2&"|"&E2) puis appliquer =NB.SI($F$2:$F$100;$F2)>1 à toute la ligne.',
+   169→    oldVersionAlternative:
+   170→      'Tri + lecture paire par paire : dépend de l’œil, ne se documente pas. Le filtre « supprimer les doublons » TRASNFORME les données — à ne jamais utiliser sur une source comptable.',
+   171→  },
+   172→  {
+   173→    id: 'fc-tcd',
+   174→    name: 'Tableau croisé dynamique (TCD)',
+   175→    syntax:
+   176→      'Sélectionner la plage > Insertion > Tableau croisé dynamique > glisser les champs en Lignes / Colonnes / Valeurs > Actualiser — aucune formule écrite.',
+   177→    purpose:
+   178→      'Croiser, compter et totaliser sans formule : ventes par cycle et par responsable, factures par fournisseur et par mois — outil d’exploration et de contre-vérification des ordres de grandeur.',
+   179→    example:
+   180→      'Sur la feuille « Anomalies » (A2:F16) > TCD > Cycle en lignes, Statut en colonnes, Référence en valeurs (Comptage) : Achats 3 (1 résolue, 1 en cours, 1 ouverte), Trésorerie 3… Penser à Actualiser après chaque mise à jour de la source — un TCD non actualisé est un faux témoin.',
+   181→    oldVersionAlternative:
+   182→      'Matrice de NB.SI.ENS — une formule par cellule du tableau croisé : le même tableau en formules, moins souple mais traçable cellule par cellule et compatible partout.',
+   183→  },
+   184→  {
+   185→    id: 'fc-mefc',
+   186→    name: 'Mise en forme conditionnelle (règles)',
+   187→    syntax:
+   188→      'Accueil > Mise en forme conditionnelle > Règles de mise en surbrillance des cellules / Nouvelle règle > « Utiliser une formule » (accepte toute formule logique)',
+   189→    purpose:
+   190→      'Rendre l’anomalie VISIBLE sans tri ni filtre : délais négatifs en rouge, encours > 60 jours, seuils dépassés — l’alerte voyage avec le fichier et se met à jour seule.',
+   191→    example:
+   192→      'Règle par formule sur F2:F16 : =F2<0 (anomalies en retard) ; règle de valeur sur E2:E16 : supérieure à 10 000 (pièces significatives) ; barres de données sur les soldes — un graphique dans la cellule.',
+   193→    oldVersionAlternative:
+   194→      'Mise en forme manuelle : ne se met PAS à jour quand les données changent — à réserver à la présentation finale, jamais au contrôle.',
+   195→  },
+   196→]
+   197→
+   198→// ---------------------------------------------------------------------
+   199→// 2. EXERCICES INTERACTIFS (5) — données fictives vérifiées
+   200→// ---------------------------------------------------------------------
+   201→
+   202→export const excelExercises: ExcelExercise[] = [
+   203→  {
+   204→    id: 'ex-rapprochement-listes',
+   205→    title: 'Exercice 1 — Rapprochement de deux listes : factures reçues vs journal',
+   206→    objective:
+   207→      'Comparer la liste des factures fournisseurs reçues en septembre (20 pièces) et les écritures du journal des achats (18 lignes). Le comptage naïf annonce 2 manquantes — le rapprochement ligne à ligne, lui, sépare les absences réelles des doubles saisies. Colonnes A à F fournies ; le rapprochement se fait sur le n° de pièce.',
+   208→    dataColumns: ['Liste', 'N° pièce', 'Date', 'Tiers / Compte', 'N° écriture', 'Montant (€)'],
+   209→    dataRows: [
+   210→      ['Factures reçues', 'FA-2024-101', '12/09/2024', 'Laiterie du Nord', '—', 18450],
+   211→      ['Factures reçues', 'FA-2024-102', '10/09/2024', 'Emballages Vertes', '—', 4286.4],
+   212→      ['Factures reçues', 'FA-2024-103', '08/09/2024', 'Éleclairs Énergie', '—', 12730.55],
+   213→      ['Factures reçues', 'FA-2024-104', '14/09/2024', 'Froid & Maintenance', '—', 3120],
+   214→      ['Factures reçues', 'FA-2024-105', '05/09/2024', 'Logitrans Transport', '—', 7845.2],
+   215→      ['Factures reçues', 'FA-2024-106', '19/09/2024', 'Sécuritest Contrôles', '—', 1265],
+   216→      ['Factures reçues', 'FA-2024-107', '16/09/2024', 'Laiterie du Nord', '—', 21300],
+   217→      ['Factures reçues', 'FA-2024-108', '18/09/2024', 'Emballages Vertes', '—', 5812.75],
+   218→      ['Factures reçues', 'FA-2024-109', '03/09/2024', 'Éleclairs Énergie', '—', 9480.1],
+   219→      ['Factures reçues', 'FA-2024-110', '21/09/2024', 'Froid & Maintenance', '—', 2940],
+   220→      ['Factures reçues', 'FA-2024-111', '23/09/2024', 'Laiterie du Nord', '—', 15275.5],
+   221→      ['Factures reçues', 'FA-2024-112', '07/09/2024', 'Logitrans Transport', '—', 6430],
+   222→      ['Factures reçues', 'FA-2024-113', '11/09/2024', 'Emballages Vertes', '—', 4218],
+   223→      ['Factures reçues', 'FA-2024-114', '24/09/2024', 'Sécuritest Contrôles', '—', 1890],
+   224→      ['Factures reçues', 'FA-2024-115', '25/09/2024', 'Éleclairs Énergie', '—', 11205.6],
+   225→      ['Factures reçues', 'FA-2024-116', '20/09/2024', 'Froid & Maintenance', '—', 3585],
+   226→      ['Factures reçues', 'FA-2024-117', '27/09/2024', 'Laiterie du Nord', '—', 9840],
+   227→      ['Factures reçues', 'FA-2024-118', '17/09/2024', 'Logitrans Transport', '—', 8125.3],
+   228→      ['Factures reçues', 'FA-2024-119', '23/09/2024', 'Emballages Vertes', '—', 3674.25],
+   229→      ['Factures reçues', 'FA-2024-120', '26/09/2024', 'Laiterie du Nord', '—', 14560],
+   230→      ['Journal (écritures)', 'FA-2024-109', '06/09/2024', '401ELE', 'EC-2024-0954', 9480.1],
+   231→      ['Journal (écritures)', 'FA-2024-105', '07/09/2024', '401LOG', 'EC-2024-0957', 7845.2],
+   232→      ['Journal (écritures)', 'FA-2024-112', '10/09/2024', '401LOG', 'EC-2024-0961', 6430],
+   233→      ['Journal (écritures)', 'FA-2024-103', '11/09/2024', '401ELE', 'EC-2024-0963', 12730.55],
+   234→      ['Journal (écritures)', 'FA-2024-102', '12/09/2024', '401EMB', 'EC-2024-0964', 4286.4],
+   235→      ['Journal (écritures)', 'FA-2024-113', '13/09/2024', '401EMB', 'EC-2024-0965', 4218],
+   236→      ['Journal (écritures)', 'FA-2024-101', '14/09/2024', '401LDN', 'EC-2024-0966', 18450],
+   237→      ['Journal (écritures)', 'FA-2024-104', '16/09/2024', '401FRO', 'EC-2024-0967', 3120],
+   238→      ['Journal (écritures)', 'FA-2024-113', '16/09/2024', '401EMB', 'EC-2024-0971', 4218],
+   239→      ['Journal (écritures)', 'FA-2024-107', '18/09/2024', '401LDN', 'EC-2024-0973', 21300],
+   240→      ['Journal (écritures)', 'FA-2024-118', '19/09/2024', '401LOG', 'EC-2024-0975', 8125.3],
+   241→      ['Journal (écritures)', 'FA-2024-108', '20/09/2024', '401EMB', 'EC-2024-0976', 5812.75],
+   242→      ['Journal (écritures)', 'FA-2024-116', '22/09/2024', '401FRO', 'EC-2024-0979', 3585],
+   243→      ['Journal (écritures)', 'FA-2024-110', '24/09/2024', '401FRO', 'EC-2024-0982', 2940],
+   244→      ['Journal (écritures)', 'FA-2024-114', '26/09/2024', '401SEC', 'EC-2024-0985', 1890],
+   245→      ['Journal (écritures)', 'FA-2024-119', '26/09/2024', '401EMB', 'EC-2024-0987', 3674.25],
+   246→      ['Journal (écritures)', 'FA-2024-115', '28/09/2024', '401ELE', 'EC-2024-0988', 11205.6],
+   247→      ['Journal (écritures)', 'FA-2024-120', '30/09/2024', '401LDN', 'EC-2024-0991', 14560],
+   248→    ],
+   249→    tasks: [
+   250→      {
+   251→        question:
+   252→          'Par simple différence de comptage (20 factures reçues, 18 écritures au journal), combien de factures SEMBLENT ne pas avoir été comptabilisées ? Quelle hypothèse ce calcul suppose-t-il ?',
+   253→        expected:
+   254→          '2 en apparence (20 − 18). Ce comptage naïf suppose qu’une écriture correspond exactement à une facture — hypothèse fausse dès qu’il existe une double saisie : le doublon occupe une ligne qui ne rapproche aucune facture supplémentaire.',
+   255→      },
+   256→      {
+   257→        question:
+   258→          'Quelle formule placez-vous en face de chaque facture pour signaler son absence au journal (n° de facture en A2, références du journal en Journal!C2:C19) ?',
+   259→        expected:
+   260→          'RECHERCHEX renvoie #N/A précisément quand la facture est absente du journal ; ESTNA intercepte cette absence (et elle seule) ; SI la traduit en statut lisible. Alternative compatible toutes versions : =SI(NB.SI(Journal!$C$2:$C$19;A2)=0;"écart";"ok").',
+   261→        formula: '=SI(ESTNA(RECHERCHEX(A2;Journal!$C$2:$C$19;Journal!$C$2:$C$19));"écart";"ok")',
+   262→      },
+   263→      {
+   264→        question: 'Que renvoie exactement =ESTNA(RECHERCHEX(A2;Journal!$C$2:$C$19;Journal!$C$2:$C$19)) quand la facture A2 manque au journal ?',
+   265→        expected:
+   266→          'VRAI. RECHERCHEX échoue en #N/A (valeur absente), et ESTNA(#N/A) = VRAI — c’est ce VRAI que la fonction SI convertit en « écart ». ESTNA n’intercepte QUE #N/A : une erreur de formule (#REF!, #DIV/0!…) resterait visible au lieu d’être confondue avec une absence.',
+   267→        formula: '=ESTNA(RECHERCHEX(A2;Journal!$C$2:$C$19;Journal!$C$2:$C$19))  →  VRAI',
+   268→      },
+   269→      {
+   270→        question:
+   271→          'Après rapprochement ligne à ligne (et dans les deux sens) : quelles anomalies exactement, et pour quels montants ?',
+   272→        expected:
+   273→          '3 factures sans écriture — FA-2024-106 (1 265,00 €), FA-2024-111 (15 275,50 €), FA-2024-117 (9 840,00 €), soit 26 380,50 € non comptabilisés — et 1 double saisie : FA-2024-113 (4 218,00 €) passée deux fois (EC-2024-0965 et EC-2024-0971). L’écart de totaux (166 033,65 − 143 871,15 = 22 162,50 €) mélange les deux natures : 26 380,50 € de manquant moins 4 218,00 € de double — seul le rapprochement ligne à ligne les sépare.',
+   274→      },
+   275→    ],
+   276→    explanation:
+   277→      'Le piège de l’exercice est le comptage naïf : 18 écritures ne couvrent que 17 factures, car la double saisie de la FA-2024-113 occupe une ligne « en trop ». La méthode : rapprocher ligne à ligne avec =SI(ESTNA(RECHERCHEX(…));"écart";"ok") (ou NB.SI=0 sur les versions anciennes), DANS LES DEUX SENS — puis qualifier chaque écart : absence (3 factures, 26 380,50 €) ou excès (1 double saisie, 4 218,00 €). L’écart de totaux (22 162,50 €) alerte mais n’explique rien : deux phénomènes de signes opposés s’y neutralisent en partie. En entretien, une phrase suffit à marquer le point : « je ne rapproche jamais deux listes par différence de totaux, mais ligne à ligne, dans les deux sens ».',
+   278→  },
+   279→  {
+   280→    id: 'ex-detection-doublons',
+   281→    title: 'Exercice 2 — Détection de doublons subtils dans un registre de paiements',
+   282→    objective:
+   283→      'Le registre de septembre compte 25 paiements. Deux sont des doublons « subtils » — aucune ligne n’est identique à une autre : références différentes, dates différentes. Colonnes A à E fournies (n° paiement, date, bénéficiaire, référence, montant) ; la clé de détection se construit en colonne F.',
+   284→    dataColumns: ['N° paiement', 'Date', 'Bénéficiaire', 'Référence', 'Montant (€)'],
+   285→    dataRows: [
+   286→      ['PAY-2409-001', '02/09/2024', 'Imprimerie Label', 'FAC-881', 642.3],
+   287→      ['PAY-2409-002', '02/09/2024', 'Télécom Fixe', 'ABO-09', 1240],
+   288→      ['PAY-2409-003', '03/09/2024', 'Netpropreté Services', 'FAC-1204', 2870],
+   289→      ['PAY-2409-004', '04/09/2024', 'Éleclairs Énergie', 'P-2024-1206', 1874.5],
+   290→      ['PAY-2409-005', '05/09/2024', 'Froid & Maintenance', 'VIR-58213', 3120],
+   291→      ['PAY-2409-006', '05/09/2024', 'Office Location', 'LOY-2409', 9500],
+   292→      ['PAY-2409-007', '05/09/2024', 'Assurances Risq', 'POL-4471', 4310],
+   293→      ['PAY-2409-008', '06/09/2024', 'Éleclairs Énergie', 'P-2024-1260', 1874.5],
+   294→      ['PAY-2409-009', '06/09/2024', 'Sécuritest Contrôles', 'FAC-221', 1890],
+   295→      ['PAY-2409-010', '09/09/2024', 'Logitrans Transport', 'FAC-338', 7845.2],
+   296→      ['PAY-2409-011', '09/09/2024', 'Froid & Maintenance', 'VIR-58213', 3120],
+   297→      ['PAY-2409-012', '10/09/2024', 'Emballages Vertes', 'FAC-455', 4286.4],
+   298→      ['PAY-2409-013', '11/09/2024', 'Laiterie du Nord', 'FAC-512', 18450],
+   299→      ['PAY-2409-014', '12/09/2024', 'Imprimerie Label', 'FAC-889', 715.8],
+   300→      ['PAY-2409-015', '13/09/2024', 'Télécom Fixe', 'CON-114', 326.4],
+   301→      ['PAY-2409-016', '16/09/2024', 'Netpropreté Services', 'FAC-1241', 2955],
+   302→      ['PAY-2409-017', '17/09/2024', 'Office Location', 'TAX-2409', 1900],
+   303→      ['PAY-2409-018', '18/09/2024', 'Assurances Risq', 'AV-2210', 860],
+   304→      ['PAY-2409-019', '19/09/2024', 'Logitrans Transport', 'FAC-341', 6430],
+   305→      ['PAY-2409-020', '23/09/2024', 'Emballages Vertes', 'FAC-460', 5812.75],
+   306→      ['PAY-2409-021', '24/09/2024', 'Laiterie du Nord', 'FAC-518', 21300],
+   307→      ['PAY-2409-022', '25/09/2024', 'Sécuritest Contrôles', 'FAC-229', 1265],
+   308→      ['PAY-2409-023', '26/09/2024', 'Éleclairs Énergie', 'P-2024-1318', 12730.55],
+   309→      ['PAY-2409-024', '27/09/2024', 'Netpropreté Services', 'FAC-1250', 2640],
+   310→      ['PAY-2409-025', '30/09/2024', 'Télécom Fixe', 'ABO-10', 1310],
+   311→    ],
+   312→    tasks: [
+   313→      {
+   314→        question: 'Pourquoi un simple tri sur la colonne Référence ne suffit-il pas à détecter tous les doublons ?',
+   315→        expected:
+   316→          'Parce qu’un des deux doublons porte DEUX références différentes : P-2024-1206 et P-2024-1260 (transposition à la ressaisie). Le tri sépare les deux lignes au lieu de les rapprocher — et le second doublon (même référence, dates différentes) n’est pas non plus une ligne identique. Il faut une clé construite, pas une colonne brute.',
+   317→      },
+   318→      {
+   319→        question:
+   320→          'Quelle clé composite construire en colonne F, et avec quelle formule tester chaque ligne ?',
+   321→        expected:
+   322→          'La clé bénéficiaire|montant neutralise les variations de référence et de date : un paiement légitime ne partage presque jamais les deux. Le NB.SI sur la clé, comparé à 1, signale chaque ligne appartenant à un doublon — ici 4 lignes : 2 paires.',
+   323→        formula: 'En F2 : =C2&"|"&E2   —   en G2 : =NB.SI($F$2:$F$26;F2)>1',
+   324→      },
+   325→      {
+   326→        question: 'Quelle règle de mise en forme conditionnelle fait s’auto-signaler les lignes en doublon ?',
+   327→        expected:
+   328→          'Une règle « Utiliser une formule » appliquée à toute la plage A2:F26 : la colonne de la clé est verrouillée en absolu ($F), la ligne en relatif — chaque ligne est comparée à toute la colonne, et la couleur suit les mises à jour sans tri ni filtre.',
+   329→        formula: '=NB.SI($F$2:$F$26;$F2)>1',
+   330→      },
+   331→      {
+   332→        question: 'Quels sont les deux doublons, et quelle est l’exposition totale ?',
+   333→        expected:
+   334→          'Doublon 1 : PAY-2409-004 (04/09) et PAY-2409-008 (06/09) — Éleclairs Énergie, 1 874,50 €, références P-2024-1206 / P-2024-1260 (transposition à la ressaisie). Doublon 2 : PAY-2409-005 (05/09) et PAY-2409-011 (09/09) — Froid & Maintenance, 3 120,00 €, même référence VIR-58213 exécutée deux fois. Exposition totale : 4 994,50 € payés en trop.',
+   335→      },
+   336→    ],
+   337→    explanation:
+   338→      'Un doublon subtil ne se voit ni au tri ni au filtre : il se construit. La démarche : identifier ce qui rend deux paiements « le même » (bénéficiaire ET montant), concaténer cette clé (=C2&"|"&E2), compter les occurrences (=NB.SI($F$2:$F$26;F2)>1) et rendre le signal permanent par mise en forme conditionnelle. Sur les 25 paiements (119 268,40 € au total), la clé signale exactement 4 lignes : 2 paires de doublons — 4 994,50 € payés en double (une occurrence de chaque paire). Point d’entretien : la clé se choisit selon le risque — ici la référence ne pouvait pas servir (elle variait), donc on raisonne en « qui a été payé combien » ; et on documente le taux de faux positifs accepté, car deux paiements légitimes identiques existeraient dans un vrai mois.',
+   339→  },
+   340→  {
+   341→    id: 'ex-stats-conditionnelles',
+   342→    title: 'Exercice 3 — Statistiques conditionnelles : totaux par fournisseur et par mois',
+   343→    objective:
+   344→      'Trente factures fournisseurs sur juillet–septembre 2024 (colonnes A à D : n°, fournisseur, mois, montant TTC). Objectif : écrire les agrégations SOMME.SI / SOMME.SI.ENS du tableau de bord, puis prouver leur exactitude par un contrôle de cohérence à trois chemins.',
+   345→    dataColumns: ['N° facture', 'Fournisseur', 'Mois', 'Montant TTC (€)'],
+   346→    dataRows: [
+   347→      ['FA-2024-0701', 'Laiterie du Nord', 'Juillet 2024', 21300],
+   348→      ['FA-2024-0702', 'Emballages Vertes', 'Juillet 2024', 4286.4],
+   349→      ['FA-2024-0703', 'Éleclairs Énergie', 'Juillet 2024', 12730.55],
+   350→      ['FA-2024-0704', 'Froid & Maintenance', 'Juillet 2024', 3120],
+   351→      ['FA-2024-0705', 'Logitrans Transport', 'Juillet 2024', 7845.2],
+   352→      ['FA-2024-0706', 'Sécuritest Contrôles', 'Juillet 2024', 1265],
+   353→      ['FA-2024-0707', 'Laiterie du Nord', 'Juillet 2024', 18450],
+   354→      ['FA-2024-0708', 'Emballages Vertes', 'Juillet 2024', 5812.75],
+   355→      ['FA-2024-0709', 'Éleclairs Énergie', 'Juillet 2024', 9480.1],
+   356→      ['FA-2024-0710', 'Logitrans Transport', 'Juillet 2024', 6430],
+   357→      ['FA-2024-0801', 'Laiterie du Nord', 'Août 2024', 19870],
+   358→      ['FA-2024-0802', 'Emballages Vertes', 'Août 2024', 3674.25],
+   359→      ['FA-2024-0803', 'Éleclairs Énergie', 'Août 2024', 11205.6],
+   360→      ['FA-2024-0804', 'Froid & Maintenance', 'Août 2024', 2940],
+   361→      ['FA-2024-0805', 'Logitrans Transport', 'Août 2024', 8125.3],
+   362→      ['FA-2024-0806', 'Sécuritest Contrôles', 'Août 2024', 1890],
+   363→      ['FA-2024-0807', 'Laiterie du Nord', 'Août 2024', 15275.5],
+   364→      ['FA-2024-0808', 'Emballages Vertes', 'Août 2024', 4218],
+   365→      ['FA-2024-0809', 'Éleclairs Énergie', 'Août 2024', 10320.45],
+   366→      ['FA-2024-0810', 'Froid & Maintenance', 'Août 2024', 3585],
+   367→      ['FA-2024-0901', 'Laiterie du Nord', 'Septembre 2024', 18450],
+   368→      ['FA-2024-0902', 'Emballages Vertes', 'Septembre 2024', 5812.75],
+   369→      ['FA-2024-0903', 'Éleclairs Énergie', 'Septembre 2024', 12730.55],
+   370→      ['FA-2024-0904', 'Froid & Maintenance', 'Septembre 2024', 3120],
+   371→      ['FA-2024-0905', 'Logitrans Transport', 'Septembre 2024', 7845.2],
+   372→      ['FA-2024-0906', 'Sécuritest Contrôles', 'Septembre 2024', 1265],
+   373→      ['FA-2024-0907', 'Laiterie du Nord', 'Septembre 2024', 14560],
+   374→      ['FA-2024-0908', 'Emballages Vertes', 'Septembre 2024', 4286.4],
+   375→      ['FA-2024-0909', 'Éleclairs Énergie', 'Septembre 2024', 9480.1],
+   376→      ['FA-2024-0910', 'Froid & Maintenance', 'Septembre 2024', 2940],
+   377→    ],
+   378→    tasks: [
+   379→      {
+   380→        question:
+   381→          'Quelle formule donne le total des factures d’un fournisseur donné sur un mois donné — et que renvoie-t-elle pour « Laiterie du Nord » en septembre 2024 ?',
+   382→        expected:
+   383→          'SOMME.SI.ENS : la plage à sommer en PREMIER argument, puis les paires plage/critère. Laiterie du Nord en septembre : FA-2024-0901 (18 450,00 €) + FA-2024-0907 (14 560,00 €) = 33 010,00 €.',
+   384→        formula: '=SOMME.SI.ENS($D$2:$D$31;$B$2:$B$31;"Laiterie du Nord";$C$2:$C$31;"Septembre 2024")',
+   385→      },
+   386→      {
+   387→        question: 'Quel est le total du trimestre pour Éleclairs Énergie ?',
+   388→        expected:
+   389→          '65 947,35 € : 12 730,55 + 9 480,10 (juillet) + 11 205,60 + 10 320,45 (août) + 12 730,55 + 9 480,10 (septembre) — un seul critère suffit, SOMME.SI est donc plus simple ici.',
+   390→        formula: '=SOMME.SI($B$2:$B$31;"Éleclairs Énergie";$D$2:$D$31)',
+   391→      },
+   392→      {
+   393→        question: 'Quel est le montant total des factures de juillet 2024 ?',
+   394→        expected: '90 720,00 € : le critère porte sur la colonne Mois, la plage sommée reste les montants.',
+   395→        formula: '=SOMME.SI($C$2:$C$31;"Juillet 2024";$D$2:$D$31)',
+   396→      },
+   397→      {
+   398→        question:
+   399→          'Contrôle de cohérence : quelle relation doit relier les totaux par fournisseur, les totaux par mois et la somme générale — et que vaut-elle ici ?',
+   400→        expected:
+   401→          'Les trois chemins doivent converger : somme des 6 totaux fournisseurs = somme des 3 totaux mensuels = =SOMME(D2:D31). Ici 107 905,50 + 28 090,55 + 65 947,35 + 15 705,00 + 30 245,70 + 4 420,00 = 90 720,00 + 81 104,10 + 80 490,00 = 252 314,10 € par les trois voies. Un écart signale une ligne oubliée, un doublon ou une plage mal bornée — pas une différence d’arrondi à tolérer.',
+   402→        formula: '=SOMME(D2:D31)  →  252 314,10 €',
+   403→      },
+   404→      {
+   405→        question: 'Combien de factures « Emballages Vertes » sur le trimestre ?',
+   406→        expected: '6 factures (2 par mois) : 4 286,40 + 5 812,75 + 3 674,25 + 4 218,00 + 5 812,75 + 4 286,40 = 28 090,55 € — le comptage accompagne toujours le total.',
+   407→        formula: '=NB.SI($B$2:$B$31;"Emballages Vertes")',
+   408→      },
+   409→    ],
+   410→    explanation:
+   411→      'SOMME.SI.ENS totalise sous critères, NB.SI.ENS compte : les deux gestes du tableau de bord. Trois réflexes valent la note d’entretien : (1) l’ordre des arguments de SOMME.SI.ENS — la plage à sommer vient en premier, à la différence de SOMME.SI ; (2) verrouiller les plages ($) pour recopier sans dérive ; (3) l’exactitude se démontre par recoupement : par fournisseur, par mois et en somme générale, les trois chemins donnent 252 314,10 €. Un total ne se lit pas, il se recoupe — c’est la marque d’un fichier tenu par un comptable, pas par un utilisateur d’Excel.',
+   412→  },
+   413→  {
+   414→    id: 'ex-controle-coherence',
+   415→    title: 'Exercice 4 — Contrôle de cohérence : total de balance contre somme des comptes',
+   416→    objective:
+   417→      'La balance auxiliaire clients au 30/09/2024 affiche un TOTAL GÉNÉRAL de 82 460,00 € pour 12 comptes détail listés. Poser la formule de contrôle, calculer l’écart, écarter une cause fréquente (transposition de chiffres), puis recouper avec la balance générale pour identifier la ligne manquante.',
+   418→    dataColumns: ['Compte', 'Intitulé', 'Solde (€)'],
+   419→    dataRows: [
+   420→      ['411ALP', 'Alpina Distribution', 12480],
+   421→      ['411BOR', 'Bornia Supermarchés', 8940],
+   422→      ['411CAM', 'Campec restauration', 5260],
+   423→      ['411DOL', 'Dolliaf commerce', 3715],
+   424→      ['411FRA', 'Francine food', 6930],
+   425→      ['411GOU', 'Gourmandiz', 2145],
+   426→      ['411HYV', 'Hyver & fils', 9870],
+   427→      ['411IDE', 'Idéal épicerie', 4305],
+   428→      ['411JUL', 'Julliat grossiste', 7620],
+   429→      ['411KAI', 'Kaiseki import', 1980],
+
+[showing lines 30-429 of 776; use offset=430 with limit to continue reading]

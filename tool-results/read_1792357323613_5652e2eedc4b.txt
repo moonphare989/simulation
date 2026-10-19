@@ -1,0 +1,402 @@
+     1→     1→import type { Mission } from '@/lib/types'
+     2→     2→
+     3→     3→// =====================================================================
+     4→     4→// Fiche 2 — Renault · Mission 3 : Rapprochements bancaires (la plus riche)
+     5→     5→// Scénario pédagogique fictif — juin à septembre 2025, montants en euros.
+     6→     6→// 10 rapprochements mensuels + 15 suspens + écritures de régularisation.
+     7→     7→// =====================================================================
+     8→     8→
+     9→     9→export const renaultMission3: Mission = {
+    10→    10→  id: 'renault-m3',
+    11→    11→  ficheId: 'renault',
+    12→    12→  order: 3,
+    13→    13→  title: 'Rapprochements bancaires : dix mois, quinze suspens, des écritures correctrices',
+    14→    14→  period: 'Juin – Septembre 2025 · scénario pédagogique (données fictives)',
+    15→    15→  company: 'Renault (scénario pédagogique — simulation)',
+    16→    16→  sector: 'Automobile · service comptable et financier',
+    17→    17→  referenceData: [
+    18→    18→    'Dix rapprochements bancaires mensuels produits et revus : décembre 2024 à septembre 2025 (soldes relevé et comptable, suspens, écarts résiduels)',
+    19→    19→    'Quinze écarts et suspens analysés et résolus : virement en transit, frais bancaires non comptabilisés, prélèvement inconnu, chèque non débité, remise non créditée, doublon, erreur de montant, erreur de date, encaissement non identifié, opération dans le mauvais compte, chèque ancien de plus de six mois, remise de chèques en transit, virement client non affecté, frais de change, prélèvement SEPA rejeté',
+    20→    20→    'Rapprochement détaillé du mois d\u2019août 2025 : 13 opérations au relevé, 12 au journal de banque, solde rapproché de 1 139 170 € et écritures correctrices de 9 310 €',
+    21→    21→    'Cinq comptes bancaires suivis quotidiennement (mission 1 de la fiche)',
+    22→    22→    'BFR suivi sur deux exercices fictifs : 380 000 € en N contre 285 000 € en N-1 (mission 2 de la fiche)',
+    23→    23→    'Environ cinquante décaissements par mois contrôlés par échantillonnage (mission 4 de la fiche)',
+    24→    24→    'Matrice des délégations de signature appliquée : cinq signataires fictifs, plafonds de 8 000 € à 200 000 € (mission 4 de la fiche)',
+    25→    25→    'Bons à payer vérifiés avant tout paiement fournisseur (mission 4 de la fiche)',
+    26→    26→    'Plus de soixante-dix écritures de clôture mensuelle revues sur l\u2019ensemble des clôtures (mission 5 de la fiche)',
+    27→    27→  ],
+    28→    28→  summary:
+    29→    29→    "Mission la plus riche de la fiche : maîtriser la procédure de rapprochement bancaire en dix étapes, produire les rapprochements de dix mois consécutifs, analyser quinze suspens (décalages normaux contre anomalies), chiffrer le solde rapproché et passer les écritures correctrices nécessaires. Un écart résiduel de 5 090 € en septembre sert de fil rouge à l'investigation. Scénario entièrement fictif, montants en euros.",
+    30→    30→
+    31→    31→  comprehension: {
+    32→    32→    intro:
+    33→    33→      "Le compte 512 de la comptabilité et le relevé de la banque racontent la même histoire — mais jamais le même jour, et jamais exactement dans le même ordre. Chèques émis non encore présentés, remises créditées à J+2, virements en transit, frais prélevés sans avis : autant de décalages qui font diverger les deux soldes. Le rapprochement bancaire est la procédure qui réconcilie ces deux versions du monde, mois après mois. Dans ce scénario pédagogique fictif, le stagiaire reprend dix rapprochements mensuels (décembre 2024 à septembre 2025), traite quinze suspens de natures différentes et apprend à distinguer ce qui est normal (le temps bancaire) de ce qui est anormal (l'erreur, l'omission, la fraude potentielle). C'est le cœur du métier de la trésorerie comptable et l'un des sujets les plus testés en entretien. Précision de référentiel : les comptes cités (512, 627, 471…) appartiennent au plan comptable général français ; en IFRS, aucun plan de comptes n'est imposé et les intitulés diffèrent, mais la logique du rapprochement est strictement identique dans tous les référentiels.",
+    34→    34→    definitions: [
+    35→    35→      {
+    36→    36→        term: 'Rapprochement bancaire',
+    37→    37→        definition:
+    38→    38→          "Procédure périodique qui compare le relevé de compte envoyé par la banque et le compte de banque tenu en comptabilité, explique chaque divergence et aboutit à un solde rapproché identique calculé depuis les deux documents.",
+    39→    39→      },
+    40→    40→      {
+    41→    41→        term: 'Relevé bancaire',
+    42→    42→        definition:
+    43→    43→          "Document de la banque listant, pour la période, toutes les opérations portées au compte (débits et crédits) et le solde en fin de période. C'est la vision « banque » de la trésorerie.",
+    44→    44→      },
+    45→    45→      {
+    46→    46→        term: 'Compte de banque en comptabilité (512)',
+    47→    47→        definition:
+    48→    48→          "Compte du plan comptable général reflétant la vision « entreprise » des mouvements bancaires, alimenté par le journal de banque. Son solde diverge du relevé tant que des opérations n'ont pas été portées des deux côtés.",
+    49→    49→      },
+    50→    50→      {
+    51→    51→        term: 'Pointage',
+    52→    52→        definition:
+    53→    53→          "Action de rapprocher une à une les opérations communes aux deux documents, par référence, montant et sens. Une opération pointée existe des deux côtés, même si les dates différent légèrement.",
+    54→    54→      },
+    55→    55→      {
+    56→    56→        term: 'Suspens',
+    57→    57→        definition:
+    58→    58→          "Opération présente dans un seul des deux documents à la date du rapprochement. Il devient soit un décalage temporel qui se résorbera (normal), soit une anomalie à traiter (écriture manquante, doublon, erreur).",
+    59→    59→      },
+    60→    60→      {
+    61→    61→        term: 'Décalage temporel',
+    62→    62→        definition:
+    63→    63→          "Divergence liée aux délais d'acheminement ou de traitement : chèque émis non encore présenté, remise non encore créditée, virement émis en fin de mois débité le mois suivant. Aucune écriture correctrice n'est requise ; l'élément se reporte d'un rapprochement à l'autre jusqu'à sa résorption.",
+    64→    64→      },
+    65→    65→      {
+    66→    66→        term: 'Chèque émis non débité',
+    67→    67→        definition:
+    68→    68→          "Chèque comptabilisé et remis au bénéficiaire mais pas encore présenté à la banque : le solde comptable est plus bas que le relevé. Se surveille : un chèque ancien jamais présenté doit être traité (validité limitée dans le temps selon les règles bancaires applicables, prescription possible).",
+    69→    69→      },
+    70→    70→      {
+    71→    71→        term: 'Remise de chèques non créditée',
+    72→    72→        definition:
+    73→    73→          "Chèques clients déposés en banque et comptabilisés mais non encore crédités (délai d'encaissement, souvent J+1 à J+2) : le solde comptable est plus élevé que le relevé.",
+    74→    74→      },
+    75→    75→      {
+    76→    76→        term: 'Virement en transit',
+    77→    77→        definition:
+    78→    78→          "Virement émis ou reçu comptabilisé en fin de période mais porté au compte bancaire de la période suivante. Décalage pur, très fréquent en fin de mois.",
+    79→    79→      },
+    80→    80→      {
+    81→    81→        term: 'Frais bancaires non comptabilisés',
+    82→    82→        definition:
+    83→    83→          "Frais de tenue de compte, commissions, frais de change prélevés par la banque sans pièce comptable envoyée : ils figurent au relevé et pas en comptabilité. Anomalie : une écriture correctrice (charge / 512) doit être passée.",
+    84→    84→      },
+    85→    85→      {
+    86→    86→        term: 'Écriture correctrice',
+    87→    87→        definition:
+    88→    88→          "Écriture de régularisation passée en comptabilité à la suite du rapprochement : frais à comptabiliser, prélèvement inconnu mis en attente, extourne d'un doublon, reclassement entre comptes bancaires.",
+    89→    89→      },
+    90→    90→      {
+    91→    91→        term: 'Extourne',
+    92→    92→        definition:
+    93→    93→          "Écriture inverse d'une écriture erronée ou obsolète : même comptes, même montant, sens inverses. On extourne un doublon, une écriture de période erronée ou un chèque prescrit.",
+    94→    94→      },
+    95→    95→      {
+    96→    96→        term: 'Compte d\u2019attente (471)',
+    97→    97→        definition:
+    98→    98→          "Compte transitoire du PCG utilisé pour comptabiliser un montant dont l'imputation définitive n'est pas connue (prélèvement inconnu, encaissement non identifié). À solder dès l'identification — un compte d'attente qui gonfle est un signal d'alerte.",
+    99→    99→      },
+   100→   100→      {
+   101→   101→        term: 'Solde rapproché',
+   102→   102→        definition:
+   103→   103→          "Solde obtenu après ajustement des deux documents : solde relevé corrigé des éléments non encore portés en banque, égal au solde comptable corrigé des éléments non encore comptabilisés. S'il diffère, l'écart résiduel doit être expliqué avant conclusion.",
+   104→   104→      },
+   105→   105→    ],
+   106→   106→    keyPoints: [
+   107→   107→      "Le rapprochement part toujours des deux soldes de fin de période et aboutit à un solde rapproché unique ; chaque écart intermédiaire doit être nommé et chiffré.",
+   108→   108→      "Un suspens n'est pas une anomalie en soi : les décalages temporels (chèques émis, remises, virements en transit) sont normaux et se reportent ; les éléments non comptabilisés, doublons et erreurs exigent un traitement.",
+   109→   109→      "L'ancienneté est le critère de tri : un suspens de un à trois jours est du temps bancaire ; un suspens de plusieurs mois appelle une investigation (chèque ancien, doublon, réclamation).",
+   110→   110→      "Le pointage se fait sur les couples (référence, montant, sens) — jamais sur la seule date : une même opération peut être datée différemment des deux côtés.",
+   111→   111→      "Toute écriture correctrice découle d'une pièce ou d'une confirmation : le compte d'attente (471) ne doit être qu'un passage, jamais un débarras.",
+   112→   112→      "Un écart résiduel non expliqué interdit la conclusion : on repointe, on vérifie les doubles, on interroge la banque, et on documente chaque hypothèse.",
+   113→   113→      "Les écritures correctrices respectent le sens : un frais débité par la banque se comptabilise par le débit d'une charge au crédit du 512 ; un encaissement non identifié par le débit du 512 au crédit du 471.",
+   114→   114→      "Le rapprochement est un contrôle de fond, pas un formalisme : il détecte erreurs de saisie, oublis, doublons de paiement et peut révéler des débits frauduleux — c'est la première ligne de défense de la trésorerie.",
+   115→   115→      "Les comptes utilisés (512, 627, 471…) relèvent du PCG ; en IFRS les libellés changent mais la procédure est identique. En entretien, le nommer montre la conscience du référentiel applicable.",
+   116→   116→    ],
+   117→   117→  },
+   118→   118→
+   119→   119→  objectives: {
+   120→   120→    why:
+   121→   121→      "Sans rapprochement, le solde comptable de banque n'est qu'une opinion. Le rapprochement est le seul contrôle qui garantit, mois par mois, que la comptabilité bancaire reflète la réalité du compte : il détecte les oublis de comptabilisation, les doubles paiements, les prélèvements erronés et les débits suspects. Dans ce scénario pédagogique, dix mois de rapprochements et quinze suspens font vivre la totalité de la procédure — du pointage à l'écriture correctrice — avec un écart résiduel à investiguer, comme dans la vraie vie. C'est aussi la mission qui apprend la patience méthodique : un rapprochement ne se conclut que lorsqu'il est nul d'écarts inexpliqués et documenté.",
+   122→   122→    infoSought: [
+   123→   123→      'Le solde relevé et le solde comptable de chaque compte bancaire à chaque fin de mois',
+   124→   124→      'La liste exhaustive des suspens par nature, montant, date et ancienneté',
+   125→   125→      'La distinction entre décalages temporels (report sans écriture) et anomalies (traitement immédiat)',
+   126→   126→      'Les écritures correctrices nécessaires : comptes, montants, sens, justificatifs',
+   127→   127→      'Les doublons de comptabilisation et paiements indu à extourner ou récupérer',
+   128→   128→      'Les opérations anciennes ou inhabituelles à escalader (chèque de plus de six mois, prélèvement inconnu)',
+   129→   129→      "L'écart résiduel éventuel et sa cause — jusqu'à zéro ou à une explication documentée",
+   130→   130→    ],
+   131→   131→    risksCovered: [
+   132→   132→      "Risque d'omission : frais, prélèvements ou encaissements jamais comptabilisés (comptabilité fausse, résultat erroné)",
+   133→   133→      "Risque de doublon : facture ou paiement comptabilisé ou payé deux fois (perte de trésorerie)",
+   134→   134→      "Risque d'erreur de saisie : montant inversé, mauvais compte bancaire, mauvaise période",
+   135→   135→      "Risque de fraude : débit frauduleux, virement vers un compte inconnu, faux ordre de prélèvement",
+   136→   136→      "Risque de fraude interne : dissimulation de détournement par des comptes d'attente jamais soldés",
+   137→   137→      "Risque de cut-off : opérations rattachées à la mauvaise période, soldes de clôture faux",
+   138→   138→      "Risque de conclusion hâtive : écart résiduel masqué par une écriture d'équilibrage non justifiée",
+   139→   139→      "Risque de perte documentaire : rapprochements non archivés, suspens sans historique, piste d'audit rompue",
+   140→   140→    ],
+   141→   141→  },
+   142→   142→
+   143→   143→  preparation: {
+   144→   144→    documents: [
+   145→   145→      "Relevés bancaires des cinq comptes pour chaque mois à rapprocher (avec soldes de début et de fin)",
+   146→   146→      "Journaux de banque (comptes 512001 à 512005) avec les reportés de soldes",
+   147→   147→      "Rapprochements bancaires du mois précédent (état des suspens reportés)",
+   148→   148→      "Journal des chèques émis (souches, numéros, bénéficiaires)",
+   149→   149→      "Bordereaux de remises de chèques et de billets",
+   150→   150→      "Avis de virements émis et reçus, avec références",
+   151→   151→      "Conditions bancaires : barème des frais, délais de valeur, dates de crédit des remises",
+   152→   152→      "Chronologie des virements internes entre les cinq comptes",
+   153→   153→      "Balance des comptes d\u2019attente (471 et assimilés) pour identifier les montants en instance",
+   154→   154→      "Matrice des délégations et contacts bancaires (pour les réclamations et confirmations)",
+   155→   155→      "Historique des anomalies des mois précédents et leur statut de résolution",
+   156→   156→    ],
+   157→   157→    questionsToAsk: [
+   158→   158→      "Quels comptes bancaires entrent dans le périmètre du rapprochement mensuel, et à quelle date de clôture ?",
+   159→   159→      "Les soldes de départ sont-ils déjà rapprochés (reprise des suspens du mois précédent) ?",
+   160→   160→      "Quels délais de valeur et dates de crédit des remises la banque applique-t-elle ?",
+   161→   161→      "Quelle ancienneté déclenche le traitement d'un suspens (par exemple chèque non présenté depuis plus de six mois) ?",
+   162→   162→      "Qui contacter à la banque pour une réclamation, et avec quels délais de réponse contractuels ?",
+   163→   163→      "Quels comptes d'attente sont tolérés et pendant combien de temps ?",
+   164→   164→      "Le rapprochement est-il revu et signé par le responsable avant archivage ?",
+   165→   165→    ],
+   166→   166→    precautions: [
+   167→   167→      "Vérifier la continuité : le solde initial du mois doit être le solde final rapproché du mois précédent — sinon, reprendre le rapprochement antérieur.",
+   168→   168→      "Pointer sur les couples référence / montant / sens, jamais sur la date seule : une date différente n'est pas un écart si l'opération figure des deux côtés.",
+   169→   169→      "Ne jamais passer d'écriture d'équilibrage « pour boucher » un écart résiduel : chaque écriture correctrice exige une pièce ou une confirmation écrite.",
+   170→   170→      "Surveiller l'ancienneté des suspens et l' historicaliser : un chèque ancien ou un compte d'attente qui dort devient une anomalie de plus en plus difficile à justifier.",
+   171→   171→      "Documenter chaque étape (pointage, hypothèse, confirmation) : le rapprochement est une pièce d'audit potentielle.",
+   172→   172→    ],
+   173→   173→  },
+   174→   174→
+   175→   175→  method: [
+   176→   176→    {
+   177→   177→      title: 'Rassembler le relevé bancaire et le compte de banque en comptabilité',
+   178→   178→      description:
+   179→   179→        "Obtenir le relevé de la période et l'extrait du journal de banque (compte 512) pour la même période, avec les soldes de début ; vérifier que le solde initial comptable est bien le solde rapproché du mois précédent.",
+   180→   180→      why: "Un rapprochement n'est qu'une chaîne : si le point de départ est faux, tout ce qui suit l'est aussi.",
+   181→   181→    },
+   182→   182→    {
+   183→   183→      title: 'Vérifier les dates et la période couvertes',
+   184→   184→      description:
+   185→   185→        "S'assurer que les deux documents couvrent exactement la même période (dates d'ouverture et de clôture), et repérer les opérations de bord de période (J-1, J+1) sources de décalages.",
+   186→   186→      why: "La moitié des divergences vient d'un problème de périmètre temporel, pas de fond : le cut-off se joue à la journée.",
+   187→   187→    },
+   188→   188→    {
+   189→   189→      title: 'Pointer les opérations communes',
+   190→   190→      description:
+   191→   191→        "Rapprocher une à une les opérations présentes des deux côtés, par référence, montant et sens ; marquer chaque ligne pointée. Les dates peuvent différer de quelques jours sans que ce soit un écart.",
+   192→   192→      why: "Le pointage élimine le bruit : il ne reste ensuite que les vraies divergences, toutes identifiées et chiffrées.",
+   193→   193→    },
+   194→   194→    {
+   195→   195→      title: 'Isoler les opérations présentes dans un seul des deux documents',
+   196→   196→      description:
+   197→   197→        "Lister d'un côté ce qui est au relevé sans être en comptabilité, de l'autre ce qui est en comptabilité sans être au relevé : c'est l'état des suspens.",
+   198→   198→      why: "C'est la matière première du diagnostic : chaque suspens recevra ensuite un statut, normal ou anormal.",
+   199→   199→    },
+   200→   200→    {
+   201→   201→      title: 'Distinguer le décalage temporel de l\u2019erreur ou de l\u2019omission',
+   202→   202→      description:
+   203→   203→        "Pour chaque suspens, juger : s'agit-il d'un délai d'acheminement banal (chèque récent, remise de la veille, virement fin de mois) ou d'une anomalie (élément non comptabilisé, doublon, montant différent, libellé inconnu) ?",
+   204→   204→      why: "Cette distinction conditionne tout le reste : un décalage se reporte, une anomalie se traite — confondre les deux ruine le rapprochement.",
+   205→   205→    },
+   206→   206→    {
+   207→   207→      title: 'Traiter les familles d\u2019opérations une par une',
+   208→   208→      description:
+   209→   209→        "Passer en revue les familles : chèques émis, virements émis et reçus, prélèvements SEPA, remises de chèques et de billets, frais et commissions bancaires, opérations de change.",
+   210→   210→      why: "Chaque famille a ses délais et ses pièges propres : le traitement par famille rend le contrôle exhaustif et rapide.",
+   211→   211→    },
+   212→   212→    {
+   213→   213→      title: 'Détecter les écritures manquantes ou en double',
+   214→   214→      description:
+   215→   215→        "Rechercher dans les suspens non expliqués les signatures d'un oubli (opération banque sans comptabilité) ou d'un doublon (deux écritures identiques, deux paiements rapprochés d'une même facture).",
+   216→   216→      why: "Les oublis faussent le résultat ; les doubles détruisent la trésorerie : ce sont les deux anomalies les plus coûteuses du rapprochement.",
+   217→   217→    },
+   218→   218→    {
+   219→   219→      title: 'Analyser les opérations anciennes ou inhabituelles',
+   220→   220→      description:
+   221→   221→        "Isoler les suspens anciens (chèque non présenté depuis plus de six mois, compte d'attente dormant) et les opérations atypiques (montant rond élevé, libellé incompréhensible, contrepartie inconnue) et les escalader.",
+   222→   222→      why: "L'ancienneté et l'atypisme sont les deux signaux classiques d'une fraude ou d'une perte latente : les ignorer, c'est assumer le risque.",
+   223→   223→    },
+   224→   224→    {
+   225→   225→      title: 'Déterminer les écritures comptables nécessaires',
+   226→   226→      description:
+   227→   227→        "Pour chaque anomalie, définir l'écriture correctrice : comptes, sens, montant, justificatif (avis bancaire, confirmation écrite) ; mettre en compte d'attente (471) les montants en instance d'identification, avec un plan de solder.",
+   228→   228→      why: "Le rapprochement ne se termine pas dans un tableau : il se termine dans le journal — sinon la comptabilité reste fausse.",
+   229→   229→    },
+   230→   230→    {
+   231→   231→      title: 'Conclure sur la cohérence et documenter',
+   232→   232→      description:
+   233→   233→        "Calculer le solde rapproché depuis le relevé et depuis la comptabilité, vérifier l'égalité, traiter ou expliquer tout écart résiduel, puis faire viser et archiver le rapprochement avec ses annexes.",
+   234→   234→      why: "Un rapprochement visé, nul d'écarts inexpliqués et archivé est une preuve de contrôle — face à la direction comme face à un auditeur.",
+   235→   235→    },
+   236→   236→  ],
+   237→   237→
+   238→   238→  exercises: [
+   239→   239→    {
+   240→   240→      id: 'renault-ex-3-1',
+   241→   241→      title: 'Exercice 1 · Procédure de rapprochement guidée (mois d\u2019août)',
+   242→   242→      cycle: 'Trésorerie',
+   243→   243→      context:
+   244→   244→        "Dans ce cas, on me confie le rapprochement du compte principal (Banque Avenir, 512001) pour le mois d'août 2025 (données fictives). Les soldes de départ sont identiques des deux côtés : 1 184 300,00 € au 1er août, repris du rapprochement de juillet. Je dois calculer les soldes de fin, le solde rapproché et les écritures correctrices. Toutes les opérations sont fictives et exprimées en euros.",
+   245→   245→      documents: [
+   246→   246→        {
+   247→   247→          kind: 'table',
+   248→   248→          name: 'Relevé bancaire Banque Avenir — compte 512001, août 2025 (document fictif)',
+   249→   249→          columns: ['Date', 'Opération libellée par la banque', 'Débit (€)', 'Crédit (€)'],
+   250→   250→          rows: [
+   251→   251→            ['01/08', 'Solde de départ', '—', 1184300],
+   252→   252→            ['02/08', 'Virement reçu — client Sablier & Cie', '—', 86500],
+   253→   253→            ['03/08', 'Prélèvement — fournisseur Métalux', 42300, '—'],
+   254→   254→            ['05/08', 'Remise de chèques créditée', '—', 58750],
+   255→   255→            ['07/08', 'Virement émis — salaires', 148000, '—'],
+   256→   256→            ['09/08', 'Frais de tenue de compte (3e trimestre)', 145, '—'],
+   257→   257→            ['12/08', 'Virement reçu — client Verdot SA', '—', 63200],
+   258→   258→            ['15/08', 'Prélèvement SEPA — Sogex Énergie', 18420, '—'],
+   259→   259→            ['18/08', 'Chèque n° 518234 payé', 27600, '—'],
+   260→   260→            ['21/08', 'Virement émis — fournisseur Orcom', 91250, '—'],
+   261→   261→            ['25/08', 'Remise de chèques créditée', '—', 32400],
+   262→   262→            ['27/08', 'Prélèvement SEPA — émetteur « XYLO CORP » (non identifié)', 8900, '—'],
+   263→   263→            ['28/08', 'Frais de change', 265, '—'],
+   264→   264→            ['29/08', 'Virement reçu — client Balder', '—', 74100],
+   265→   265→          ],
+   266→   266→          note:
+   267→   267→            "Le solde de fin de période n'est pas indiqué : il se calcule. Le prélèvement « XYLO CORP » ne correspond à aucun fournisseur connu du fichier fournisseurs fictif. Document fictif à but pédagogique.",
+   268→   268→        },
+   269→   269→        {
+   270→   270→          kind: 'table',
+   271→   271→          name: 'Journal de banque — compte 512001, août 2025 (comptabilité, document fictif)',
+   272→   272→          columns: ['Date', 'Libellé de l\u2019écriture', 'Encaissement (€)', 'Décaissement (€)'],
+   273→   273→          rows: [
+   274→   274→            ['01/08', 'Solde initial (rapproché de juillet)', '—', 1184300],
+   275→   275→            ['02/08', 'Virement client Sablier & Cie', 86500, '—'],
+   276→   276→            ['04/08', 'Prélèvement fournisseur Métalux', '—', 42300],
+   277→   277→            ['05/08', 'Remise de chèques', 58750, '—'],
+   278→   278→            ['07/08', 'Virement des salaires', '—', 148000],
+   279→   279→            ['12/08', 'Virement client Verdot SA', 63200, '—'],
+   280→   280→            ['16/08', 'Prélèvement Sogex Énergie', '—', 18420],
+   281→   281→            ['20/08', 'Chèque n° 518234 — fournisseur Balder', '—', 27600],
+   282→   282→            ['21/08', 'Virement fournisseur Orcom', '—', 91250],
+   283→   283→            ['25/08', 'Remise de chèques', 32400, '—'],
+   284→   284→            ['29/08', 'Virement client Balder', 74100, '—'],
+   285→   285→            ['30/08', 'Chèque n° 518241 émis — fournisseur Kallista', '—', 35800],
+   286→   286→            ['30/08', 'Remise de chèques — client Névé', 12600, '—'],
+   287→   287→          ],
+   288→   288→          note:
+   289→   289→            "Le chèque 518241 a été remis au fournisseur le 30/08 ; la banque le débitlera le 02/09. La remise Névé sera créditée par la banque le 02/09. Les dates de comptabilisation peuvent différer de quelques jours des dates bancaires (ex. : Métalux comptabilisé le 04/08, débité le 03/08). Document fictif.",
+   290→   290→        },
+   291→   291→      ],
+   292→   292→      questions: [
+   293→   293→        {
+   294→   294→          id: 'rn3-e1-q1',
+   295→   295→          question: 'Calculer le solde du relevé bancaire au 31 août 2025, en euros.',
+   296→   296→          type: 'numeric',
+   297→   297→          expected: 1162370,
+   298→   298→          explanation:
+   299→   299→            "Solde relevé = 1 184 300 + 86 500 − 42 300 + 58 750 − 148 000 − 145 + 63 200 − 18 420 − 27 600 − 91 250 + 32 400 − 8 900 − 265 + 74 100 = 1 162 370,00 €. Dans ce cas, je recalcule ce solde une seconde fois par cumul progressif avant de continuer.",
+   300→   300→        },
+   301→   301→        {
+   302→   302→          id: 'rn3-e1-q2',
+   303→   303→          question: 'Calculer le solde comptable du compte 512001 au 31 août 2025, en euros.',
+   304→   304→          type: 'numeric',
+   305→   305→          expected: 1148480,
+   306→   306→          explanation:
+   307→   307→            "Solde comptable = 1 184 300 + 86 500 − 42 300 + 58 750 − 148 000 + 63 200 − 18 420 − 27 600 − 91 250 + 32 400 + 74 100 − 35 800 + 12 600 = 1 148 480,00 €. L\u2019écart brut avec le relevé (1 162 370 − 1 148 480 = 13 890 €) devra être entièrement expliqué.",
+   308→   308→        },
+   309→   309→        {
+   310→   310→          id: 'rn3-e1-q3',
+   311→   311→          question:
+   312→   312→            'Calculer le solde rapproché au 31 août 2025, en euros (il doit être identique depuis le relevé et depuis la comptabilité).',
+   313→   313→          type: 'numeric',
+   314→   314→          expected: 1139170,
+   315→   315→          explanation:
+   316→   316→            "Voie relevé : 1 162 370 − 35 800 (chèque 518241 émis non débité) + 12 600 (remise Névé non créditée) = 1 139 170 €. Voie comptable : 1 148 480 − 145 (frais de tenue de compte) − 8 900 (prélèvement XYLO CORP) − 265 (frais de change) = 1 139 170 €. Les deux voies convergent : le rapprochement est juste.",
+   317→   317→        },
+   318→   318→        {
+   319→   319→          id: 'rn3-e1-q4',
+   320→   320→          question:
+   321→   321→            'Quel est le montant total des écritures correctrices à passer en comptabilité, en euros ?',
+   322→   322→          type: 'numeric',
+   323→   323→          expected: 9310,
+   324→   324→          explanation:
+   325→   325→            "Écritures correctrices = frais de tenue de compte 145 + prélèvement inconnu 8 900 + frais de change 265 = 9 310,00 €. Les deux autres suspens (chèque 518241, remise Névé) sont des décalages temporels : aucune écriture, simple report à septembre.",
+   326→   326→        },
+   327→   327→        {
+   328→   328→          id: 'rn3-e1-q5',
+   329→   329→          question:
+   330→   330→            "Rédigez votre démarche en cinq étapes pour ce rapprochement, et traitez spécifiquement le prélèvement « XYLO CORP » de 8 900 € : quelle classification, quel traitement comptable, quelles actions avant de conclure ?",
+   331→   331→          type: 'open',
+   332→   332→          keywords: [
+   333→   333→            'pointer',
+   334→   334→            'suspens',
+   335→   335→            'décalage',
+   336→   336→            'banque',
+   337→   337→            '471',
+   338→   338→            'attente',
+   339→   339→            'réclamation',
+   340→   340→            'justificatif',
+   341→   341→            'documenter',
+   342→   342→          ],
+   343→   343→          explanation:
+   344→   344→            "Démarche attendue : (1) vérifier la continuité des soldes initiaux (1 184 300 € des deux côtés, repris du rapprochement de juillet) ; (2) pointer les opérations communes par référence, montant et sens (les écarts de date de quelques jours, comme Métalux comptabilisé au 04/08 et débité au 03/08, ne sont pas des suspens) ; (3) établir l\u2019état des suspens : côté comptabilité, chèque 518241 (35 800 €) et remise Névé (12 600 €) ; côté banque, frais 145 €, prélèvement XYLO CORP 8 900 €, frais de change 265 € ; (4) qualifier chaque suspens : les deux premiers sont des décalages temporels (report sans écriture), les trois derniers sont des anomalies (écritures correctrices) ; (5) calculer le solde rapproché des deux voies (1 139 170 €) et documenter. Traitement du prélèvement XYLO CORP : c\u2019est une anomalie à investiguer (émetteur inconnu). Dans ce cas, je commencerais par interroger la banque (réclamation écrite avec la référence de l\u2019opération), je passerais en attendant l\u2019écriture débit 471 « compte d\u2019attente » / crédit 512 pour 8 900 € afin que le 512 soit juste, et je ne solderais le 471 qu\u2019après identification : remboursement obtenu, contrepartie reconnue ou confirmation du prélèvement. Tant que l\u2019origine n\u2019est pas établie, je ne conclus pas le rapprochement sans mentionner ce point, car un prélèvement inconnu peut être le symptôme d\u2019un ordre de prélèvement frauduleux.",
+   345→   345→        },
+   346→   346→      ],
+   347→   347→      risks: [
+   348→   348→        'Prélèvement frauduleux ou erroné non détecté',
+   349→   349→        'Frais et commissions jamais comptabilisés',
+   350→   350→        'Décalage temporel confondu avec une anomalie (ou l\u2019inverse)',
+   351→   351→      ],
+   352→   352→      solutionSummary:
+   353→   353→        "Soldes au 31 août : relevé 1 162 370 €, comptabilité 1 148 480 €, écart brut 13 890 €. Suspens côté comptabilité : chèque 518241 émis non débité (35 800 €) et remise Névé non créditée (12 600 €) — deux décalages temporels sans écriture, à reporter sur septembre. Suspens côté banque : frais de tenue de compte (145 €), prélèvement XYLO CORP inconnu (8 900 €) et frais de change (265 €) — trois anomalies nécessitant 9 310 € d'écritures correctrices. Solde rapproché : 1 139 170 € par les deux voies. Le prélèvement inconnu exige une réclamation bancaire et un passage provisoire en compte d'attente (471) : on ne solde jamais un suspens inexpliqué par une écriture d'équilibrage. En entretien, dérouler la procédure en dix étapes avec ce cas concret (continuité, pointage, suspens, qualification, correcteurs, conclusion) suffit à démontrer la maîtrise complète du cycle.",
+   354→   354→      interviewTips: [
+   355→   355→        "Annoncer les deux voies du solde rapproché et leur convergence : c'est la signature d'un rapprochement maîtrisé.",
+   356→   356→        "Qualifier chaque suspens en deux mots (décalage / anomalie) avant d'en parler : le vocabulaire juste crédibilise.",
+   357→   357→        "Sur le prélèvement inconnu, citer la réclamation bancaire et le 471 : traitement professionnel complet.",
+   358→   358→      ],
+   359→   359→    },
+   360→   360→
+   361→   361→    {
+   362→   362→      id: 'renault-ex-3-2',
+   363→   363→      title: 'Exercice 2 · Atelier : dix rapprochements mensuels',
+   364→   364→      cycle: 'Trésorerie',
+   365→   365→      context:
+   366→   366→        "Le service a produit dix rapprochements mensuels consécutifs (décembre 2024 à septembre 2025, données fictives). Neuf se concluent par un écart entièrement expliqué par les suspens. Je dois contrôler chaque mois, repérer celui qui présente un écart résiduel non expliqué et définir la démarche. Rappel : écart brut = solde relevé − solde comptable ; un chèque émis non débité rend le relevé plus élevé que la comptabilité, une remise non créditée ou des frais non comptabilisés l'abaissent.",
+   367→   367→      documents: [
+   368→   368→        {
+   369→   369→          kind: 'table',
+   370→   370→          name: 'Synthèse des dix rapprochements mensuels (documents fictifs, montants en €)',
+   371→   371→          columns: ['Mois', 'Solde relevé banque (€)', 'Solde comptable 512 (€)', 'Principaux suspens identifiés'],
+   372→   372→          rows: [
+   373→   373→            ['déc. 2024', 2410800, 2402650, 'Chèques émis non débités : 22 750 · Remise non créditée : 14 600'],
+   374→   374→            ['janv. 2025', 2285400, 2296900, 'Chèques émis non débités : 4 300 · Remise non créditée : 15 800'],
+   375→   375→            ['févr. 2025', 2176300, 2173450, 'Chèques émis non débités : 9 450 · Remise non créditée : 6 600'],
+   376→   376→            ['mars 2025', 2348900, 2340200, 'Chèques émis non débités : 12 300 · Remise non créditée : 3 600'],
+   377→   377→            ['avr. 2025', 2204500, 2197750, 'Chèques émis non débités : 8 250 · Remise non créditée : 1 500'],
+   378→   378→            ['mai 2025', 2152800, 2158250, 'Chèques émis non débités : 2 150 · Remise non créditée : 7 600'],
+   379→   379→            ['juin 2025', 2310600, 2306150, 'Chèques émis non débités : 6 950 · Remise non créditée : 2 500'],
+   380→   380→            ['juil. 2025', 2274300, 2269900, 'Chèques émis non débités : 11 200 · Remise non créditée : 6 800'],
+   381→   381→            ['août 2025', 1162370, 1148480, 'Chèque 518241 non débité : 35 800 · Remise non créditée : 12 600 · Frais et prélèvement non comptabilisés : 9 310'],
+   382→   382→            ['sept. 2025', 1386500, 1372900, 'Chèques émis non débités : 18 900 · Remises non créditées : 9 750 · Frais non comptabilisés : 640'],
+   383→   383→          ],
+   384→   384→          note:
+   385→   385→            "Les suspens listés sont ceux identifiés à la clôture de chaque mois. Convention : l'écart brut se calcule relevé − comptabilité. Documents fictifs à but pédagogique.",
+   386→   386→        },
+   387→   387→      ],
+   388→   388→      questions: [
+   389→   389→        {
+   390→   390→          id: 'rn3-e2-q1',
+   391→   391→          question: 'Calculer l\u2019écart brut (relevé − comptabilité) de septembre 2025, en euros.',
+   392→   392→          type: 'numeric',
+   393→   393→          expected: 13600,
+   394→   394→          explanation:
+   395→   395→            "Écart brut = 1 386 500 − 1 372 900 = 13 600,00 €.",
+   396→   396→        },
+   397→   397→        {
+   398→   398→          id: 'rn3-e2-q2',
+   399→   399→          question:
+   400→   400→            "Les suspens identifiés de septembre expliquent : + 18 900 (chèques émis non débités) − 9 750 (remises non créditées) − 640 (frais non comptabilisés). Quel est l'écart résiduel inexpliqué, en euros ?",
+
+[showing lines 1-400 of 857; use offset=401 with limit to continue reading]

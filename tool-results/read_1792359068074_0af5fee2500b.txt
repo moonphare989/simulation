@@ -1,0 +1,332 @@
+     1→// =====================================================================
+     2→// Fiche 3 — Centrale Danone · Mission 3
+     3→// Vérification des justificatifs : validité, cohérence, exhaustivité
+     4→// =====================================================================
+     5→import type { Mission } from '@/lib/types'
+     6→import { DANONE_REFERENCE, FICHE3_DISCLAIMER, danoneBase } from './_commun'
+     7→
+     8→export const danoneM3: Mission = {
+     9→  ...danoneBase(3),
+    10→  id: 'danone-m3',
+    11→  title: 'Vérification des justificatifs',
+    12→  summary:
+    13→    'Vérifier la validité, l’authenticité apparente, la cohérence, l’exhaustivité et la conformité des justificatifs du mois : existence de la pièce, concordance des montants, identité des tiers, dates, nature du bien ou service, preuve de livraison/réception, autorisation interne — et détection des manquants, incohérents et dupliqués. Scénario fictif à visée pédagogique.',
+    14→  referenceData: [
+    15→    FICHE3_DISCLAIMER,
+    16→    ...DANONE_REFERENCE,
+    17→    'Mission 3 : vérification de la validité et de l’exhaustivité des justificatifs sur les factures contrôlées du mois (dossiers conformes, incomplets, incohérents, duplicatas, rapprochement journal des ventes / remises de chèques).',
+    18→  ],
+    19→  comprehension: {
+    20→    intro:
+    21→      '« Justifier » une écriture, c’est prouver. Mais prouver quoi, exactement ? La vérification des justificatifs repose sur cinq notions que l’on confond trop vite. La validité : la pièce soutient-elle réellement l’opération — existe-t-elle, émane-t-elle du bon tiers, décrit-elle bien le bien ou service, le montant est-il le bon ? L’authenticité apparente : la pièce semble-t-elle émaner de l’émetteur annoncé (présentation, références, absence d’altération) — l’authenticité au sens strict relevant d’expertises plus poussées, le comptable contrôle ce qu’il peut voir. La cohérence : les pièces d’un même dossier concordent-elles entre elles et avec la comptabilité (montants, dates, identités, nature) ? L’exhaustivité : toutes les opérations de la période ont-elles leur justificatif — rien de caché, rien d’oublié ? La conformité : la pièce répond-elle aux exigences formelles (mentions obligatoires, autorisation interne, validations requises) ? Dans ce scénario fictif, la vérification porte sur les dossiers du mois : détection de pièces manquantes, d’incohérences entre pièces, de duplicatas et de ruptures d’exhaustivité (rapprochement du journal des ventes avec les remises de chèques encaissées). Réflexe de base : un verdict (« conforme », « incomplet », « incohérent ») ne se prononce qu’après avoir recherché la preuve complémentaire, jamais sur une impression.',
+    22→    definitions: [
+    23→      { term: 'Justificatif (pièce justificative)', definition: 'Document qui prouve la réalité, le montant et la nature d’une opération : facture, bon de commande, bon de réception/livraison, relevé bancaire, note de frais avec pièces jointes. Sans justificatif, l’écriture n’est pas défendable.' },
+    24→      { term: 'Validité', definition: 'La pièce soutient effectivement l’opération qu’elle prétend constater : bon émetteur, bon destinataire, bonne nature de bien ou service, bon montant, date plausible. Une facture valide fonde l’enregistrement ; une pièce non valide le fragilise.' },
+    25→      { term: 'Authenticité apparente', definition: 'Ensemble des indices visibles suggérant que la pièce émane bien de l’émetteur annoncé : présentation cohérente, numérotation plausible, absence d’altération, coordonnées vérifiables. Nuance : l’authenticité au sens strict relève de vérifications plus poussées (contact de l’émetteur, rapprochements externes) — le comptable contrôle l’apparence et escalade le doute.' },
+    26→      { term: 'Cohérence', definition: 'Concordance des informations entre les pièces d’un même dossier et avec la comptabilité : montants (facture ↔ BL ↔ commande), dates, identités des tiers, nature du bien. Une facture de 1 240,00 € contre un BL de 1 420,00 € est incohérente : l’une des deux pièces (ou les deux) ne décrit pas l’opération réelle.' },
+    27→      { term: 'Exhaustivité', definition: 'Toutes les opérations de la période sont enregistrées et justifiées : chaque livraison facturable a sa facture, chaque encaissement sa trace. Se vérifie par rapprochements croisés (journal ↔ relevés ↔ pièces), jamais par simple lecture du journal.' },
+    28→      { term: 'Conformité', definition: 'Respect des exigences de forme : mentions obligatoires de la facture, autorisation interne (bon de commande validé, visa), validations requises (bon à payer, visa manager d’une note de frais). Une pièce peut être réelle mais non conforme — la déduction de TVA ou le remboursement s’en trouvent fragilisés.' },
+    29→      { term: 'Duplicata', definition: 'Copie d’une pièce déjà comptabilisée. Un duplicata reçu par un second canal (mail + courrier, rescan) ne doit jamais être resaisi : la détection repose sur le couple fournisseur + numéro de facture (+ montant et date).' },
+    30→      { term: 'Pièce manquante', definition: 'Élément du dossier absent au moment du contrôle (BL non signé, autorisation absente). Le traitement : demande de la pièce, statut « incomplet », jamais de validation définitive tant que le dossier n’est pas reconstitué.' },
+    31→      { term: 'Autorisation interne', definition: 'Preuve que l’opération a été voulue et approuvée en interne : bon de commande validé, déplacement autorisé, visa hiérarchique. Une dépense réelle mais non autorisée reste une anomalie de contrôle interne.' },
+    32→      { term: 'Rapprochement de justificatifs', definition: 'Technique de croisement systématique : facture contre commande et réception, journal des ventes contre relevé d’encaissements, journal des achats contre relevé bancaire. C’est l’outil privilégié des contrôles de cohérence et d’exhaustivité.' },
+    33→      { term: 'Sondage / revue exhaustive', definition: 'Deux étendues de contrôle : le sondage vérifie un échantillon (critères : montant, risque, rotation) ; la revue exhaustive traite la totalité. L’exhaustivité des opérations, elle, se contrôle par rapprochement — même sur échantillon, la méthode reste le croisement.' },
+    34→      { term: 'Verdict de contrôle', definition: 'Conclusion qualifiée d’un dossier : conforme (dossier complet et concordant), incomplet (pièce(s) manquante(s)), incohérent (contradiction entre pièces ou avec la comptabilité). Chaque verdict s’accompagne de la preuve qui le fonde et, si besoin, de la preuve complémentaire à rechercher.' },
+    35→    ],
+    36→    keyPoints: [
+    37→      'Cinq notions à ne pas confondre : validité, authenticité apparente, cohérence, exhaustivité, conformité.',
+    38→      'Un verdict se prononce sur preuves, jamais sur impression : on cherche d’abord la pièce complémentaire.',
+    39→      'La cohérence se contrôle en croisant les pièces d’un même dossier : montants, dates, identités, nature.',
+    40→      'L’exhaustivité se contrôle par rapprochement (journal ↔ relevés ↔ pièces), pas par lecture du journal.',
+    41→      'Le duplicata est la première cause de double comptabilisation : rechercher fournisseur + numéro de facture avant toute saisie.',
+    42→      'Une facture et un avoir de même montant ne sont pas nécessairement une anomalie : vérifier le lien de correction entre les deux pièces.',
+    43→      'L’autorisation interne (commande validée, visa) fait partie du justificatif au même titre que la facture.',
+    44→      'L’authenticité apparente s’arrête au visible : au moindre doute, escalader (contact émetteur, responsable) au lieu de conclure seul.',
+    45→      'Chaque dossier contrôlé reçoit un statut tracé : conforme, incomplet, incohérent — avec la suite donnée.',
+    46→      'Un écart même faible (1 €, 0,35 €) rompt la cohérence et se traite comme une incohérence à expliquer.',
+    47→    ],
+    48→  },
+    49→  objectives: {
+    50→    why:
+    51→      'Les comptes ne valent que par leurs preuves : une écriture justifiée par une pièce incomplète, incohérente ou dupliquée est une écriture fragile — en clôture comme en audit. Cette mission installe le réflexe « dossier complet et concordant avant validation », et la capacité à documenter un verdict de contrôle défendable devant un tiers.',
+    52→    infoSought: [
+    53→      'L’existence d’une pièce pour chaque opération enregistrée (et inversement : chaque pièce a son opération).',
+    54→      'La concordance des montants entre les pièces du dossier et avec l’écriture comptable.',
+    55→      'L’identité exacte des tiers : émetteur, destinataire, bénéficiaire.',
+    56→      'Les dates : cohérence interne du dossier et rattachement à la bonne période.',
+    57→      'La nature du bien ou du service : description, quantité, référence.',
+    58→      'La preuve de réception ou de livraison, et l’autorisation interne.',
+    59→      'L’absence de duplicata et de compensation injustifiée (facture + avoir).',
+    60→      'L’exhaustivité du mois : rien d’enregistré sans pièce, rien de réel sans écriture.',
+    61→    ],
+    62→    risksCovered: [
+    63→      'Comptabilisation de pièces dupliquées (double charge, double dette).',
+    64→      'Validation de dossiers incomplets (BL manquant, autorisation absente).',
+    65→      'Incohérences non détectées entre facture, BL et commande (surfacturation, erreur).',
+    66→      'Opérations réelles non enregistrées (ruptures d’exhaustivité, ventes non facturées).',
+    67→      'Pièces non conformes : mentions manquantes fragilisant la TVA déductible.',
+    68→      'Tiers usurpés ou confondus (homonymies, entités sœurs).',
+    69→      'Écarts résiduels non expliqués bloquant le lettrage et le rapprochement.',
+    70→      'Avoirs utilisés pour neutraliser des factures à tort (compensation de complaisance).',
+    71→      'Verdicts de contrôle indéfendables faute de preuve documentée.',
+    72→    ],
+    73→  },
+    74→  preparation: {
+    75→    documents: [
+    76→      'La liste des dossiers du mois à vérifier avec leur statut de réception.',
+    77→      'Les dossiers documentaires : factures, bons de commande, bons de réception/livraison, autorisations internes.',
+    78→      'Le journal des achats et le journal des ventes du mois.',
+    79→      'Les relevés bancaires et le journal de banque (contrôles de cohérence des règlements).',
+    80→      'Le relevé de remises de chèques (pour le contrôle d’exhaustivité des encaissements).',
+    81→      'La liste des duplicatas reçus (mail, portail, courrier) à écarter.',
+    82→      'Les balances auxiliaires clients et fournisseurs (rapprochement des soldes aux pièces).',
+    83→      'La grille des mentions obligatoires et les exigences de validation interne (habilitations, visas).',
+    84→      'Le tableau de suivi des pièces manquantes et des relances en cours.',
+    85→      'Les procédures de rejet : qui peut refuser une pièce, sous quelle forme, avec quel délai.',
+    86→    ],
+    87→    questionsToAsk: [
+    88→      'Le contrôle du mois est-il exhaustif ou par sondage — et selon quels critères d’échantillonnage ?',
+    89→      'Quelles pièces sont exigibles pour chaque type d’opération (seuils, nature) ?',
+    90→      'Qui contacter pour obtenir une pièce manquante : le tiers, le service interne, l’archivage ?',
+    91→      'Un dossier incomplet bloque-t-il le paiement, ou un acompte est-il envisageable ?',
+    92→      'Comment sont tracés les duplicatas écartés (pour prouver qu’ils n’ont pas été perdus) ?',
+    93→      'Quel écart de montant déclenche une demande de correction : tout écart, ou un seuil de matérialité ?',
+    94→      'Où consigner les verdicts (conforme / incomplet / incohérent) pour qu’ils soient exploitables en clôture ?',
+    95→    ],
+    96→    precautions: [
+    97→      'Ne jamais prononcer un verdict avant d’avoir cherché la preuve complémentaire (relance, archive, banque).',
+    98→      'Comparer chaque pièce du dossier à toutes les autres — pas seulement la facture au BL.',
+    99→      'Traquer le duplicata avant toute conclusion de validité : deux canaux, même pièce.',
+   100→      'Documenter chaque demande de pièce et chaque réponse : le dossier de contrôle doit raconter l’histoire du dossier contrôlé.',
+   101→      'Ne pas confondre « conforme » et « complet » : une facture conforme peut vivre dans un dossier incomplet.',
+   102→    ],
+   103→  },
+   104→  method: [
+   105→    { title: 'Structurer le périmètre de vérification', description: 'Lister les opérations du mois à justifier (achats, ventes, encaissements, notes de frais) et leur étendue de contrôle : exhaustive ou par sondage raisonné (montants, risques, rotation).', why: 'Un contrôle sans périmètre défini ne peut être ni terminé, ni prouvé.' },
+   106→    { title: 'Vérifier l’existence de la pièce', description: 'Contrôler qu’une pièce existe, est lisible et accessible pour chaque opération : facture, commande, réception/livraison, autorisation.', why: 'L’existence est la première condition de validité : pas de pièce, pas de justificatif.' },
+   107→    { title: 'Apprécier l’authenticité apparente', description: 'Examiner la présentation : émetteur identifiable, numérotation plausible, absence d’altération, cohérence du canal de réception ; escalader au moindre doute sérieux.', why: 'La plupart des pièces fautives se révèlent à l’œil : incohérences de forme, mentions incohérentes, doublons « trop parfaits ».' },
+   108→    { title: 'Contrôler l’identité des tiers', description: 'Vérifier émetteur, destinataire, bénéficiaire : raison sociale complète, adresse, entité du groupe concernée, homonymies éventuelles.', why: 'Une pièce valide pour la mauvaise entité (ou le mauvais homonyme) justifie une opération… qui n’est pas celle du compte mouvementé.' },
+   109→    { title: 'Contrôler les dates', description: 'Comparer les dates des pièces entre elles (commande ≤ réception ≤ facture) et avec la période comptable visée.', why: 'Les dates incohérentes invalident le dossier et signalent des reconstitutions.' },
+   110→    { title: 'Contrôler la nature du bien ou du service', description: 'Lire la description : référence, quantité, qualité — et vérifier qu’elle correspond à l’activité et à la comptabilisation proposée.', why: 'La pièce doit décrire l’opération réelle : une référence erronée (produit livré ≠ produit facturé) invalide la facture malgré des montants justes.' },
+   111→    { title: 'Rapprocher les montants', description: 'Comparer facture ↔ BL ↔ commande ↔ écriture, et recalculer HT, TVA au taux applicable (20 % / 5,5 %) et TTC.', why: 'La concordance des montants est le cœur de la cohérence : tout écart, même faible, exige une explication.' },
+   112→    { title: 'Vérifier la preuve de réception et l’autorisation', description: 'S’assurer du BL/BR signé et de l’autorisation interne (commande validée, visa) pour chaque dépense.', why: 'Réalité de la livraison et volonté interne : deux preuves distinctes, toutes deux indispensables.' },
+   113→    { title: 'Traquer les duplicatas et compensations', description: 'Rechercher les pièces en double (fournisseur + numéro + montant) et examiner les couples facture + avoir de même montant (lien de correction légitime ou neutralisation suspecte).', why: 'Le doublon double la charge ; la compensation de complaisance cache des opérations.' },
+   114→    { title: 'Contrôler l’exhaustivité', description: 'Croiser le journal avec des sources indépendantes : relevé de remises de chèques, relevés bancaires, BL non facturés, bordereaux d’expédition.', why: 'Une écriture fausse se voit dans son dossier ; une opération manquante ne se voit que par rapprochement externe.' },
+   115→    { title: 'Qualifier chaque dossier', description: 'Attribuer un statut : conforme, incomplet (pièce(s) à obtenir), incohérent (contradiction constatée) — avec la preuve et le montant en cause.', why: 'Le statut transforme le contrôle en action : qui relancer, quoi corriger, quand solder.' },
+   116→    { title: 'Rechercher la preuve complémentaire avant de conclure', description: 'Pour chaque dossier non conforme : relance du tiers, recherche en archive, contrôle du relevé bancaire, confirmation directe.', why: 'Le verdict définitif se prononce preuves réunies : conclure trop vite, c’est devoir se rétracter.' },
+   117→    { title: 'Documenter et suivre', description: 'Tracer verdicts, demandes de pièces, réponses et corrections ; suivre jusqu’à résolution et alimenter le bilan mensuel.', why: 'Le dossier de contrôle est lui-même un justificatif : celui du sérieux du contrôle.' },
+   118→  ],
+   119→  exercises: [
+   120→    {
+   121→      id: 'danone-m3-ex1',
+   122→      title: 'Classer les types de contrôle',
+   123→      cycle: 'Transversal',
+   124→      context:
+   125→        'Cinq notions, cinq objectifs différents. Avant de contrôler des dossiers réels (fictifs), vérifiez que vous savez ce que vous contrôlez — et pourquoi. Les définitions données à l’étape Compréhension servent de référentiel.',
+   126→      risks: ['Confusion des notions', 'Verdict injustifié'],
+   127→      documents: [],
+   128→      questions: [
+   129→        {
+   130→          id: 'danone-m3-ex1-q1',
+   131→          question: 'Une facture existe, décrit bien le service reçu et le montant exact : quelle notion venez-vous de contrôler ?',
+   132→          type: 'mcq',
+   133→          options: [
+   134→            'La validité (la pièce soutient réellement l’opération)',
+   135→            'L’exhaustivité (toutes les opérations ont leur pièce)',
+   136→            'La conformité (les mentions formelles sont respectées)',
+   137→            'La cohérence (les pièces du dossier concordent entre elles)',
+   138→          ],
+   139→          expected: '0',
+   140→          explanation:
+   141→            'Existence + adéquation au fait (bon service, bon montant) : c’est la définition de la validité d’une pièce — elle fonde effectivement l’opération. L’exhaustivité interroge le périmètre (rien de manquant dans le mois) ; la conformité interroge la forme (mentions, visas) ; la cohérence compare plusieurs pièces entre elles.',
+   142→        },
+   143→        {
+   144→          id: 'danone-m3-ex1-q2',
+   145→          question: 'Le journal des ventes affiche 11 845,00 € d’encaissements chèques, le relevé de remises en montre 12 430,00 € : quelle notion est en jeu ?',
+   146→          type: 'mcq',
+   147→          options: [
+   148→            'La validité',
+   149→            'L’authenticité apparente',
+   150→            'L’exhaustivité',
+   151→            'La conformité',
+   152→          ],
+   153→          expected: '2',
+   154→          explanation:
+   155→            'Un montant encaissé qui ne figure pas au journal est une opération non enregistrée : le problème est d’exhaustivité. Ni la validité (les écritures existantes peuvent être parfaites), ni la conformité (aucun problème de forme), ni l’authenticité (aucune suspicion sur l’origine du document) — c’est le rapprochement qui révèle le trou.',
+   156→        },
+   157→        {
+   158→          id: 'danone-m3-ex1-q3',
+   159→          question: 'La facture mentionne un BL de 1 420,00 € pour un montant facturé de 1 240,00 € : quelle notion est en jeu ?',
+   160→          type: 'mcq',
+   161→          options: [
+   162→            'La cohérence (contradiction entre pièces du dossier)',
+   163→            'L’exhaustivité',
+   164→            'La validité seule, sans autre contrôle',
+   165→            'L’authenticité au sens strict',
+   166→          ],
+   167→          expected: '0',
+   168→          explanation:
+   169→            'Deux pièces du même dossier décrivent différemment la même opération : incohérence. Elle peut provenir d’une erreur de saisie (BL ou facture), d’une livraison partielle, d’un retour non documenté… Le rôle du contrôleur : constater l’écart, rechercher la cause, demander la pièce qui tranche — pas choisir arbitrairement une des deux valeurs.',
+   170→        },
+   171→        {
+   172→          id: 'danone-m3-ex1-q4',
+   173→          question: 'Parmi les contrôles suivants, lesquels relèvent de la conformité ?',
+   174→          type: 'multi',
+   175→          options: [
+   176→            'Vérifier que la facture porte le numéro de TVA intracommunautaire de l’émetteur',
+   177→            'Vérifier que la note de frais porte le visa du manager',
+   178→            'Vérifier que le bon de commande a été validé par une personne habilitée',
+   179→            'Rapprocher le montant facturé du montant du bon de livraison',
+   180→            'Contrôler que chaque chèque encaissé figure au journal des ventes',
+   181→            'Comparer la date de facture à la date de réception',
+   182→          ],
+   183→          expected: ['0', '1', '2'],
+   184→          explanation:
+   185→            'La conformité est une affaire de forme et d’autorisations : mentions obligatoires (numéro de TVA), validations requises (visa manager, commande habilitée). Le rapprochement facture/BL relève de la cohérence ; le contrôle chèques/journal relève de l’exhaustivité ; la comparaison des dates sert la cohérence (et la chronologie). Classer chaque contrôle évite de croire qu’on a « tout vérifié » alors qu’un seul axe l’a été.',
+   186→        },
+   187→        {
+   188→          id: 'danone-m3-ex1-q5',
+   189→          question: 'Expliquez la différence entre validité et conformité à l’aide d’un exemple.',
+   190→          type: 'open',
+   191→          keywords: ['réalité', 'opération', 'forme', 'mentions', 'TVA', 'déduction'],
+   192→          explanation:
+   193→            'La validité interroge le fond : la pièce décrit-elle une opération réelle, du bon tiers, pour le bon montant ? La conformité interroge la forme : la pièce respecte-t-elle les exigences (mentions obligatoires, autorisations, visas) ? Exemple : une facture parfaitement réelle (service rendu, montant exact) mais sans numéro de TVA de l’émetteur est valide sur le fond et non conforme sur la forme — sa déduction de TVA serait fragilisée. Inversement, une facture formellement impeccable décrivant un service jamais rendu est conforme… et non valide. Les deux contrôles sont complémentaires : l’un sans l’autre laisse passer respectivement le risque fiscal et le risque de pièce fictive.',
+   194→        },
+   195→      ],
+   196→      solutionSummary:
+   197→        'Validité (le fond : la pièce prouve l’opération), conformité (la forme : mentions, autorisations, visas), cohérence (les pièces concordent entre elles), exhaustivité (rien ne manque), authenticité apparente (la pièce semble émaner de l’émetteur). Les pièges : croire qu’une facture conforme est valide, ou qu’un journal complet garantit l’exhaustivité. À l’oral, savoir nommer le type de contrôle que l’on réalise est aussi valorisé que savoir le réaliser.',
+   198→      interviewTips: [
+   199→        'Donnez un exemple où une pièce est conforme mais non valide (et l’inverse) : la distinction devient mémorable.',
+   200→        'Annoncez toujours le type de contrôle en cours : « là, je contrôle la cohérence » — vocabulaire exact = crédibilité.',
+   201→      ],
+   202→    },
+   203→    {
+   204→      id: 'danone-m3-ex2',
+   205→      title: 'Dossiers de pièces : conforme, incomplet, incohérent',
+   206→      cycle: 'Achats',
+   207→      context:
+   208→        'Trois dossiers de pièces du mois, trois situations typiques. Pour chacun : un verdict, un montant, et la preuve complémentaire éventuelle avant de conclure. Montants et sociétés fictifs.',
+   209→      risks: ['Validation de dossier incomplet', 'Incohérence non détectée', 'Verdict prématuré'],
+   210→      documents: [
+   211→        {
+   212→          kind: 'table',
+   213→          name: 'Dossier 1 — Achat de matières premières (fictif)',
+   214→          columns: ['Pièce', 'Date', 'Référence', 'Montant (€)'],
+   215→          rows: [
+   216→            ['Bon de commande COM-2024-0518', '02/07/2024', '40 tonnes de sucre cristallisé — 87,00 € / t', '3 480,00 HT'],
+   217→            ['Bon de réception BR-2024-0421', '05/07/2024', '40 tonnes reçues, conforme', '3 480,00'],
+   218→            ['Facture FA-2024-1330', '06/07/2024', '40 t × 87,00 € — TVA 5,5 % (denrée alimentaire)', '3 480,00 HT'],
+   219→            ['Bon à payer validé (responsable achats)', '08/07/2024', 'visa A. Ndiaye', '—'],
+   220→          ],
+   221→          note: 'Document fictif. TVA applicable : taux réduit de 5,5 % sur les denrées alimentaires (sucre — denrée destinée à l’alimentation humaine ; régime à confirmer selon le cas). Total facture : 3 671,40 € TTC.',
+   222→        },
+   223→        {
+   224→          kind: 'table',
+   225→          name: 'Dossier 2 — Prestation de nettoyage (fictif)',
+   226→          columns: ['Pièce', 'Date', 'Référence', 'Montant (€)'],
+   227→          rows: [
+   228→            ['Facture FA-2024-1352', '10/07/2024', 'Prestation nettoyage juin — TVA 20 %', '2 150,00 HT'],
+   229→            ['Bon de commande', '—', 'absent du dossier', '—'],
+   230→            ['Bon de réception', '—', 'absent du dossier', '—'],
+   231→            ['Autorisation / visa', '—', 'absent du dossier', '—'],
+   232→          ],
+   233→          note: 'Document fictif. Total facture : 2 580,00 € TTC. Aucune autre pièce jointe au dossier.',
+   234→        },
+   235→        {
+   236→          kind: 'table',
+   237→          name: 'Dossier 3 — Achat d’équipement de réserve (fictif)',
+   238→          columns: ['Pièce', 'Date', 'Référence', 'Montant (€)'],
+   239→          rows: [
+   240→            ['Bon de commande COM-2024-0533', '11/07/2024', 'Étagères de réserve — lot unique', '1 420,00 HT'],
+   241→            ['Bon de réception BR-2024-0440', '14/07/2024', 'Lot reçu, conforme, sans réserve', '1 420,00'],
+   242→            ['Facture FA-2024-1361', '15/07/2024', 'Étagères de réserve — TVA 20 %', '1 240,00 HT'],
+   243→            ['Bon à payer validé (responsable logistique)', '16/07/2024', 'visa L. Berthier', '—'],
+   244→          ],
+   245→          note: 'Document fictif. TVA facturée : 248,00 € — TTC 1 488,00 €.',
+   246→        },
+   247→      ],
+   248→      questions: [
+   249→        {
+   250→          id: 'danone-m3-ex2-q1',
+   251→          question: 'Dossier 1 (achat de matières premières) : quel verdict ?',
+   252→          type: 'mcq',
+   253→          options: [
+   254→            'Conforme : pièce complète, montants concordants (commande = réception = facture), autorisation présente',
+   255→            'Incomplet : il manque une pièce obligatoire',
+   256→            'Incohérent : contradiction de montant entre pièces',
+   257→            'Non conforme : la TVA appliquée est nécessairement erronée',
+   258→          ],
+   259→          expected: '0',
+   260→          explanation:
+   261→            'Commande, réception et facture concordent (40 tonnes, 87,00 €/t, 3 480,00 € HT) et le bon à payer est visé : dossier conforme. Le contrôle arithmétique confirme : TVA 5,5 % = 191,40 €, TTC = 3 480,00 × 1,055 = 3 671,40 €. Le taux réduit sur denrées alimentaires est applicable en référence (à confirmer selon le produit exact et le régime), mais dans ce scénario le dossier est complet et concordant : conforme.',
+   262→        },
+   263→        {
+   264→          id: 'danone-m3-ex2-q2',
+   265→          question: 'Dossier 2 (prestation de nettoyage, facture seule) : quel verdict et quelle suite immédiate ?',
+   266→          type: 'mcq',
+   267→          options: [
+   268→            'Incomplet : facture seule au dossier — demander bon de commande, bon de réception et autorisation avant toute validation',
+   269→            'Conforme : une facture suffit à justifier une charge',
+   270→            'Incohérent : les montants se contredisent',
+   271→            'Non valide : la prestation n’a manifestement pas été réalisée',
+   272→          ],
+   273→          expected: '0',
+   274→          explanation:
+   275→            'Le dossier ne contient que la facture : ni commande, ni réception, ni visa. Verdict : incomplet — la suite est la demande de pièces (qui a commandé ? qui a reçu ?) avant validation ou paiement. Attention aux mauvaises réponses : une facture seule ne justifie pas une charge (validité non établie côté réception) ; aucune contradiction de montant n’existe (il n’y a rien à comparer) ; et on ne peut pas conclure à la non-réalité de la prestation — c’est précisément ce que les pièces demandées établiront.',
+   276→        },
+   277→        {
+   278→          id: 'danone-m3-ex2-q3',
+   279→          question: 'Dossier 3 (étagères de réserve) : quel verdict ?',
+   280→          type: 'mcq',
+   281→          options: [
+   282→            'Conforme : le bon à payer est visé, donc tout va bien',
+   283→            'Incohérent : la facture (1 240,00 €) contredit le bon de commande et le bon de réception (1 420,00 €)',
+   284→            'Incomplet seulement : il manque le détail du lot',
+   285→            'Conforme partiellement : l’écart est couvert par le visa',
+   286→          ],
+   287→          expected: '1',
+   288→          explanation:
+   289→            'Commande et réception concordent à 1 420,00 € HT, la facture porte 1 240,00 € HT : contradiction entre pièces — dossier incohérent. Le visa du bon à payer ne « couvre » pas l’écart : une validation ne justifie jamais une incohérence de 180,00 €. Causes possibles à instruire : remise non mentionnée, erreur de saisie fournisseur, livraison partielle non signalée, ou BL erroné. Le verdict s’accompagne de la recherche de la pièce qui tranche.',
+   290→        },
+   291→        {
+   292→          id: 'danone-m3-ex2-q4',
+   293→          question: 'Dossier 3 : quel est l’écart de montant HT entre la facture et les autres pièces ?',
+   294→          type: 'numeric',
+   295→          expected: 180,
+   296→          explanation: '1 420,00 − 1 240,00 = 180,00 € HT (soit 216,00 € TTC à 20 %). L’écart se chiffre toujours : c’est lui qui détermine la matérialité de la relance et le traitement (correction de facture ou régularisation du BL).',
+   297→        },
+   298→        {
+   299→          id: 'danone-m3-ex2-q5',
+   300→          question: 'Pour le dossier 3, quelle preuve complémentaire rechercheriez-vous avant de conclure ? Et pour le dossier 2 ?',
+   301→          type: 'open',
+   302→          keywords: ['fournisseur', 'avoir', 'remise', 'bon de livraison', 'commande', 'responsable', 'écrit'],
+   303→          explanation:
+   304→            'Dossier 3 : demander au fournisseur l’explication écrite de l’écart de 180,00 € — avoir de régularisation si une remise a été accordée après commande, facture rectifiée si erreur, ou correction du BL/BR si la quantité réellement livrée diffère (avec contre-vérification physique ou du stock). Si l’explication confirme la facture (1 240,00 €), le dossier devient cohérent après correction de la commande/réception ; sinon, la facture est corrigée. Dossier 2 : contacter le service demandeur (qui a commandé le nettoyage ?) et le prestataire (preuve d’intervention : planning, badge, bon d’intervention signé), et rechercher l’autorisation interne correspondante. Dans les deux cas : la preuve s’obtient par écrit, la conclusion n’intervient qu’après — et le statut « incomplet » ou « incohérent » reste tracé jusqu’à résolution.',
+   305→        },
+   306→      ],
+   307→      solutionSummary:
+   308→        'Dossier 1 : conforme — chaîne complète (commande = réception = facture = 3 480,00 € HT, TVA 5,5 %, TTC 3 671,40 €, visa). Dossier 2 : incomplet — facture seule, demander commande, réception et autorisation avant paiement. Dossier 3 : incohérent — facture 1 240,00 € contre BL/commande 1 420,00 €, écart de 180,00 € HT à expliquer par écrit (avoir, remise, erreur ou livraison partielle) ; le visa ne couvre pas l’écart. Méthode constante : qualifier le verdict, chiffrer l’écart, demander la preuve complémentaire, conclure après réponse.',
+   309→      interviewTips: [
+   310→        'Ne prononcez jamais « conforme » sans avoir cité ce qui l’établit (chaîne complète + concordance + visa) : le verdict se argumente.',
+   311→        'Sur le dossier 3, la formule clé : « le visa ne couvre pas l’incohérence » — elle montre que vous hiérarchisez les preuves.',
+   312→      ],
+   313→    },
+   314→    {
+   315→      id: 'danone-m3-ex3',
+   316→      title: 'Duplicatas et compensations',
+   317→      cycle: 'Achats',
+   318→      context:
+   319→        'Extrait du journal des achats de juillet 2024 : dix lignes. Deux configurations à repérer : une facture scannée deux fois, et un couple facture + avoir de même montant chez le même fournisseur. Toutes les données sont fictives.',
+   320→      risks: ['Double comptabilisation', 'Compensation injustifiée', 'Perte de traçabilité'],
+   321→      documents: [
+   322→        {
+   323→          kind: 'table',
+   324→          name: 'Journal des achats — extrait de 10 lignes (fictif)',
+   325→          columns: ['Ligne', 'N° pièce', 'Date', 'Fournisseur', 'HT (€)', 'Canal de réception'],
+   326→          rows: [
+   327→            [1, 'FA-2024-1182', '04/07/2024', 'Transports Ravel', 612.4, 'Portail'],
+   328→            [2, 'FA-2024-1185', '05/07/2024', 'Imprimerie du Val', 1248, 'Mail'],
+   329→            [3, 'FA-2024-1187', '08/07/2024', 'Papier & Logistique', 890.4, 'Courrier'],
+   330→            [4, 'FA-2024-1190', '09/07/2024', 'Astral Nettoyage', 1530, 'Portail'],
+
+[showing lines 1-330 of 471; use offset=331 with limit to continue reading]
